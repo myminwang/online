@@ -129,3 +129,12 @@
 
         使用runserver或makemigrations时，报错：
         ModuleNotFoundError: No module named 'users'
+
+## 项目流程：
+* 一、分析前端提供的html文件，列出页面结构，确定需要创建的apps；
+* 二、创建环境、配置数据库参数、创建apps；
+* 三、根据页面内容，创建各apps的models；
+* 四、使用xadmin管理后台
+* 五、各功能模块实现：
+    * 1.注册功能的实现：
+
