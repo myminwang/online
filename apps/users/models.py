@@ -27,6 +27,7 @@ class UserProfile(AbstractUser):
         verbose_name_plural = verbose_name
 
     def __str__(self):
+        # 在python 2.7 使用__unicode__(self)
         return self.username
 
 

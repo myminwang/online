@@ -15,11 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import url
+from django.conf.urls import url,include
 
 import xadmin
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     url(r'^admin/', xadmin.site.urls),
+
+    # # 用户操作管理，URL
+    # url(r'^opera/', include('apps.operation.urls', namespace='opera')),
+    # # 课程机构相关 URL
+    # url(r'^org/', include('apps.organizations.urls', namespace='org')),
+    # # 课程相关 URL 配置
+    # url(r'^course/', include('apps.courses.urls', namespace='courses')),
+    # # 用户中心 URL 配置
+    url(r'^users/', include('apps.users.urls'), name='users'),
+
 ]

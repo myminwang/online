@@ -3,10 +3,9 @@
 from datetime import datetime
 
 from django.db import models
-
-from apps.courses.models import Courseinfo
-from apps.users.models import UserProfile
-from apps.organizations.models import Organizationinfo, Teacher
+from courses.models import Courseinfo
+from users.models import UserProfile
+from organizations.models import Organizationinfo, Teacher
 
 
 # Create your models here.

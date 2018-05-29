@@ -5,7 +5,7 @@ from django.db import models
 
 # Create your models here.
 
-from apps.organizations.models import Organizationinfo, Teacher
+from organizations.models import Organizationinfo, Teacher
 
 
 class Courseinfo(models.Model):
