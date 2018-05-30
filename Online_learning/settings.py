@@ -143,3 +143,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # UserProfile 覆盖了 django 内置的 user 表
 AUTH_USER_MODEL = 'users.UserProfile'
+
+
+# 发送邮件功能设置
+EMAIL_HOST = 'smtp.sina.com'  # 发送邮件的服务器，使用SMTP服务器，需要在邮箱中开启此服务
+EMAIL_PORT = 25   # 官网文档中默认值
+EMAIL_HOST_USER = 'online_learn_edu@sina.com'  # 用户名
+EMAIL_HOST_PASSWORD ='WZQwzq+123'  # 密码
+
+EMAIL_FROM = 'online_learn_edu@sina.com' # 自定义配置，使用时需要引入
+# 在send_mail()参数中要求写'from@example.com'

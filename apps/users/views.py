@@ -5,8 +5,7 @@ from django.contrib.auth.hashers import make_password  # 对明文进行加密�
 
 from .forms import RegisterForm
 from .models import UserProfile
-
-
+from utils.email_send import send_link_email
 # Create your views here.
 
 
@@ -42,6 +41,7 @@ class RegisterView(View):
                 user_profile.is_active = False
                 user_profile.save()
 
+                send_link_email(email)  # 发送激活邮件
                 return render(request, "email_send_success.html", {'email': email, 'msg': '请前往查收并尽快激活账户'})
 
         else:

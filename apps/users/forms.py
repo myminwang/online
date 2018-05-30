@@ -9,10 +9,9 @@ from .models import UserProfile
 from captcha.fields import CaptchaField   # 验证码验证模块
 
 
-
 class RegisterForm(forms.Form):
     """注册信息验证"""
-    # 通过验证，传回字典格式对象，验证失败，传回错误信息
+    # 通过验证，传回对象，验证失败，传回错误信息
     email = forms.EmailField(required=True)
     password = forms.CharField(required=True, min_length=5)
     captcha = CaptchaField(error_messages={'invalid': '验证码错误'})
