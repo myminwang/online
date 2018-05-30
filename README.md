@@ -138,7 +138,7 @@
 * 五、各功能模块实现：
     * 1.注册功能的实现：
     注册流程:
-    https://github.com/myminwang/online/blob/master/static/images/register.001.jpeg
+    ![register](https://github.com/myminwang/online/blob/master/static/images/register.001.jpeg "register")
     * 用到的技术：
     A.django自带的form验证功能，可以在处理用户提交的数据之前，进行数据格式等验证；
     B.验证码技术，采用第三方验证码生成包captcha，实现验证码功能；
