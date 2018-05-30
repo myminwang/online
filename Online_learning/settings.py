@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'courses',
     'xadmin',
     'crispy_forms',
+    'captcha',   # 验证码包，需要配置url，并在数据库中生成表
 ]
 
 MIDDLEWARE = [

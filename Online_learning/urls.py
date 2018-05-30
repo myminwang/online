@@ -22,7 +22,8 @@ import xadmin
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    url(r'^admin/', xadmin.site.urls),
+    path('admin/', xadmin.site.urls),
+    path('captcha/', include('captcha.urls')),
 
     # # 用户操作管理，URL
     # url(r'^opera/', include('apps.operation.urls', namespace='opera')),
@@ -30,7 +31,8 @@ urlpatterns = [
     # url(r'^org/', include('apps.organizations.urls', namespace='org')),
     # # 课程相关 URL 配置
     # url(r'^course/', include('apps.courses.urls', namespace='courses')),
+
     # 用户中心 URL 配置,看include源码进行配置，默认app_name=None,只有为元组时才能传入参数
-    url(r'^users/', include(('users.urls', 'users'), namespace='users')),
+    path('users/', include(('users.urls', 'users'), namespace='users')),
 
 ]

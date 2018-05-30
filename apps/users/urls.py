@@ -3,11 +3,13 @@
 __author__ = "问道编程"
 __date__ = "5/29/18 19:27"
 
-from django.conf.urls import url
+from django.urls import path
 
-from .views import RegisterView
+from .views import RegisterView,LoginView
 
 urlpatterns = [
     # 用户注册
-    url(r'^register/$', RegisterView.as_view(), name='register'),
+    path('register/', RegisterView.as_view(), name='register'),
+    # 用户登录
+    path('login/', LoginView.as_view(), name='login'),
 ]
