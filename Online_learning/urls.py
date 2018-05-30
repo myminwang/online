@@ -14,10 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from django.conf.urls import url,include
+from django.urls import path,include   # 等同于在django.conf.urls导入include
+from django.conf.urls import url
 
 import xadmin
+
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
@@ -29,7 +30,7 @@ urlpatterns = [
     # url(r'^org/', include('apps.organizations.urls', namespace='org')),
     # # 课程相关 URL 配置
     # url(r'^course/', include('apps.courses.urls', namespace='courses')),
-    # # 用户中心 URL 配置
-    url(r'^users/', include('apps.users.urls'), name='users'),
+    # 用户中心 URL 配置,看include源码进行配置，默认app_name=None,只有为元组时才能传入参数
+    url(r'^users/', include(('users.urls', 'users'), namespace='users')),
 
 ]

@@ -24,7 +24,7 @@ class Organizationinfo(models.Model):
     """授课机构信息"""
     category_choices = (('gx', '高校'), ('pxjg', '培训机构'), ('gr', '个人'))
     category = models.CharField(verbose_name='机构类别', choices=category_choices, default='gx', max_length=20)
-    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, verbose_name='所在城市')
+    city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, verbose_name='所在城市')
     name = models.CharField(verbose_name='机构名称', default='', max_length=100)
     image = models.ImageField(verbose_name='机构logo', upload_to='org/%Y/%m', default=100)
     students = models.IntegerField(verbose_name='学习人数', default=0)
@@ -50,7 +50,7 @@ class Organizationinfo(models.Model):
 
 class Teacher(models.Model):
     """讲师"""
-    org = models.ForeignKey(Organizationinfo, on_delete=models.SET_NULL, null=True, verbose_name='就职公司')
+    org = models.ForeignKey(Organizationinfo, on_delete=models.CASCADE, null=True, verbose_name='就职公司')
     name = models.CharField(verbose_name='姓名', default='', max_length=20)
     image = models.ImageField(verbose_name='教师头像', upload_to='teacher/%Y/%m',default='teacher/default.png', max_length=100)
     age = models.IntegerField(verbose_name='年龄', default=30)

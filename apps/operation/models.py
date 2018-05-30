@@ -13,8 +13,8 @@ from organizations.models import Organizationinfo, Teacher
 
 class CourseComments(models.Model):
     """用户对课程的评论"""
-    course = models.ForeignKey(Courseinfo, on_delete=models.SET_NULL, null=True, verbose_name='课程')
-    user = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, verbose_name='用户')
+    course = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, null=True, verbose_name='课程')
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, verbose_name='用户')
     comments = models.TextField(verbose_name='评论')
     add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
 
@@ -25,7 +25,7 @@ class CourseComments(models.Model):
 
 class UserFav(models.Model):
     """用户对机构、讲师、课程收藏"""
-    user = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, verbose_name='用户')
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, verbose_name='用户')
     fav_id = models.IntegerField(verbose_name='收藏类型的ID', default=0)
     # 该fav_id记录的是相应收藏类型的id
     fav_type = models.IntegerField(verbose_name='收藏类型',
