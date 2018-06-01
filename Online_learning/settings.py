@@ -11,9 +11,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import sys   # 配置app目录
+import sys  # 配置app目录
 import pymysql  # mysql 数据库
-
 
 pymysql.install_as_MySQLdb()
 
@@ -33,7 +32,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -49,7 +47,7 @@ INSTALLED_APPS = [
     'courses',
     'xadmin',
     'crispy_forms',
-    'captcha',   # 验证码包，需要配置url，并在数据库中生成表
+    'captcha',  # 验证码包，需要配置url，并在数据库中生成表
 ]
 
 MIDDLEWARE = [
@@ -83,7 +81,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Online_learning.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -91,13 +88,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'online',
-        'USER':'root',
-        'PASSWORD':'WZQwzq+123',
-        'HOST':'127.0.0.1',
-        'POST':'3306',
+        'USER': 'root',
+        'PASSWORD': 'WZQwzq+123',
+        'HOST': '127.0.0.1',
+        'POST': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -117,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -131,12 +126,17 @@ USE_L10N = True
 
 USE_TZ = False  # 数据库获取本地时间,如果为True则取国际时间
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# 解决：配置正确，而网页中文件无法加载的问题
+STATICFILES_DIRS = (
+    ('css', os.path.join(STATIC_ROOT, 'css').replace('\\', '/')),
+    ('js', os.path.join(STATIC_ROOT, 'js').replace('\\', '/')),
+)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -144,12 +144,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # UserProfile 覆盖了 django 内置的 user 表
 AUTH_USER_MODEL = 'users.UserProfile'
 
-
 # 发送邮件功能设置
 EMAIL_HOST = 'smtp.sina.com'  # 发送邮件的服务器，使用SMTP服务器，需要在邮箱中开启此服务
-EMAIL_PORT = 25   # 官网文档中默认值
+EMAIL_PORT = 25  # 官网文档中默认值
 EMAIL_HOST_USER = 'online_learn_edu@sina.com'  # 用户名
-EMAIL_HOST_PASSWORD ='WZQwzq+123'  # 密码
+EMAIL_HOST_PASSWORD = 'WZQwzq+123'  # 密码
 
-EMAIL_FROM = 'online_learn_edu@sina.com' # 自定义配置，使用时需要引入
+EMAIL_FROM = 'online_learn_edu@sina.com'  # 自定义配置，使用时需要引入
 # 在send_mail()参数中要求写'from@example.com'

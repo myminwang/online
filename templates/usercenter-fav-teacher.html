@@ -1,0 +1,101 @@
+{% extends 'usercenter_base.html' %}
+
+{% load staticfiles %}
+
+{% block title %} 我的收藏 {% endblock %}
+
+{% block custom_bread %} 我的收藏 {% endblock %}
+
+{% block body %}
+<section>
+	<div class="wp list personal_list">
+	<div class="left">
+        <ul>
+            <li class="active2"><a href="usercenter-info.html">个人资料</a></li>
+            <li ><a href="usercenter-mycourse.html">我的课程</a></li>
+            <li ><a href="usercenter-fav-course.html">我的收藏</a></li>
+            <li >
+                <a href="usercenter-message.html" style="position: relative;">
+                    我的消息
+                </a>
+            </li>
+        </ul>
+	</div>
+
+    
+    <div class="right" >
+            <div class="personal_des Releasecont">
+                <div class="head">
+                    <h1>我的收藏</h1>
+                </div>
+            </div>
+            <div class="personal_des permessage">
+                <div class="head">
+                    <ul class="tab_header messagehead">
+                        <li><a href="usercenter-fav-course.html">课程机构</a> </li>
+                        <li class="active"><a href="usercenter-fav-teacher.html">授课教师 </a></li>
+                        <li><a href="usercenter-fav-course.html">公开课程</a></li>
+                    </ul>
+                </div>
+                <div class="messagelist">
+                    
+                    <div class=" butler_list butler-fav-box">
+                        <dl class="des users">
+                            <dt>
+                                <a href="/org/teacher/detail/1/">
+                                    <img width="100" height="100" src="{% static 'media/teacher/2016/11/aobama_CXWwMef.png' %}"/>
+                                </a>
+                            </dt>
+                            <dd>
+                                <h1>
+                                    <a href="/org/teacher/detail/1/">
+                                        bobby<span class="key">认证教师</span>
+                                    </a>
+                                </h1>
+                                <ul class="cont clearfix">
+                                    <li class="time">工作年限：<span>5年</span></li>
+                                    <li class="c7">课程数：<span>2</span></li>
+                                </ul>
+                                <ul class="cont clearfix">
+                                    <li class="time">工作公司：<span>xxx</span></li>
+                                    <li class="c7">公司职位：<span>xxx</span></li>
+                                </ul>
+                            </dd>
+                            <div class="delete jsDeleteFav_teacher" data-favid="1"></div>
+                        </dl>
+                    </div>
+                    
+                    <div class=" butler_list butler-fav-box">
+                        <dl class="des users">
+                            <dt>
+                                <a href="/org/teacher/detail/2/">
+                                    <img width="100" height="100" src="{% static 'media/teacher/2016/11/aobama.png' %}"/>
+                                </a>
+                            </dt>
+                            <dd>
+                                <h1>
+                                    <a href="/org/teacher/detail/2/">
+                                        还是bobby<span class="key">认证教师</span>
+                                    </a>
+                                </h1>
+                                <ul class="cont clearfix">
+                                    <li class="time">工作年限：<span>5年</span></li>
+                                    <li class="c7">课程数：<span>1</span></li>
+                                </ul>
+                                <ul class="cont clearfix">
+                                    <li class="time">工作公司：<span>xxx</span></li>
+                                    <li class="c7">公司职位：<span>xxx</span></li>
+                                </ul>
+                            </dd>
+                            <div class="delete jsDeleteFav_teacher" data-favid="2"></div>
+                        </dl>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+	</div>
+</section>
+{% endblock %}

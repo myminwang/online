@@ -1,0 +1,55 @@
+
+
+{#验证码邮件发送成功页面#}
+<div class="dialog" id="jsDialog">
+<!--提示弹出框-->
+<div class="successbox dialogbox" id="jsSuccessTips">
+    <h1>成功提交</h1>
+    <div class="close jsCloseDialog"><img src="../images/dig_close.png"/></div>
+    <div class="cont">
+        <h2>您的需求提交成功！</h2>
+        <p></p>
+    </div>
+</div>
+<div  class="noactivebox dialogbox" id="jsUnactiveForm" >
+    <h1>邮件验证提示</h1>
+    <div class="close jsCloseDialog"><img src="../images/dig_close.png"/></div>
+    <div class="center">
+        <img src="../images/send.png"/>
+        <p>我们已经向您的邮箱<span class="green" id="jsEmailToActive">12@13.com</span>发送了邮件，<br/>为保证您的账号安全，请及时验证邮箱</p>
+        <p class="a"><a class="btn" id="jsGoToEmail" target="_blank" href="http://mail.qq.com">去邮箱验证</a></p>
+        <p class="zy_success upmove"></p>
+        <p style="display: none;" class="sendE2">没收到，您可以查看您的垃圾邮件和被过滤邮件，也可以再次发送验证邮件（<span class="c5c">60s</span>）</p>
+        <p class="sendE">没收到，您可以查看您的垃圾邮件和被过滤邮件，<br/>也可以<span class="c5c green" id="jsSenEmailAgin" style="cursor: pointer;">再次发送验证邮件</span></p>
+    </div>
+</div>
+</div>
+
+
+{#重置密码页面#}
+<div class="resetpassbox dialogbox" id="jsSetNewPwd">
+    <h1>重新设置密码</h1>
+    <div class="close jsCloseDialog"><img src="../images/dig_close.png"/></div>
+    <p class="green">请输入新密码</p>
+    <form id="jsSetNewPwdForm">
+        <div class="box">
+            <span class="word2">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span>
+            <input type="password" name="password" id="jsResetPwd" placeholder="请输入新密码"/>
+        </div>
+        <div class="box">
+            <span class="word2">确&nbsp;认&nbsp;密&nbsp;码</span>
+            <input type="password" name="password2" id="jsResetPwd2" placeholder="请再次输入新密码"/>
+        </div>
+        <div class="box">
+            <span class="word2">验&nbsp;&nbsp;证&nbsp;&nbsp;码</span>
+            <input type="text" name="code" id="jsResetCode" placeholder="请输入手机验证码"/>
+        </div>
+        <div class="error btns" id="jsSetNewPwdTips"></div>
+        <div class="button">
+            <input type="hidden" name="mobile" id="jsInpResetMobil" />
+            <input id="jsSetNewPwdBtn" type="button" value="提交" />
+        </div>
+        <input type='hidden' name='csrfmiddlewaretoken' value='mymQDzHWl2REXIfPMg2mJaLqDfaS1sD5' />
+    </form>
+</div>
+<div class="bg" id="dialogBg"></div>

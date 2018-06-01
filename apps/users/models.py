@@ -39,6 +39,7 @@ class EmailVerification(models.Model):
                                  choices=(('register', '注册'), ('forget', '修改密码'), ('update_email', '修改邮箱')),
                                  default='register')
     send_time = models.DateField(verbose_name='添加时间', default=datetime.datetime.now)
+    is_delete = models.BooleanField(verbose_name='是否已验证', default=0)
 
     class Meta:
         verbose_name = '邮箱验证信息'

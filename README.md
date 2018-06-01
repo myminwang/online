@@ -121,14 +121,6 @@
 * mysql安装请参考[http://www.cnblogs.com/wendaobiancheng/p/9041278.html](http://www.cnblogs.com/wendaobiancheng/p/9041278.html)
 * Navicat安装，mac免费版链接：https://pan.baidu.com/s/1mWqOacmSqWmVD5YgRbUoCg  密码:sjw4
 
-## 待解决问题：
-* xadmin，后台管理不能显示APP的中文名称
-        每个APP文件下的__init__.py文件添加（以uses为例）：
-
-        default_app_config = "users.apps.UsersConfig"
-
-        使用runserver或makemigrations时，报错：
-        ModuleNotFoundError: No module named 'users'
 
 ## 项目流程：
 * 一、分析前端提供的html文件，列出页面结构，确定需要创建的apps；
@@ -141,5 +133,30 @@
     ![register](https://github.com/myminwang/online/blob/master/static/images/register.001.jpeg "register")
     * 用到的技术：
         * A.django自带的form验证功能，可以在处理用户提交的数据之前，进行数据格式等验证；
-        * B.验证码技术，采用第三方验证码生成包captcha，实现验证码功能；
+        * B.验证码技术，采用第三方验证码生成包captcha，在setting中配置添加app，配置url，在数据库中创建表后就可以使用了，在网页中、form中做好配置就行，自动实现验证过程，实现验证码功能；
     * 2.邮箱验证功能的实现：
+        * A.邮件发送功能，使用django自带的send_mail模块，在setting中配置默认参数及自定义参数，创建通用模块文件夹，
+        单独新建邮件发送模块，并使用随机函数生成随机的验证码，加在链接中，发给用户；
+        * B.激活验证功能，
+
+
+
+
+## 待解决问题：
+* xadmin，后台管理不能显示APP的中文名称
+        每个APP文件下的__init__.py文件添加（以uses为例）：
+
+        default_app_config = "users.apps.UsersConfig"
+
+        使用runserver或makemigrations时，报错：
+        ModuleNotFoundError: No module named 'users'
+* 注册页面第一次显示时，不能显示验证码，点击注册并登录后可以正常显示:已解决，get方式调用视图时，需要将验证码模块render到网页中
+
+
+## 待优化项目：
+* 邮件发送成功页面，优化页面
+* 密码修改页面优化
+* 注册页面输入框中显示None，value=register_form.email.value，一开始没有返回值的原因，如何消除
+
+
+

@@ -8,7 +8,7 @@ import string  # python自带的字符串模块
 
 from django.core.mail import send_mail
 
-from users.models import EmailVerification, UserProfile
+from users.models import EmailVerification
 from Online_learning.settings import EMAIL_FROM  # 引入自定义的配置
 
 
@@ -21,7 +21,7 @@ def send_link_email(email, send_type='register'):
     if send_type == 'register':
         email_subject = '在线学习网激活邮件（请勿回复）'
         email_message = '欢迎您注册在线学习网账号，请点击下面的链接完成激活:\nhttp://127' \
-                        '.0.0.1:8000/active/' + emailinfo.code
+                        '.0.0.1:8000/users/active/' + emailinfo.code
         send_mail(email_subject, email_message, EMAIL_FROM, [email])
         emailinfo.save()
     elif send_type == 'forget':

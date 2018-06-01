@@ -1,0 +1,80 @@
+{% extends 'usercenter_base.html' %}
+
+{% load staticfiles %}
+
+{% block title %} 我的消息 {% endblock %}
+
+{% block custom_bread %} 我的消息 {% endblock %}
+
+{% block body %}
+<section>
+	<div class="wp list personal_list">
+	<div class="left">
+        <ul>
+            <li class="active2"><a href="usercenter-info.html">个人资料</a></li>
+            <li ><a href="usercenter-mycourse.html">我的课程</a></li>
+            <li ><a href="usercenter-fav-course.html">我的收藏</a></li>
+            <li >
+                <a href="usercenter-message.html" style="position: relative;">
+                    我的消息
+                </a>
+            </li>
+        </ul>
+	</div>
+
+    
+    <div class="right" >
+		<div class="personal_des Releasecont">
+			<div class="head">
+				<h1>我的消息</h1>
+			</div>
+
+		</div>
+		<div class="personal_des permessage">
+			<div class="head">
+				<ul class="tab_header messagehead">
+					<li class="active"><a href="/user/message/">个人消息</a> </li>
+				</ul>
+
+
+			</div>
+			<div class="messagelist">
+                
+                    <div class="messages">
+                        <div class="fr">
+                            <div class="top"><span class="fl time">2016年11月6日 23:49</span><span class="fr btn foldbtn"></span></div>
+                            <p>
+                                欢迎注册
+                            </p>
+                        </div>
+                    </div>
+                
+
+
+			</div>
+
+
+			<div class="pageturn pagerright">
+                <ul class="pagelist">
+                
+
+                
+                    
+                        
+                            <li class="active"><a href="?page=1">1</a></li>
+
+
+
+
+
+            </ul>
+            </div>
+		</div>
+
+	</div>
+
+
+	</div>
+</section>
+
+{% endblock %}
