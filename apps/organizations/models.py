@@ -26,7 +26,7 @@ class Organizationinfo(models.Model):
     category = models.CharField(verbose_name='机构类别', choices=category_choices, default='gx', max_length=20)
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, verbose_name='所在城市')
     name = models.CharField(verbose_name='机构名称', default='', max_length=100)
-    image = models.ImageField(verbose_name='机构logo', upload_to='org/%Y/%m', default=100)
+    image = models.ImageField(verbose_name='机构logo', upload_to='orgs/%Y/%m', max_length=100)
     students = models.IntegerField(verbose_name='学习人数', default=0)
     address = models.CharField(verbose_name='机构地址', default='', max_length=200)
     desc = models.TextField(verbose_name='机构介绍', default='')
@@ -52,7 +52,7 @@ class Teacher(models.Model):
     """讲师"""
     org = models.ForeignKey(Organizationinfo, on_delete=models.CASCADE, null=True, verbose_name='就职公司')
     name = models.CharField(verbose_name='姓名', default='', max_length=20)
-    image = models.ImageField(verbose_name='教师头像', upload_to='teacher/%Y/%m',default='teacher/default.png', max_length=100)
+    image = models.ImageField(verbose_name='教师头像', upload_to='teachers/%Y/%m',default='default1.png', max_length=100)
     age = models.IntegerField(verbose_name='年龄', default=30)
     work_years = models.IntegerField(verbose_name='工作年限', default=0)
     work_position = models.CharField(verbose_name='工作职位', default='', max_length=20)

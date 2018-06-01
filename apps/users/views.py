@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password  # 对明文进行加密模块
 from django.http import HttpResponse
-from django.contrib.auth import login, authenticate  # 登录模块、用户验证方法
+from django.contrib.auth import login, authenticate, logout  # 登录模块、用户验证方法
 from django.contrib.auth.backends import ModelBackend  # 包含authenticate方法的模块，进行重写，需要在setting里配置
 from django.db.models import Q  # or功能
 
@@ -125,11 +125,11 @@ class LoginView(View):
 
             # 验证用户名、密码、是否激活
             # try:
-            #     user = UserProfile.objects.get(Q(username=login_user) | Q(email=login_user))
-            #     if not user.is_active:
+            #     users = UserProfile.objects.get(Q(username=login_user) | Q(email=login_user))
+            #     if not users.is_active:
             #         return render(request, 'login.html', {'msg': '用户未激活'})
-            #     elif user.check_password(login_password):  # django自带的转密文的密码验证方式
-            #         login(request, user)
+            #     elif users.check_password(login_password):  # django自带的转密文的密码验证方式
+            #         login(request, users)
             #         return render(request, 'index.html', {})
             #     else:
             #         return render(request, 'login.html', {'login_form': login_form, 'msg': '用户名或密码错误'})
@@ -173,7 +173,7 @@ class PwdresetView(View):
         if users:
             for user in users:
                 email = user.email
-                return render(request, 'password_reset.html', {'email': email, 'pwdreset_code':pwdreset_code})
+                return render(request, 'password_reset.html', {'email': email, 'pwdreset_code': pwdreset_code})
         else:
             return render(request, 'register_active_failed.html')
 
@@ -192,7 +192,7 @@ class PwdmodifyView(View):
             if password1 == password2:
                 pwdmodify_user = UserProfile.objects.get(email=pwdmodify_email)
                 pwdmodify_user.password = make_password(password1)
-                pwdmodify_user.save()        # 更新数据库中的密码
+                pwdmodify_user.save()  # 更新数据库中的密码
 
                 pwdmodify_code_e = EmailVerification.objects.get(code=pwdmodify_code)
                 pwdmodify_code_e.is_delete = 1
@@ -200,11 +200,29 @@ class PwdmodifyView(View):
 
                 return render(request, 'login.html', {'pwdreset_msg': '密码重置成功，请登录'})
             else:
-                return render(request, 'password_reset.html', {'pwdmodify_form': pwdmodify_form, 'msg': '两次输入不一致，请重新输入'})
+                return render(request, 'password_reset.html',
+                              {'pwdmodify_form': pwdmodify_form, 'msg': '两次输入不一致，请重新输入'})
         else:
             return render(request, 'password_reset.html', {'pwdmodify_form': pwdmodify_form})
 
 
+class LogoutView(View):
+    """注销登录功能"""
+
+    def get(self, request):
+        """get方式进行注销登录"""
+        logout(request)
+        return render(request, 'index.html')
+
+
 class UserInfoView(View):
     """用户的个人中心"""
-    pass
+
+    def get(self, request):
+        """进入个人中心"""
+        user = request.user.username
+        if not user:    # 未登录
+            return render(request, 'login.html', {'pwdreset_msg': '您还未登录...'})
+        else:
+            return render(request, 'usercenter-info.html')
+

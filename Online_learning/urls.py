@@ -27,12 +27,14 @@ urlpatterns = [
     path('admin/', xadmin.site.urls),
     path('captcha/', include('captcha.urls')),
 
-    # # 用户操作管理，URL
-    # url(r'^opera/', include('apps.operation.urls', namespace='opera')),
-    # # 课程机构相关 URL
-    # url(r'^org/', include('apps.organizations.urls', namespace='org')),
-    # # 课程相关 URL 配置
-    # url(r'^course/', include('apps.courses.urls', namespace='courses')),
+    # 用户操作管理，URL
+    # path('^opera/', include(('operation.urls', 'operation'), namespace='opera')),
+
+    # 课程机构相关 URL
+    path(r'org/', include(('organizations.urls', 'organizations'), namespace='org')),
+
+    # 课程相关 URL 配置
+    path('course/', include(('courses.urls', 'courses'), namespace='courses')),
 
     # 用户中心 URL 配置,看include源码进行配置，默认app_name=None,只有为元组时才能传入参数
     path('users/', include(('users.urls', 'users'), namespace='users')),

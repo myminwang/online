@@ -26,25 +26,23 @@
  			<div class="top">
 				<div class="wp">
 					<div class="fl"><p>服务电话：<b>88888888</b></p></div>
-					<!--登录后跳转-->
-
-
+{#                    登录后显示#}
                         <div class="personal">
                             <dl class="user fr">
-                                <dd>bobby<img class="down fr" src="{% static 'images/top_down.png' %}"/></dd>
-                                <dt><img width="20" height="20" src="{% static 'media/images/2016/12/default_big_14.png' %}"/></dt>
+                                <dd>{{ request.user.nick_name }}<img class="down fr" src="{% static 'images/top_down.png' %}"/></dd>
+                                <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
                             </dl>
                             <div class="userdetail">
                             	<dl>
-	                                <dt><img width="80" height="80" src="{% static 'media/images/2016/12/default_big_14.png' %}"/></dt>
+	                                <dt><img width="80" height="80" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
 	                                <dd>
-	                                    <h2>django</h2>
-	                                    <p>bobby</p>
+	                                    <h2>{{ request.user.nick_name }}</h2>
+	                                    <p>>{{ request.user.username }}</p>
 	                                </dd>
                                 </dl>
                                 <div class="btn">
-	                                <a class="personcenter fl" href="usercenter-info.html">进入个人中心</a>
-	                                <a class="fr" href="/logout/">退出</a>
+	                                <a class="personcenter fl" href="{% url 'users:userinfo' %}">进入个人中心</a>
+	                                <a class="fr" href="{% url 'users:login' %}">退出</a>
                                 </div>
                             </div>
                         </div>
@@ -58,8 +56,8 @@
 
     <div class="middle">
         <div class="wp">
-            <a href="index.html"><img class="fl" src="{% static 'images/logo2.png' %}"/></a>
-            <h1>我的慕学网</h1>
+            <a href="index.html"><img class="fl" src="{% static 'images/logo.png' %}"/></a>
+            <h1>我的在线学习平台</h1>
         </div>
     </div>
 			</div>
@@ -70,8 +68,8 @@
 <section>
     <div class="wp">
         <ul  class="crumbs">
-            <li><a href="index.html">首页</a>></li>
-            <li><a href="/user/home/">个人中心</a>></li>
+            <li><a href="{% url 'index' %}">首页</a>></li>
+            <li><a href="{% url 'users:userinfo' %}">个人中心</a>></li>
             <li>
                 {% block custom_bread %}我的收藏{% endblock %}
             </li>

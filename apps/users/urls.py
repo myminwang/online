@@ -5,7 +5,7 @@ __date__ = "5/29/18 19:27"
 
 from django.urls import path
 
-from .views import RegisterView, LoginView, RegisterActiveView, UserInfoView, ForgetpwdView, PwdresetView, PwdmodifyView
+from .views import RegisterView, LoginView, RegisterActiveView, UserInfoView, ForgetpwdView, PwdresetView, PwdmodifyView, LogoutView
 
 urlpatterns = [
     # 用户注册
@@ -22,4 +22,7 @@ urlpatterns = [
     path('pwdreset/<url_pwdreset_code>/', PwdresetView.as_view(), name='pwdreset'),
     # 重置密码处理
     path('pwdmodify/', PwdmodifyView.as_view(), name='pwdmodify'),
+    # 注销登录/登出
+    path('logout/', LogoutView.as_view(), name='logout'),
+
 ]

@@ -80,7 +80,7 @@ function login_form_submit(){
         cache: false,
         type: 'post',
         dataType:'json',
-        url:"/user/login/",
+        url:"/users/login/",
         data:$('#jsLoginForm').serialize() + '&autologin='+autoLogin + '&' + arg[0] + '=' + arg[1],
         async: true,
         beforeSend:function(XMLHttpRequest){
@@ -143,7 +143,7 @@ function find_password_form_submit(){
         cache: false,
         type: 'post',
         dataType:'json',
-        url:"/user/password/find/",
+        url:"/users/password/find/",
         data:$('#jsFindPwdForm').serialize(),
         async: true,
         beforeSend:function(XMLHttpRequest){
@@ -202,7 +202,7 @@ $('#jsSetNewPwdBtn').on('click', function(){
         cache: false,
         type: 'post',
         dataType:'json',
-        url:"/user/mobile/resetpassword/",
+        url:"/users/mobile/resetpassword/",
         data:$('#jsSetNewPwdForm').serialize(),
         async: true,
         beforeSend:function(XMLHttpRequest){
@@ -383,7 +383,7 @@ $(function() {
             cache:false,
             type:'get',
             dataType:'json',
-            url: "/user/send_again_email/",
+            url: "/users/send_again_email/",
             data: {username:zyUname},
              success: function(data){
                  zy_str="验证邮件发送成功";

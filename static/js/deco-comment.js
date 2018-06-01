@@ -55,7 +55,7 @@ function submit_comment(){
 		uid = $('#use_id').val();
 		com_id= ajax_submit_comment(comment,lesson_id,parent_id,child_uid);
 		getopage(1,com_id);
-		//str_div = '<ul class="media-list"><li class="media"> <a href="javascript:void(0);" class="pull-left"><img src="'+picurl+'" class="media-object"></a><div class="media-body"><h4 class="media-heading"><a class="com_toggle" href="javascript:;">回复</a><span class="user-name">'+cur_name+'</span>'+teacher+'<span class="time">刚刚</span><span class="child_uid">'+uid+'</span></h4><p>'+comment+'</p><div class="media child_comment" style="display: none;"><a class="pull-left" href="javascript:void(0);"><img class="media-object" src="'+picurl+'"></a><div class="media-body"><h4 class="media-heading"><span class="user-name">'+cur_name+'</span></h4><div class="comment-input"><textarea class="form-control" rows="3" placeholder="我要评论"></textarea><div class="btnbox"><button type="button" class="btn btn-micv5 btn-lg-fts reply com_'+com_id+'">回复</button></div></div></div></div></div></li></ul>';
+		//str_div = '<ul class="media-list"><li class="media"> <a href="javascript:void(0);" class="pull-left"><img src="'+picurl+'" class="media-object"></a><div class="media-body"><h4 class="media-heading"><a class="com_toggle" href="javascript:;">回复</a><span class="users-name">'+cur_name+'</span>'+teacher+'<span class="time">刚刚</span><span class="child_uid">'+uid+'</span></h4><p>'+comment+'</p><div class="media child_comment" style="display: none;"><a class="pull-left" href="javascript:void(0);"><img class="media-object" src="'+picurl+'"></a><div class="media-body"><h4 class="media-heading"><span class="users-name">'+cur_name+'</span></h4><div class="comment-input"><textarea class="form-control" rows="3" placeholder="我要评论"></textarea><div class="btnbox"><button type="button" class="btn btn-micv5 btn-lg-fts reply com_'+com_id+'">回复</button></div></div></div></div></div></li></ul>';
         if(comment!=""){
 			//$("#commentbox").after(str_div);
 			$('#load_message').css("display","none");
@@ -75,7 +75,7 @@ function submit_comment(){
 		child_id = $(this).parent().attr("id");
 		child_uid = child_id.split("_")[1];
 		ajax_submit_comment(comment,lesson_id,parent_id,child_uid);
-		str_div = '<div class="media"><a href="javascript:void(0);" class="pull-left"><img src="'+picurl+'" class="media-object"></a><div class="media-body"><h4 class="media-heading"><a class="com_child_toggle" href="javascript:;">回复</a><span class="user-name">'+cur_name+'</span>'+teacher+'<span class="time">刚刚</span><span class="child_uid">'+child_uid+'</span></h4><div class="zy_shou"><p class="t5o">'+html_encode(comment)+'</p><p>查看更多</p></div></div></div>';
+		str_div = '<div class="media"><a href="javascript:void(0);" class="pull-left"><img src="'+picurl+'" class="media-object"></a><div class="media-body"><h4 class="media-heading"><a class="com_child_toggle" href="javascript:;">回复</a><span class="users-name">'+cur_name+'</span>'+teacher+'<span class="time">刚刚</span><span class="child_uid">'+child_uid+'</span></h4><div class="zy_shou"><p class="t5o">'+html_encode(comment)+'</p><p>查看更多</p></div></div></div>';
 		str_div=$(str_div);
 		if(comment!=""){
 			$(this).parents('.child_comment').before(str_div);

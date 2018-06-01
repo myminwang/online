@@ -148,7 +148,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 还需要配置上面的TEMPLATES
 
 
-# UserProfile 覆盖了 django 内置的 user 表
+# UserProfile 覆盖了 django 内置的 users 表
 AUTH_USER_MODEL = 'users.UserProfile'
 
 # 发送邮件功能设置

@@ -4,9 +4,13 @@ __author__ = "问道编程"
 __date__ = "5/29/18 19:27"
 
 from django.conf.urls import url
+from django.urls import path
 
-#
-# urlpatterns = [
-#
-#
-# ]
+
+from .views import CoursesListView
+
+urlpatterns = [
+    # 课程列表
+    path('list/', CoursesListView.as_view(), name='list'),
+
+]

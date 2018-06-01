@@ -138,7 +138,7 @@ $(function(){
                                 '<div class="head"><img width="50" src="'+ userAvatar +'" alt=""/></div>'+
                                 '<div class="comment-content2">' +
                                     '<div class="oldcomment">'+
-                                        '<p class="comment-text"><span class="user"><i>我评论</i>：</span>' + textareaval + '</p>' +
+                                        '<p class="comment-text"><span class="users"><i>我评论</i>：</span>' + textareaval + '</p>' +
                                         '<p class="comment-time">'+ Dml.fun.getDate() +'</p>' +
                                         '<p class="replycomment btn btntop" diaryid="'+diary_id+'" commentid="'+data.id+'" selfName="自己" parentName="自己">回复</p>'+
                                     '</div>'+
@@ -204,7 +204,7 @@ $(function(){
                                 evalbox =
                                 '<div class="replycommentword">' +
                                 '<img class="myhead" src="'+ userAvatar+'" alt=""/>' +
-                                '<p class="comment-text"><span class="user"><i>我</i> 回复 <i>'+ parentName +'</i>：</span>' + textareaval + '</p>' +
+                                '<p class="comment-text"><span class="users"><i>我</i> 回复 <i>'+ parentName +'</i>：</span>' + textareaval + '</p>' +
                                 '<p class="comment-time">'+ Dml.fun.getDate() +'</p>' +
                                 '<p class="replycsomeone btn btntop" diaryid="' + diary_id + '" commentid="' + data.id + '" replyid="'+parent_id+'" selfName="'+selfName+'" parentName="'+parentName+'">回复</p>' +
                                 '</div>'
@@ -268,7 +268,7 @@ $(function(){
                             '<div class="comment-box clearfix">'+
                                 '<img class="myhead" src="'+ userAvatar +'" alt=""/>' +
                                 '<div class="comment-content">' +
-                                '<p class="comment-text"><span class="user"><i>我</i>' +' 回复 <i>'+ parentName +'</i>:</span>  '+ textareaval2 + '</p>' +
+                                '<p class="comment-text"><span class="users"><i>我</i>' +' 回复 <i>'+ parentName +'</i>:</span>  '+ textareaval2 + '</p>' +
                                 '<p class="comment-time">'+ Dml.fun.getDate() +'</p>' +
                                 '<button class="replycsomeone btn btntop" diaryid="'+diary_id+'" commentid="'+comment_id+'" replyid="'+data.id+'" selfName="'+selfName+'" parentName="'+parentName+'">回复</button>'+
                                 '</div>'+

@@ -143,7 +143,7 @@
         * A.登录验证技术，使用authenticate方法，并重写该方法（在django.contrib.auth.backends.ModelBackend模块中），使之可以验证邮箱登录方式。
         * B.登录状态保持，登录验证通过后，使用login()方法，在session中生成_auth_user_id和_auth_user_backend两个键值，并发到客户端作为cookie，
         前端页面可通过{% if request.user.is_authenticated %}判断是否登录。
-    * 4.密码重置功能（用户忘记密码）：
+    * 4.密码找回功能：
         用户忘记密码时，可通过邮箱验证进行密码重置。
         * A.
 
@@ -165,6 +165,7 @@
 * 邮件发送成功页面，优化页面
 * 密码修改页面优化
 * 注册页面输入框中显示None，value=register_form.email.value，一开始没有返回值的原因，如何消除
+* 直接输入网址链接，是否能直接进入相应页面？
 
 
 
