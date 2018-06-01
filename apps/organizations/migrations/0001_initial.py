@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('category', models.CharField(choices=[('gx', '高校'), ('pxjg', '培训机构'), ('gr', '个人')], default='gx', max_length=20, verbose_name='机构类别')),
                 ('name', models.CharField(default='', max_length=100, verbose_name='机构名称')),
-                ('image', models.ImageField(default=100, upload_to='org/%Y/%m', verbose_name='机构logo')),
+                ('images', models.ImageField(default=100, upload_to='org/%Y/%m', verbose_name='机构logo')),
                 ('students', models.IntegerField(default=0, verbose_name='学习人数')),
                 ('address', models.CharField(default='', max_length=200, verbose_name='机构地址')),
                 ('desc', models.TextField(default='', verbose_name='机构介绍')),
@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(default='', max_length=20, verbose_name='姓名')),
-                ('image', models.ImageField(default='teacher/default.png', upload_to='teacher/%Y/%m', verbose_name='教师头像')),
+                ('images', models.ImageField(default='teacher/default.png', upload_to='teacher/%Y/%m', verbose_name='教师头像')),
                 ('age', models.IntegerField(default=30, verbose_name='年龄')),
                 ('work_years', models.IntegerField(default=0, verbose_name='工作年限')),
                 ('work_position', models.CharField(default='', max_length=20, verbose_name='工作职位')),

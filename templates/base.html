@@ -8,19 +8,19 @@
 	<title>
         欢迎访问在线学习网——{% block title %}{% endblock %}
     </title>
-	<link rel="stylesheet" type="text/css" href="../css/reset.css">
-	<link rel="stylesheet" type="text/css" href="../css/animate.css">
-	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
-    <link rel="stylesheet" type="text/css" href="../css/muke/course/learn-less.css" />
-	<link rel="stylesheet" type="text/css" href="../css/muke/course/course-comment.css" />
-    <link rel="stylesheet" type="text/css" href="../css/muke/base.css">
-    <link rel="stylesheet" type="text/css" href="../css/muke/common-less.css">
-    <link rel="stylesheet" type="text/css" href="../css/muke/course/common-less.css">
-    <link rel="stylesheet" type="text/css" href="../css/mooc.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/muke/course/learn-less.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/muke/course/course-comment.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/muke/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/muke/common-less.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/muke/course/common-less.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mooc.css' %}" />
 
-    <script src="../js/jquery.min.js" type="text/javascript"></script>
-    <script src="../js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}" type="text/javascript"></script>
 
 </head>
 <body>
@@ -30,32 +30,35 @@
 		<div  class=" header">
  			<div class="top">
 				<div class="wp">
-					<div class="fl"><p>服务电话：<b>33333333</b></p></div>
-					<!--登录后跳转-->
+					<div class="fl"><p>服务电话：<b>88888888</b></p></div>
 
-
-{#                        <a style="color:white" class="fr registerbtn" href="{% url 'users:register' %}">注册</a>#}
-{#                        <a style="color:white" class="fr loginbtn" href="login.html">登录</a>#}
-
+					<!--验证是否已登录-->
+                    {% if request.user.is_authenticated %}
+{#                        登录后跳转#}
 						<div class="personal">
                             <dl class="user fr">
-                                <dd>bobby<img class="down fr" src="{% static 'images/top_down.png' %}"/></dd>
-                                <dt><img width="20" height="20" src="{% static 'media/image/2016/12/default_big_14.png' %}"/></dt>
+                                <dd>{{ request.user.nick_name }}<img class="down fr" src="{% static 'images/top_down.png' %}"/></dd>
+                                <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
                             </dl>
                             <div class="userdetail">
                             	<dl>
-	                                <dt><img width="80" height="80" src="{% static 'media/image/2016/12/default_big_14.png' %}"/></dt>
+	                                <dt><img width="80" height="80" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
 	                                <dd>
-	                                    <h2>django</h2>
-	                                    <p>bobby</p>
+	                                    <h2>{{ request.user.nick_name }}</h2>
+	                                    <p>{{ request.user.nick_name }}</p>
 	                                </dd>
                                 </dl>
                                 <div class="btn">
-	                                <a class="personcenter fl" href="usercenter-info.html">进入个人中心</a>
+	                                <a class="personcenter fl" href="{% url 'users:userinfo' %}">进入个人中心</a>
 	                                <a class="fr" href="/logout/">退出</a>
                                 </div>
                             </div>
                         </div>
+                    {% else %}
+{#                        未登录显示#}
+                        <a style="color:white" class="fr registerbtn" href="{% url 'users:register' %}">注册</a>
+                        <a style="color:white" class="fr loginbtn" href="{% url 'users:login' %}">登录</a>
+                    {% endif %}
 
 
 				</div>
@@ -63,7 +66,7 @@
 
             <div class="middle">
                 <div class="wp">
-                    <a href="index.html"><img class="fl" src="{% static 'images/logo.jpg' %}"/></a>
+                    <a href="{% url 'index' %}"><img width="350" height="100" src="{% static 'images/logo.png' %}"/></a>
                     <div class="searchbox fr">
                         <div class="selectContainer fl">
                             <span class="selectOption" id="jsSelectOption" data-value="course">
@@ -122,30 +125,30 @@
 		<div class="footer">
 			<div class="wp">
 				<ul class="cont">
-					<li class="logo"><a href=""><img src="../images/footlogo.png"/></a></li>
-					<li class="code"><img src="../images/code.jpg"/><p class="center">扫描关注微信</p></li>
-					<li class="third"><img class="fl" src="../images/tell.png"/><p class="tell">88888888</p><p class="time">周一至周日 9:00-18:00</p></li>
+					<li class="logo"><a href=""><img src="{% static 'images/footlogo.png' %}"/></a></li>
+					<li class="code"><img src="{% static 'images/code.jpg' %}"/><p class="center">扫描关注微信</p></li>
+					<li class="third"><img class="fl" src="{% static 'images/tell.png' %}"/><p class="tell">88888888</p><p class="time">周一至周日 9:00-18:00</p></li>
 				</ul>
 
 			</div>
 			<p class="line"></p>
 			<div class="wp clear">
                 <span class="fl">2018 http://52.193.67.154 在线学习交流平台 保留所有权利</span>
-                <span class="fr">copyright  2018 ICP备案证书号：京ICP备xxxxx号-1</span>
+                <span class="fr" >copyright  2018 ICP备案证书号：京ICP备xxxxx号-1</span>
 			</div>
 		</div>
 </footer>
 
 
 
-<script src="../js/selectUi.js" type='text/javascript'></script>
-<script src="../js/deco-common.js" type='text/javascript'></script>
-<script type="text/javascript" src="../js/plugins/laydate/laydate.js"></script>
-<script src="../js/plugins/layer/layer.js"></script>
-<script src="../js/plugins/queryCity/js/public.js" type="text/javascript"></script>
-<script src="../js/unslider.js" type="text/javascript"></script>
-<script src="../js/plugins/jquery.scrollLoading.js"  type="text/javascript"></script>
-<script src="../js/deco-common.js"  type="text/javascript"></script>
+<script src="{% static 'js/selectUi.js' %}" type='text/javascript'></script>
+<script src="{% static 'js/deco-common.js' %}" type='text/javascript'></script>
+<script type="text/javascript" src="{% static 'js/plugins/laydate/laydate.js' %}"></script>
+<script src="{% static 'js/plugins/layer/layer.js' %}"></script>
+<script src="{% static 'js/plugins/queryCity/js/public.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/unslider.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/plugins/jquery.scrollLoading.js' %}"  type="text/javascript"></script>
+<script src="{% static 'js/deco-common.js' %}"  type="text/javascript"></script>
 
 {% block custom_js %} {% endblock %}
 

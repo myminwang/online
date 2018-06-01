@@ -36,9 +36,9 @@ class EmailVerificationAdmin:    # python2.7 需要继承object，是新类，3.
 
 class BannerAdmin:
     """轮播图后台管理"""
-    list_display = ['image','banner_url','order']
-    list_filter = ['image','banner_url','order']
-    search_fields = ['image','banner_url','order']
+    list_display = ['images','banner_url','order']
+    list_filter = ['images','banner_url','order']
+    search_fields = ['images','banner_url','order']
 
 
 # xadmin.site.register(UserProfile, UserProfileAdmin)  # 默认是注册的

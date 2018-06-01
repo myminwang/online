@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
                 ('gender', models.CharField(choices=[('male', '男'), ('female', '女')], default='male', max_length=10, verbose_name='性别')),
                 ('address', models.CharField(default='', max_length=100, verbose_name='地址')),
                 ('mobile', models.IntegerField(null=True, verbose_name='手机号')),
-                ('image', models.ImageField(default='image?default.png', upload_to='image/%Y/%m', verbose_name='用户头像')),
+                ('images', models.ImageField(default='images?default.png', upload_to='images/%Y/%m', verbose_name='用户头像')),
                 ('add_time', models.DateField(default=datetime.datetime.now, verbose_name='添加时间')),
                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.Group', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
             name='Banner',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(max_length=200, upload_to='image/%Y/%m', verbose_name='轮播图')),
+                ('images', models.ImageField(max_length=200, upload_to='images/%Y/%m', verbose_name='轮播图')),
                 ('banner_url', models.URLField(max_length=100, verbose_name='轮播图链接')),
                 ('order', models.IntegerField(default=100, verbose_name='顺序')),
             ],

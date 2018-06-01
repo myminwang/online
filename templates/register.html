@@ -9,9 +9,9 @@
     <div class="c-box bg-box">
         <div class="login-box clearfix">
             <div class="hd-login clearfix">
-                <a class="index-logo" href="index.html"></a>
+                <a class="index-logo" href="{% url 'index' %}"></a>
                 <h1>用户注册</h1>
-                <a class="index-font" href="index.html">回到首页</a>
+                <a class="index-font" href="{% url 'index' %}">回到首页</a>
             </div>
             <div class="fl slide">
                 <div class="imgslide">
@@ -34,16 +34,17 @@
                 </div>
                 <div class="tab-form">
                     <form id="email_register_form" method="post" action="{% url 'users:register' %}" autocomplete="off">
-{#                        <input type='hidden' name='csrfmiddlewaretoken' value='gTZljXgnpvxn0fKZ1XkWrM1PrCGSjiCZ' />#}
 {#                        如果form验证存在邮箱错误，则邮箱输入框变红#}
                         <div class="form-group marb20 {% if register_form.errors.email %} errorput {% endif %}" >
                             <label>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱</label>
 {#                            将用户输入数据回填到输入框中，在value设置#}
-                            <input  type="text" id="id_email" name="email" value="{{ register_form.email.value }}" placeholder="请输入您的邮箱地址" />
+{#                            <input  type="text" id="id_email" name="email" value="{{ register_form.email.value }}" placeholder="请输入您的邮箱地址" />#}
+                            <input  type="text" id="id_email" name="email" value="" placeholder="请输入您的邮箱地址" />
                         </div>
                         <div class="form-group marb8 {% if register_form.errors.password %} errorput {% endif %}">
                             <label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
-                            <input type="password" id="id_password" name="password"  value="{{ register_form.password.value }}" placeholder="请输入6-20位非中文字符密码" />
+{#                            <input type="password" id="id_password" name="password"  value="{{ register_form.password.value }}" placeholder="请输入6-20位非中文字符密码" />#}
+                            <input type="password" id="id_password" name="password"  value="" placeholder="请输入6-20位非中文字符密码" />
                         </div>
                         <div class="form-group marb8 captcha1 {% if register_form.errors.captcha %} errorput {% endif %}">
                             <label>验&nbsp;证&nbsp;码</label>
@@ -61,11 +62,10 @@
                         <div class="auto-box marb8">
                         </div>
                         <input class="btn btn-green" id="jsEmailRegBtn" type="submit" value="注册并登录" />
-                    <input type='hidden' name='csrfmiddlewaretoken' value='5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy' />
                         {% csrf_token %}
                     </form>
                 </div>
-                <p class="form-p">已有账号？<a href="login.html">[立即登录]</a></p>
+                <p class="form-p">已有账号？<a href="{% url 'users:login' %}">[立即登录]</a></p>
             </div>
         </div>
     </div>

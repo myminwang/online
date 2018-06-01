@@ -7,7 +7,7 @@ from django.contrib import admin
 #
 #
 # class UserProfileAdmin(admin.ModelAdmin):
-#     list_display = ['username','nick_name','birthday','gender','address','mobile','image','add_time']
+#     list_display = ['username','nick_name','birthday','gender','address','mobile','images','add_time']
 #     list_filter = ['username','nick_name','birthday','gender','address','mobile']
 #     search_fields = ['username','nick_name','birthday','gender','address','mobile']
 #
@@ -19,9 +19,9 @@ from django.contrib import admin
 #
 #
 # class BannerAdmin(admin.ModelAdmin):
-#     list_display = ['image','banner_url','order']
-#     list_filter = ['image','banner_url','order']
-#     search_fields = ['image','banner_url','order']
+#     list_display = ['images','banner_url','order']
+#     list_filter = ['images','banner_url','order']
+#     search_fields = ['images','banner_url','order']
 #
 #
 # admin.site.register(UserProfile, UserProfileAdmin)

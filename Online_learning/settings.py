@@ -74,6 +74,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # 配置后，在html文件中才可以正常找到路径
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -136,10 +139,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
     ('css', os.path.join(STATIC_ROOT, 'css').replace('\\', '/')),
     ('js', os.path.join(STATIC_ROOT, 'js').replace('\\', '/')),
+    ('images', os.path.join(STATIC_ROOT, 'images').replace('\\', '/')),
 )
 
+
+# 配置用户上传的文件
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 还需要配置上面的TEMPLATES
+
 
 # UserProfile 覆盖了 django 内置的 user 表
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -152,3 +159,9 @@ EMAIL_HOST_PASSWORD = 'WZQwzq+123'  # 密码
 
 EMAIL_FROM = 'online_learn_edu@sina.com'  # 自定义配置，使用时需要引入
 # 在send_mail()参数中要求写'from@example.com'
+
+
+# 重写ModelBackend模块下的authenticate方法
+AUTHENTICATION_BACKENDS = (
+    'users.views.ChongxieAuthenticate',
+)

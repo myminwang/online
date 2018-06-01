@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100, verbose_name='课程')),
-                ('image', models.ImageField(upload_to='courses/%Y/%m', verbose_name='课程封面')),
+                ('images', models.ImageField(upload_to='courses/%Y/%m', verbose_name='课程封面')),
                 ('desc', models.CharField(max_length=300, verbose_name='课程描述')),
                 ('degree', models.CharField(choices=[('cj', '初级'), ('zj', '中级'), ('gj', '高级')], default='cj', max_length=2, verbose_name='难度')),
                 ('students', models.IntegerField(default=0, verbose_name='学习人数')),

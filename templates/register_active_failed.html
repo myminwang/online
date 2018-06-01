@@ -5,8 +5,9 @@
     <title>验证失败</title>
 </head>
 <body>
-<h1 style="text-align: center">验证码已失效或账户未注册</h1><br>
-<h2 style="text-align: center"><a href="{% url 'users:register' %}">点击进行重新注册</a></h2><br>
+<h1 style="text-align: center">无效链接</h1><br>
+<h2 style="text-align: center"><a href="{% url 'index' %}">点击进入在线学习网</a></h2><br>
+<h2 style="text-align: center"><a href="{% url 'users:register' %}">点击进行注册</a></h2><br>
 <h2 style="text-align: center"><a href="{% url 'users:login' %}">已有账户，点击登录</a></h2><br>
 </body>
 </html>

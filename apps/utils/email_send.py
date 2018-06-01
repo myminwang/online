@@ -25,7 +25,11 @@ def send_link_email(email, send_type='register'):
         send_mail(email_subject, email_message, EMAIL_FROM, [email])
         emailinfo.save()
     elif send_type == 'forget':
-        pass
+        email_subject = '在线学习网密码重置邮件（请勿回复）'
+        email_message = '欢迎您使用在线学习网平台，请点击下面的链接重置登录密码:\nhttp://127' \
+                        '.0.0.1:8000/users/pwdreset/' + emailinfo.code
+        send_mail(email_subject, email_message, EMAIL_FROM, [email])
+        emailinfo.save()
     elif send_type == 'update_email':
         pass
 

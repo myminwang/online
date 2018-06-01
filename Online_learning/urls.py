@@ -38,3 +38,4 @@ urlpatterns = [
     path('users/', include(('users.urls', 'users'), namespace='users')),
 
 ]
+
