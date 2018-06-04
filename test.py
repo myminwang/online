@@ -5,4 +5,4 @@ __date__ = "2018-06-04 16:59"
 
 def application(venv, start_response):
     start_response('200 OK', [('Content-Type','text/html')])
-    return "Hello World from uWSGI"
+    return [b"Hello World from uWSGI"]
