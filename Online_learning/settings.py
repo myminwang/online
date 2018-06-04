@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',  # 验证码包，需要配置url，并在数据库中生成表
-    'pure_pagination',  # 分页器,在下面有配置
+    # 'pure_pagination',  # 分页器,在下面有配置
 ]
 
 MIDDLEWARE = [
@@ -167,9 +167,9 @@ AUTHENTICATION_BACKENDS = (
     'users.views.ChongxieAuthenticate',
 )
 
-# 分页器
-PAGINATION_SETTINGS = {
-    'PAGE_RANGE_DISPLAYED': 10,   # 中间显示多少个页码
-    'MARGIN_PAGES_DISPLAYED': 2,  # 两端显示多少个页码
-    'SHOW_FIRST_PAGE_WHEN_INVALID': True,    # 当输入页数不合法是否要跳到第一页
-}
+# # 分页器
+# PAGINATION_SETTINGS = {
+#     'PAGE_RANGE_DISPLAYED': 10,   # 中间显示多少个页码
+#     'MARGIN_PAGES_DISPLAYED': 2,  # 两端显示多少个页码
+#     'SHOW_FIRST_PAGE_WHEN_INVALID': True,    # 当输入页数不合法是否要跳到第一页
+# }

@@ -4,7 +4,7 @@
 from django.shortcuts import render
 from django.views.generic.base import View
 
-from pure_pagination import Paginator, EmptyPage, PageNotAnInteger # 实现分页功能
+# from pure_pagination import Paginator, EmptyPage, PageNotAnInteger # 实现分页功能
 
 from .models import City, Organizationinfo
 
@@ -48,15 +48,15 @@ class OrgListView(View):
         elif sort == 'courses':
             all_orgs = all_orgs.order_by('-course_nums')
 
-        # 分页功能
-        # 尝试获取前台get请求传递过来的page参数
-        # # 如果是不合法的配置参数默认返回第一页
-        try:
-            page = request.GET.get('page',1)
-        except PageNotAnInteger:
-            page = 1
-        p = Paginator(all_orgs, 5, request=request)
-
+        # # 分页功能
+        # # 尝试获取前台get请求传递过来的page参数
+        # # # 如果是不合法的配置参数默认返回第一页
+        # try:
+        #     page = request.GET.get('page',1)
+        # except PageNotAnInteger:
+        #     page = 1
+        # p = Paginator(all_orgs, 5, request=request)
+        #
 
         return render(request, 'org-list.html', {
             'city_id': city_id,
