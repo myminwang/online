@@ -14,4 +14,8 @@ class TeacherListView(View):
 
 class OrgListView(View):
     """机构列表"""
+
+    # def get(self,request):
+    #     """进入机构列表页"""
+    #     return render(request,'org-list.html' ,{})
     pass

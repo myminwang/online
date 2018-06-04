@@ -62,7 +62,7 @@ class Lession(models.Model):
     章节信息
     点击我要学习进入
     """
-    course = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, null=True, verbose_name='课程')
+    course = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, verbose_name='课程')
     name = models.CharField(verbose_name='章节名', max_length=100)
     add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
 
@@ -79,7 +79,7 @@ class Video(models.Model):
     # 外键至章节
     # 播放地址
     # 添加时间
-    lession = models.ForeignKey(Lession, on_delete=models.CASCADE, null=True, verbose_name='章节')
+    lession = models.ForeignKey(Lession, on_delete=models.CASCADE, verbose_name='章节')
     name = models.CharField(verbose_name='视频名称', max_length=100)
     url = models.URLField(verbose_name='播放地址', max_length=200, default='https://v.youku.com/v_show/id_XMzU3ODg1MjUwMA'
                                                                        '.html?spm=a2hww.20027244.m_250379.5~1~3!2~A')
@@ -99,7 +99,7 @@ class CourseResource(models.Model):
     # 资料名称
     # 下载地址
     # 添加时间
-    lession = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, null=True, verbose_name='课程')
+    lession = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, verbose_name='课程')
     name = models.CharField(verbose_name='资料名称', max_length=100)
     download = models.FileField(verbose_name='资料下载', upload_to='course/resource/%Y/%m', max_length=100)
     add_time = models.DateField(verbose_name='添加时间', default=datetime.now)

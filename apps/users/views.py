@@ -211,7 +211,7 @@ class LogoutView(View):
 
     def get(self, request):
         """get方式进行注销登录"""
-        logout(request)
+        logout(request)   # 源码显示，logout只需要一个参数
         return render(request, 'index.html')
 
 
