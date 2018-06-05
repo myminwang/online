@@ -162,12 +162,15 @@
 
 
 ## 待优化项目：
-* 邮件发送成功页面，优化页面
-* 密码修改页面优化
-* 注册页面输入框中显示None，value=register_form.email.value，一开始没有返回值的原因，如何消除
+* 邮件发送成功页面、密码修改页面，优化
+* 注册页面输入框中显示None，value=register_form.email.value，一开始没有返回值的原因，如何消除，现在把value注释了，不能显示红框
 * 直接输入网址链接，是否能直接进入相应页面？
 * org-list.html 的第44行不理解，第88、89行待修改
 *
 
 
+* /etc/init.d/nginx restart
+* uwsgi --http :8001 --plugin python --module Online_learning.wsgi
 
+
+上传测试

@@ -1,5 +1,5 @@
 """
-WSGI config for Online_learning project.
+WSGI config for online project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -10,7 +10,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Online_learning.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "online.settings")
 
 
 application = get_wsgi_application()
