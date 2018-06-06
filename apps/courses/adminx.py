@@ -5,20 +5,20 @@ __date__ = "5/29/18 16:52"
 
 import xadmin
 
-from .models import Courseinfo,Lession,Video,CourseResource
+from .models import Courseinfo, Lession, Video, CourseResource
 
 
 class CourseinfoAdmin:
     """课程信息管理"""
-    list_display = ['course_org', 'teacher', 'name', 'users', 'desc',
+    list_display = ['course_org', 'teacher', 'name', 'image', 'desc',
                     'degree', 'students', 'learn_time', 'category', 'fav_nums',
                     'click_nums', 'detail', 'is_banner', 'before_know', 'teacher_tell', 'add_time']
-    list_filter = ['course_org', 'teacher', 'name', 'users', 'desc',
-                    'degree', 'students', 'learn_time', 'category', 'fav_nums',
-                    'click_nums', 'detail', 'is_banner', 'before_know', 'teacher_tell']
-    search_fields = ['course_org', 'teacher', 'name', 'users', 'desc',
-                    'degree', 'students', 'learn_time', 'category', 'fav_nums',
-                    'click_nums', 'detail', 'is_banner', 'before_know', 'teacher_tell', 'add_time']
+    list_filter = ['course_org', 'teacher', 'name', 'image', 'desc',
+                   'degree', 'students', 'learn_time', 'category', 'fav_nums',
+                   'click_nums', 'detail', 'is_banner', 'before_know', 'teacher_tell']
+    search_fields = ['course_org', 'teacher', 'name', 'image', 'desc',
+                     'degree', 'students', 'learn_time', 'category', 'fav_nums',
+                     'click_nums', 'detail', 'is_banner', 'before_know', 'teacher_tell', 'add_time']
 
 
 class LessionAdmin:

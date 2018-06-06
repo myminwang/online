@@ -44,7 +44,6 @@ class Organizationinfo(models.Model):
         """获取该机构所有的课程数量"""
         return self.courseinfo_set.all().count()
 
-
     class Meta:
         verbose_name = '授课机构'
         verbose_name_plural = verbose_name

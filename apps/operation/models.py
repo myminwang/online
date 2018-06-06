@@ -54,11 +54,13 @@ class UserMessage(models.Model):
         verbose_name = '用户消息'
         verbose_name_plural = verbose_name
 
+
 # 用户对用户的消息
 
 
 class UserCourse(CourseComments):
     """用户正在学习的课程,继承用户评论"""
+
     class Meta:
         verbose_name = '用户学习的课程'
         verbose_name_plural = verbose_name
@@ -66,14 +68,14 @@ class UserCourse(CourseComments):
 
 class UserAsk(models.Model):
     """用户咨询"""
-    name = models.CharField(verbose_name='姓名',max_length=50)
-    mobile = models.CharField(verbose_name='联系电话',max_length=11)
-    course = models.CharField(verbose_name='课程名',max_length=100)
+    name = models.CharField(verbose_name='姓名', max_length=50)
+    mobile = models.CharField(verbose_name='联系电话', max_length=11)
+    course_name = models.CharField(verbose_name='课程名', max_length=100)
     add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
+    is_delete = models.BooleanField(verbose_name='是否已处理', default=0, choices=((0, '未处理'), (1, '已处理')))
 
     class Meta:
         verbose_name = '用户咨询'
         verbose_name_plural = verbose_name
-
 
 # 用户对课程、讲师、课程点赞

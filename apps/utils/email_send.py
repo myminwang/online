@@ -9,7 +9,7 @@ import string  # python自带的字符串模块
 from django.core.mail import send_mail
 
 from users.models import EmailVerification
-from Online_learning.settings import EMAIL_FROM  # 引入自定义的配置
+from online.settings import EMAIL_FROM  # 引入自定义的配置
 
 
 def send_link_email(email, send_type='register'):

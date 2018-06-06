@@ -42,7 +42,7 @@
 					<div class="cont">
                         <a href="?ct={{ category }}"><span class="{% ifequal city '' %}active2{% endifequal %}">全部</span></a>
                         {% for city in all_citys %}
-                            <a href="?city={{ city }}&ct={{ category }}"><span class="">{% ifequal city_id city.id|stringformat:'i' %}active2{% endifequal %}</span></a>
+                            <a href="?city={{ city }}&ct={{ category }}"><span class="{% ifequal city_id city %}active2{% endifequal %}">{{ city }}</span></a>
 
                         {% endfor %}
 
@@ -51,7 +51,7 @@
 			</ul>
 		</div>
         <div class="all">共<span class="key">{{ org_nums }}</span>家</div>
-		<div class="butler_list company list">
+    <div class="butler_list company list">
 		<div class="layout">
 {#        排序功能#}
 			<div class="head">
@@ -99,39 +99,59 @@
 		</div>
 {#        分页功能#}
 		 <div class="pageturn">
-            <ul class="pagelist">
-                            <li class="active"><a href="?page=1">1</a></li>
-                            <li><a href="?page=2" class="page">2</a></li>
-                            <li><a href="?page=3" class="page">3</a></li>
-                    <li class="long"><a href="?page=2">下一页</a></li>
-            </ul>
+             <ul class="pagelist">
+                <li class="long">
+                    {% if all_orgs.has_previous %}
+                    <a href="?{{ all_orgs.previous_page_number.querystring }}" class="prev">上一页</a>
+                    {% endif %}
+                </li>
+
+                {% for page in all_orgs.pages %}
+                    {% if page %}
+                    {% ifequal page all_orgs.number %}
+                      <li class="active"><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                    {% else %}
+                    <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                    {% endifequal %}
+                  {% else %}
+                    <li class="none"><a href="">...</a></li>
+                  {% endif %}
+                {% endfor %}
+
+                {% if all_orgs.has_next %}
+                     <li class="long"><a href="?{{ all_orgs.next_page_number.querystring }}">下一页</a></li>
+                {% endif %}
+             </ul>
         </div>
-		</div>
+    </div>
 	</div>
+{#     用户咨询窗口#}
 	<div class="right companyright">
         <div class="head">我要学习</div>
         <form class="rightform" id="jsStayForm">
             <div>
-                <img src="../images/rightform1.png"/>
+                <img src="{% static 'images/rightform1.png' %}"/>
                 <input type="text" name="name" id="companyName" placeholder="名字" maxlength="25" />
             </div>
             <div>
-                <img src="../images/rightform2.png"/>
+                <img src="{% static 'images/rightform2.png' %}"/>
                 <input type="text" name="mobile" id="companyMobile" placeholder="联系电话"/>
             </div>
             <div>
-                <img src="../images/rightform3.png"/>
+                <img src="{% static 'images/rightform3.png' %}"/>
                 <input type="text" name="course_name" id="companyAddress" placeholder="课程名" maxlength="50" />
             </div>
             <p class="error company-tips" id="jsCompanyTips"></p>
             <input class="btn" type="text" id="jsStayBtn" value="立即咨询 >" />
-        <input type='hidden' name='csrfmiddlewaretoken' value='5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy' />
+
+        {% csrf_token %}
         </form>
     </div>
 {#    右侧机构排名#}
-        {% for hot_org in hot_orgs %}
+
 		<div class="right companyrank layout">
 			<div class="head">授课机构排名</div>
+            {% for hot_org in hot_orgs %}
                 <dl class="des">
 {#                    计数器#}
                     <dt class="num fl">{{ forloop.counter }}</dt>
@@ -140,22 +160,28 @@
                         <p>{{ hot_org.city }}</p>
                     </dd>
                 </dl>
+              {% endfor %}
 		</div>
-        {% endfor %}
 </div>
 </section>
 {% endblock %}
 
 
 {% block custom_js %}
+
+{#    参考jQuery手册#}
+{#    ajax，通过 HTTP 请求加载远程数据#}
 <script>
     $(function(){
         $('#jsStayBtn').on('click', function(){
             $.ajax({
                 cache: false,
                 type: "POST",
-                url:"/org/add_ask/",
+                {#dataType:"json",#}
+                url:"{% url 'org:userask' %}",
+                {# serialize()方法将结果转换为字符串,同时将 csrf token 一块序列化过来 #}
                 data:$('#jsStayForm').serialize(),
+                {# 所有请求均为异步请求 #}
                 async: true,
                 success: function(data) {
                     if(data.status == 'success'){

@@ -24,6 +24,7 @@
 * virtualenv venv
 * source venv/bin/activate
 * cd online
+* pip install django
 使用以下命令安装：
 * pip install -r requirements.txt
 
@@ -63,9 +64,16 @@
 
 
 ## 五、后台管理系统-Xadmin
-* 不建议直接使用pip install xadmin，可能会由于django的不匹配而重新安装低版本的django
-        安装方法：
-        pip install git+git://github.com/sshwsfc/xadmin.git@django2
+* 不建议直接使用pip install xadmin，可能会由于django的不匹配而重新安装低版本的django  
+        安装方法（使用源码，将第三方包作为应用注册）：
+          
+        在项目目录下新建extra_apps文件夹，存放第三方拓展包
+        git clone -b django2 https://github.com/sshwsfc/xadmin.git
+        将下载包中的xadmin文件夹移动到extra_apps文件夹，其他的删除
+        在项目settings.py文件添加
+        sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
+        同时要进行注册xadmin和crispy_forms
+
     * 安装完成后需要修改配置文件setting.py，在APPS中添加xadmin和crispy_forms；
     * 使用xadmin时需要在每个APP目录下新建adminx.py文件；  
     
@@ -128,7 +136,7 @@
 * 三、根据页面内容，创建各apps的models；
 * 四、使用xadmin管理后台
 * 五、各功能模块实现：
-    * 1.注册功能的实现：
+    * 1.注册功能的实现：  
     注册流程:
     ![register](https://github.com/myminwang/online/blob/master/static/images/register.001.jpeg "register")
     * 用到的技术：
@@ -138,14 +146,29 @@
         * A.邮件发送功能，使用django自带的send_mail模块，在setting中配置默认参数及自定义参数，创建通用模块文件夹，
         单独新建邮件发送模块，并使用随机函数生成随机的验证码，加在链接中，发给用户；
         * B.激活验证功能，用户点击激活链接后，后台判断是否为有效链接，成功激活后，将验证码做逻辑删除。
-    * 3.登录功能实现：
-        用户输入登录信息后，可登录账户并保持登录状态。
+    * 3.登录、登录状态保持、登出功能实现：
+        * 用户输入登录信息后，可登录账户并保持登录状态。
         * A.登录验证技术，使用authenticate方法，并重写该方法（在django.contrib.auth.backends.ModelBackend模块中），使之可以验证邮箱登录方式。
-        * B.登录状态保持，登录验证通过后，使用login()方法，在session中生成_auth_user_id和_auth_user_backend两个键值，并发到客户端作为cookie，
+        * B.登录状态保持，登录验证通过后，使用login()方法，接收两个参数(request,user)，在session中生成_auth_user_id和_auth_user_backend两个键值，并发到客户端作为cookie，
         前端页面可通过{% if request.user.is_authenticated %}判断是否登录。
+        * C.使用logout()方法，接收一个参数。
     * 4.密码找回功能：
         用户忘记密码时，可通过邮箱验证进行密码重置。
-        * A.
+    * 5.筛选功能（机构列表页点击机构类型、城市，实现按需筛选功能）：  
+    可对指定的类型、城市进行刷选，显示筛选条件、结果条数、结果。
+        * A.显示筛选条件，在前端页面对指定字段进行判断，根据结果进行显示；
+        * B.过滤器技术，根据指定条件（前端页面GET方式返回的city、ct值），对对象(all_orgs)使用filter()方法进行筛选，使用filter是为了避免没有匹配结果时（返回空），不会报错，
+    并将结果（对象格式）返回给指定变量，变量在前端页面进行遍历，得结果；
+        * C.其他，使用order_by()方法进行指定条件的排序，使用count()方法进行统计条数，使用[:]切片进行取值；
+    * 6.排名功能：  
+    实现对机构进行排名，并显示所在地等；
+    * 7.分页功能：  
+    对页面内容进行分页显示，可指定每页显示条数、页面显示样式等；
+        * A.使用第三方pure_pagination应用，在配置中对页面显示样式进行设置，在视图中对分页的内容、每页显示条数进行配置，将进过分页处理的后对象传给前端，
+        在前端进行内容显示的细微调整，如第一页不显示'上一页'、最后一页不显示'下一页'、当前页不显示链接等。
+    * 8.用户咨询功能：
+    
+        
 
 
 
@@ -159,6 +182,7 @@
         使用runserver或makemigrations时，报错：
         ModuleNotFoundError: No module named 'users'
 * 注册页面第一次显示时，不能显示验证码，点击注册并登录后可以正常显示:已解决，get方式调用视图时，需要将验证码模块render到网页中
+* 用户咨询的手机号正则验证
 
 
 ## 待优化项目：
@@ -166,11 +190,10 @@
 * 注册页面输入框中显示None，value=register_form.email.value，一开始没有返回值的原因，如何消除，现在把value注释了，不能显示红框
 * 直接输入网址链接，是否能直接进入相应页面？
 * org-list.html 的第44行不理解，第88、89行待修改
-*
+* 机构列表页，城市选择后不变色，分页的页面显示不正常
 
 
+
+* 服务器启动项目
 * /etc/init.d/nginx restart
-* uwsgi --http :8001 --plugin python --module Online_learning.wsgi
-
-
-上传测试
+* uwsgi --http :8000 --plugin python --module Online_learning.wsgi

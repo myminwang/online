@@ -17,7 +17,7 @@ class CityAdmin:
 
 class OrganizationinfoAdmin:
     """机构信息管理"""
-    list_display = ['category', 'city', 'name', 'users', 'students',
+    list_display = ['category', 'city', 'name', 'image', 'students',
                     'address', 'desc', 'add_time', 'tag', 'click_nums', 'fav_nums']
     list_filter = ['category', 'city', 'name', 'students',
                    'address', 'desc', 'tag', 'click_nums', 'fav_nums']
@@ -27,11 +27,11 @@ class OrganizationinfoAdmin:
 
 class TeacherAdmin:
     """讲师信息管理"""
-    list_display = ['org', 'name', 'users', 'age', 'work_years', 'work_position',
+    list_display = ['org', 'name', 'image', 'age', 'work_years', 'work_position',
                     'teach_points', 'fav_nums', 'add_time', 'click_nums']
-    list_filter = ['org', 'name', 'users', 'age', 'work_years', 'work_position',
+    list_filter = ['org', 'name',  'age', 'work_years', 'work_position',
                    'teach_points', 'fav_nums', 'click_nums']
-    search_fields = ['org', 'name', 'users', 'age', 'work_years', 'work_position',
+    search_fields = ['org', 'name',  'age', 'work_years', 'work_position',
                      'teach_points', 'fav_nums', 'add_time', 'click_nums']
 
 
