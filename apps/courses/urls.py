@@ -7,10 +7,13 @@ from django.conf.urls import url
 from django.urls import path
 
 
-from .views import CoursesListView
+from .views import CoursesListView, CourseDetailView
 
 urlpatterns = [
     # 课程列表
     path('list/', CoursesListView.as_view(), name='list'),
+
+    # 课程详情
+    path('detail/<int:course_id>/', CourseDetailView.as_view(), name='detail'),
 
 ]

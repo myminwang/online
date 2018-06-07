@@ -17,7 +17,18 @@ from operation.models import UserAsk
 
 class TeacherListView(View):
     """讲师列表"""
+
+    def get(self, request):
+        return render(request, 'teachers-list.html')
+
     pass
+
+
+class TeacherDetailView(View):
+    """讲师详情"""
+
+    def get(self, request, teacher_id):
+        return render(request, 'teacher-detail.html')
 
 
 class OrgListView(View):
@@ -73,15 +84,78 @@ class OrgListView(View):
 
 
 class OrgHomeView(View):
-    """机构首页"""
+    """机构首页，机构详情"""
 
-    def get(self, org_id):
-        """"""
-        pass
+    def get(self, request, org_id):
+        """机构首页显示"""
+        org = Organizationinfo.objects.get(id=org_id)
+        org_courses = org.courseinfo_set.all()[:4]
+        org_teachers = org.teacher_set.all()[:5]
+        context = {
+            'org': org,
+            'org_courses': org_courses,
+            'org_teachers': org_teachers,
+        }
+        return render(request, 'org-detail-homepage.html', context)
+
+
+# 机构推荐指数
+# 收藏机构
+
+class OrgCourseView(View):
+    """机构课程"""
+
+    def get(self, request, org_id):
+        org = Organizationinfo.objects.get(id=org_id)
+        org_courses = org.courseinfo_set.all()
+
+        # 分页功能
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+        p = Paginator(org_courses, 8, request=request)
+        orgcourses = p.page(page)
+
+        context = {
+            'org': org,
+            'org_courses': orgcourses,
+        }
+        return render(request, 'org-detail-course.html', context)
+
+
+class OrgTeacherListView(View):
+    """机构讲师"""
+
+    def get(self, request, org_id):
+        org = Organizationinfo.objects.get(id=org_id)
+        org_teachers = org.teacher_set.all()
+
+        # 分页功能
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+        p = Paginator(org_teachers, 5, request=request)
+        orgteachers = p.page(page)
+
+        return render(request, 'org-detail-teachers.html', {
+            'org': org,
+            'org_teachers': orgteachers,
+        })
+
+
+class OrgDescView(View):
+    """机构介绍"""
+
+    def get(self, request, org_id):
+        org = Organizationinfo.objects.get(id=org_id)
+        return render(request, 'org-detail-desc.html', {'org': org})
 
 
 class UserAskView(View):
     """用户咨询处理"""
+
     # 比较合理的操作是异步的，不会对整个页面进行刷新。如果有错误，显示错误。一种ajax的异步操作。
     # 因此我们此时不能直接render一个页面回来。应该是给前端返回json数据，而不是页面
     # HttpResponse类指明给用户返回哪种类型数据
@@ -98,8 +172,9 @@ class UserAskView(View):
             # userask_form.save(commit=True)
 
             res['status'] = 'success'
-            return HttpResponse(res, content_type='application/json')
         else:
             res['status'] = 'fail'
-            res['msg'] = '添加出错'
-        return HttpResponse(res.__format__(userask_form.errors), content_type='application/json')
+            for key, error in userask_form.errors.items():
+                res['msg'] = error
+                break  # 只显示一个错误
+        return HttpResponse(json.dumps(res), content_type='application/json')

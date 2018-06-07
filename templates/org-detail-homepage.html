@@ -1,0 +1,62 @@
+{% extends 'org_base.html' %}
+
+{% load staticfiles %}
+
+{% block body %}
+
+
+<div class="right companycenter layout grouping" >
+		<div class="head">
+			<h1>全部课程</h1>
+			<a class="green fr more" href="{% url 'org:org_course' org.id%}">查看更多  >  </a>
+		</div>
+		<div class="brief group_list">
+            {% for org_course in org_courses %}
+                <div class="module1_5 box">
+                    <a href="{% url 'courses:detail' org_course.id %}"><img width="214" src="{{ MEDIA_URL }}{{ org_course.image }}"/></a>
+                    <div class="des">
+                        <a href="{% url 'courses:detail' org_course.id %}"><h2>{{ org_course.name }}</h2></a>
+                        <span class="fl">课时：<i class="key">{{ org_course.learn_time }}</i></span>
+                        <span class="fr">学习人数：{{ org_course.students }}</span>
+                    </div>
+                    <div class="bottom">
+                        <span class="fl">{{ org.name }}</span>
+                         <span class="star fr  notlogin
+                            " data-favid="13"  data-fav-type="4">
+                            {{ org_course.fav_nums }}
+                        </span>
+                    </div>
+                </div>
+
+            {% endfor %}
+		</div>
+</div>
+<div class="right companycenter layout" >
+    <div class="head">
+        <h1>机构教师</h1>
+        <a class="green fr more" href="{% url 'org:org_teacher' org.id%}">查看更多  >  </a>
+    </div>
+    {% for org_teacher in org_teachers %}
+    <div class="diarys">
+        <div class="module5 share company-diary-box" style="padding:10px 0;">
+            <div class="left">
+                <a href="{% url 'org:teacher_detail' org_teacher.id %}"><img class="pic" src="{{ MEDIA_URL }}{{ org_teacher.image }}"/></a>
+                <p>姓名：{{ org_teacher.name }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
+</div>
+<div class="right companycenter layout" >
+    <div class="head">
+        <h1>机构介绍</h1>
+        <a class="green fr more" href="{% url 'org:org_desc' org.id%}">查看更多  >  </a>
+    </div>
+    <p class="cont">{{ org.desc }}</p>
+</div>
+
+
+{% endblock %}
+

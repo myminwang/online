@@ -89,16 +89,18 @@
 				<div class="nav">
 					<div class="wp">
 						<ul>
-							<li class="active" ><a href="{% url 'index' %}">首页</a></li>
-							<li >
-								<a href="{% url 'courses:list' %}">
-									公开课<img class="hot" src="{% static 'images/nav_hot.png' %}">
-								</a>
+							<li class="{% ifequal request.path '/' %}active{% endifequal %}" >
+                                <a href="{% url 'index' %}">首页</a>
+                            </li>
+							<li class="{% ifequal request.path|slice:'7' '/course' %}active{% endifequal %}">
+								<a href="{% url 'courses:list' %}">公开课<img class="hot" src="{% static 'images/nav_hot.png' %}"></a>
 							</li>
-							<li >
+							<li class="{% ifequal request.path|slice:'15' '/org/teach_list' %}active{% endifequal %}">
 								<a href="{% url 'org:teach_list' %}">授课教师</a>
 							</li>
-							<li ><a href="{% url 'org:org_list' %}">授课机构</a></li>
+							<li class="{% ifequal request.path|slice:'13' '/org/org_list' %}active{% endifequal %}">
+                                <a href="{% url 'org:org_list' %}">授课机构</a>
+                            </li>
 						</ul>
 					</div>
 				</div>
@@ -110,11 +112,11 @@
 
 <!--sidebar start-->
 <section>
-    <ul class="sidebar">
-        <li class="qq">
+    <ul class="sidebar" >
+        <li class="qq" title="QQ联系">
             <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2023525077&site=qq&menu=yes"></a>
         </li>
-        <li class="totop"></li>
+        <li class="totop" title="返回顶部"></li>
     </ul>
 </section>
 <!--sidebar end-->

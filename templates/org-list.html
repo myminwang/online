@@ -9,7 +9,7 @@
 <section>
     <div class="wp">
         <ul  class="crumbs">
-            <li><a href="index.html">首页</a>></li>
+            <li><a href="{% url 'index' %}">首页</a>></li>
             <li>课程机构</li>
         </ul>
     </div>
@@ -20,7 +20,7 @@
 <section>
 <div class="wp butler_list_box list">
 	<div class='left'>
-{#    根据类别、城市筛选机构#}
+{#根据类别、城市筛选机构#}
 		<div class="listoptions">
 			<ul>
 				<li>
@@ -53,7 +53,7 @@
         <div class="all">共<span class="key">{{ org_nums }}</span>家</div>
     <div class="butler_list company list">
 		<div class="layout">
-{#        排序功能#}
+{#排序功能#}
 			<div class="head">
 				<ul class="tab_header">
 					<li class="{% ifequal sort '' %}active{% endifequal %}"><a href="?ct={{ category }}&city={{ city_id }}">全部</a> </li>
@@ -61,7 +61,7 @@
 					<li class="{% ifequal sort 'courses' %}active{% endifequal %}"><a href="?sort=courses&ct={{ category }}&city={{ city_id }}">课程数 &#8595;</a></li>
 				</ul>
 			</div>
-{#                机构列表，对象的object_list方法#}
+{#机构列表，对象的object_list方法#}
             {% for org in all_orgs.object_list %}
                 <dl class="des difdes">
                     <dt>
@@ -97,7 +97,7 @@
                 </dl>
                 {% endfor %}
 		</div>
-{#        分页功能#}
+{#分页功能#}
 		 <div class="pageturn">
              <ul class="pagelist">
                 <li class="long">
@@ -125,7 +125,7 @@
         </div>
     </div>
 	</div>
-{#     用户咨询窗口#}
+{#用户咨询窗口#}
 	<div class="right companyright">
         <div class="head">我要学习</div>
         <form class="rightform" id="jsStayForm">
@@ -147,7 +147,7 @@
         {% csrf_token %}
         </form>
     </div>
-{#    右侧机构排名#}
+{#右侧机构排名#}
 
 		<div class="right companyrank layout">
 			<div class="head">授课机构排名</div>
@@ -169,8 +169,9 @@
 
 {% block custom_js %}
 
-{#    参考jQuery手册#}
-{#    ajax，通过 HTTP 请求加载远程数据#}
+{#用户咨询数据处理#}
+{#参考jQuery手册#}
+{#ajax，通过 HTTP 请求加载远程数据，.ajax()函数依赖服务器提供的信息来处理返回的数据。#}
 <script>
     $(function(){
         $('#jsStayBtn').on('click', function(){
@@ -178,7 +179,7 @@
                 cache: false,
                 type: "POST",
                 {#dataType:"json",#}
-                url:"{% url 'org:userask' %}",
+                url:"{% url 'org:user_ask' %}",
                 {# serialize()方法将结果转换为字符串,同时将 csrf token 一块序列化过来 #}
                 data:$('#jsStayForm').serialize(),
                 {# 所有请求均为异步请求 #}

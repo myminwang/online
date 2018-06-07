@@ -9,6 +9,11 @@ from django.views.generic.base import View
 
 class CoursesListView(View):
     """课程列表"""
-    pass
+    def get(self,request):
+        return render(request, 'course-list.html')
 
 
+class CourseDetailView(View):
+    """课程详情"""
+    def get(self,request,course_id):
+        return render(request,'course-detail.html')
