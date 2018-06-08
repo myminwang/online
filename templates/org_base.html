@@ -109,7 +109,7 @@
 				<li class="{% ifequal request.path|slice:'13' '/org/org_home' %}active2{% endifequal %}"><a href="{% url 'org:org_home' org.id %}">机构首页</a></li>
                 <li class="{% ifequal request.path|slice:'15' '/org/org_course' %}active2{% endifequal %}"><a href="{% url 'org:org_course' org.id %}">机构课程</a></li>
                 <li class="{% ifequal request.path|slice:'13' '/org/org_desc' %}active2{% endifequal %}"><a href="{% url 'org:org_desc' org.id %}">机构介绍</a></li>
-                <li class="{% ifequal request.path|slice:'16' '/org/org_teacher' %}active2{% endifequal %}"><a href="{% url 'org:org_teacher' org.id %}">机构讲师</a></li>
+                <li class="{% ifequal request.path|slice:'16' '/org/org_teacher' %}active2{% endifequal %}"><a href="{% url 'org:org_teacher' org.id %}">机构教师</a></li>
 			</ul>
 		</div>
 

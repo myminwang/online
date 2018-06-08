@@ -33,15 +33,18 @@ class Organizationinfo(models.Model):
     add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
     is_authentication = models.BooleanField(verbose_name='是否已认证', choices=((0, '未认证'), (1, '已认证')), default=0)
     is_gold = models.BooleanField(verbose_name='是否为金牌机构', choices=((0, '非金牌机构'), (1, '金牌机构')), default=0)
+    # 金牌机构必须是已获得认证的
 
     tag = models.CharField(verbose_name='机构标签', default='全国知名', max_length=20)
     click_nums = models.IntegerField(verbose_name='点击数', default=0)
     fav_nums = models.IntegerField(verbose_name='收藏数', default=0)
-    course_nums = models.IntegerField(verbose_name='课程总数', default=0)
 
-    # 课程数
     # 经典课程
     # 机构教师
+
+    def course_nums(self):
+        """获取该机构课程总数"""
+        return self.courseinfo_set.count()
 
     class Meta:
         verbose_name = '授课机构'
@@ -52,7 +55,7 @@ class Organizationinfo(models.Model):
 
 
 class Teacher(models.Model):
-    """讲师"""
+    """教师"""
     org = models.ForeignKey(Organizationinfo, on_delete=models.CASCADE, verbose_name='就职公司')
     name = models.CharField(verbose_name='姓名', default='', max_length=20)
     image = models.ImageField(verbose_name='教师头像', upload_to='teachers/%Y/%m', default='default1.png', max_length=100)
@@ -63,6 +66,8 @@ class Teacher(models.Model):
     fav_nums = models.IntegerField(verbose_name='收藏数', default=0)
     add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
     is_authentication = models.BooleanField(verbose_name='是否已认证', choices=((0, '未认证'), (1, '已认证')), default=0)
+    is_gold = models.BooleanField(verbose_name='是否为金牌教师', choices=((0, '非金牌教师'), (1, '金牌教师')), default=0)
+    # 金牌教师必须是已获得认证的
 
     click_nums = models.IntegerField(verbose_name='点击数', default=0)
 
@@ -71,7 +76,7 @@ class Teacher(models.Model):
         return self.courseinfo_set.count()   # 使用'实例.course_nums()'调用该方法获取值，在前端可以使用'实例.course_nums'直接获取值
 
     class Meta:
-        verbose_name = '讲师'
+        verbose_name = '教师'
         verbose_name_plural = verbose_name
 
     def __str__(self):

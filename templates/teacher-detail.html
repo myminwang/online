@@ -2,15 +2,15 @@
 
 {% load staticfiles %}
 
-{% block title %}讲师详情{% endblock %}
+{% block title %}教师详情{% endblock %}
 {% block crumbs%}
 <!--crumbs start-->
 <section>
     <div class="wp">
         <ul  class="crumbs">
-            <li><a href="index.html">首页</a>></li>
-            <li><a href="teachers-list.html">授课讲师</a>></li>
-            <li>讲师详情</li>
+            <li><a href="{% url 'index' %}">首页</a>></li>
+            <li><a href="{% url 'org:teach_list' %}">授课教师</a>></li>
+            <li>教师详情</li>
         </ul>
     </div>
 </section>
@@ -24,142 +24,148 @@
                     <dl class="des">
                         <dt>
                             <div class="picpic">
-                                <img width="100" height="100" src="../media/teacher/2016/11/aobama_CXWwMef.png"/>
+                                <img width="100" height="100" src="{{ MEDIA_URL }}{{ teacher.image }}"/>
                             </div>
                             <div class="btn">
                                 <span class="fl btn1 collectionbtn" id="jsLeftBtn">
                                      收藏
                                 </span>
                                 <span class="fr btn2 shareBtn bdsharebuttonbox"
-                                      data-text="授课教师-李老师-慕学网"
-                                      data-desc="我在#慕课网#发现了"
-                                      data-comment="李老师，工作年限：5年；学历：本科；所在公司：阿里巴巴&nbsp;；经典案例：django入门和深入；flask入门"
-                                      data-url="/diary/hk_detail/10/">
+                                      data-text="授课教师-{{ teacher.name }}-在线学习网"
+                                      data-desc="我在#慕课网#发现了教师“{{ teacher.name }}”，对学习中的小伙伴很有帮助，一起来看看吧。"
+                                      data-comment="{% if teacher.is_gold %}{{ teacher.name }}金牌教师，{% endif %}从业年限：{{ teacher.work_years }}年"
+                                      data-url="{% url 'org:teacher_detail' teacher.id %}">
                                     <span class="fl">分享</span>
                                     <a href="#" class="bds_more" data-cmd="more"></a>
                                 </span>
                             </div>
                         </dt>
                         <dd>
-                            <a href="/diary/hk_detail/10/">
-                                <h1>bobby<span class="key picbig">金牌讲师</span></h1>
-                            </a>
+                            <a href="{% url 'org:teacher_detail' teacher.id %}">
+                            <h1>{{ teacher.name }}
+                                {% if teacher.is_gold and teacher.is_authentication %}
+                                    <span class="key picbig">金牌教师</span>
+                                    {% elif teacher.is_authentication %}
+                                    &ensp;&ensp;<img src="{% static 'images/authentication.png' %}"/>
+                                {% endif %}
+                            </h1>
+                        </a>
                             <ul class="cont">
-                                <li>工作年限：<span>5年</span></li>
-                                <li>就职公司：<span>xxx</span></li>
-                                <li>工作职位：<span>xxx&nbsp;</span></li>
-                                <li>教学特点：<span>xxx</span></li>
+                                <li>工作年限：<span>{{ teacher.work_years }}</span></li>
+                                <li>就职单位：<span>{{ teacher.org.name }}&nbsp;</span></li>
+                                <li>工作职位：<span>{{ teacher.work_position }}&nbsp;</span></li>
+                                <li>教学特点：<span>{{ teacher.teach_points }}</span></li>
                             </ul>
                         </dd>
                     </dl>
                 </div>
             </div>
+{#全部课程#}
             <div class="butler_detail_cont clearfix">
                 <div class="left layout">
 				<div class="head">
 					<ul class="tab_header">
-						<li class="active"><a href="/diary/hk_detail/10/">全部课程</a> </li>
+						<li class="active">全部课程</li>
 					</ul>
 				</div>
                     <div class="companycenter">
                         <div class="group_list brief">
-                            
+                            {% for te_course in te_courses.object_list %}
                             <div class="module1_5 box">
-                                <a href="course-detail.html">
-                                    <img width="214" height="190" class="scrollLoading" src="../media/courses/2016/11/540e57300001d6d906000338-240-135_n0L8vbw.jpg"/>
+                                <a href="{% url 'courses:detail' te_course.id %}">
+                                    <img width="214" height="190" class="scrollLoading" src="{{ MEDIA_URL }}{{ te_course.image }}"/>
                                 </a>
                                 <div class="des">
-                                    <a href="course-detail.html"><h2>django与vuejs实战项目2</h2></a>
-                                    <span class="fl">时长：<i class="key">0</i></span>
-                                    <span class="fr">学习人数：13</span>
+                                    <a href="{% url 'courses:detail' te_course.id %}"><h2>{{ te_course.name }}</h2></a>
+                                    <span class="fl">时长：<i class="key">{{ te_course.learn_time }}</i></span>
+                                    <span class="fr">学习人数：{{ te_course.students }}</span>
                                 </div>
                                 <div class="bottom">
-                                    <span class="fl">北京大学</span>
-                                    <span class="star fr  notlogin" data-favid="15">0</span>
+                                    <span class="fl">{{ teacher.org.name }}</span>
+                                    <span class="star fr  notlogin" data-favid="15">{{ te_course.fav_nums }}</span>
                                 </div>
                             </div>
-                            
-                            <div class="module1_5 box">
-                                <a href="course-detail.html">
-                                    <img width="214" height="190" class="scrollLoading" src="../media/courses/2016/12/mysql.jpg"/>
-                                </a>
-                                <div class="des">
-                                    <a href="course-detail.html"><h2>xadmin进阶开发</h2></a>
-                                    <span class="fl">时长：<i class="key">30</i></span>
-                                    <span class="fr">学习人数：2</span>
-                                </div>
-                                <div class="bottom">
-                                    <span class="fl">慕课网</span>
-                                    <span class="star fr  notlogin" data-favid="15">1</span>
-                                </div>
-                            </div>
-                            
-
+                            {% endfor %}
                         </div>
                     </div>
-                <!--<div class="pageturn">-->
-                    <!--<ul class="pagelist">-->
-                        <!--<li class="active"><a href="?page=1">1</a></li>-->
-                    <!--</ul>-->
-                <!--</div>-->
+{#分页功能#}
+                    <div class="pageturn">
+                     <ul class="pagelist">
+                        <li class="long">
+                            {% if te_courses.has_previous %}
+                            <a href="?{{ te_courses.previous_page_number.querystring }}" class="prev">上一页</a>
+                            {% endif %}
+                        </li>
+
+                        {% for page in te_courses.pages %}
+                            {% if page %}
+                            {% ifequal page te_courses.number %}
+                              <li class="active"><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                            {% else %}
+                            <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                            {% endifequal %}
+                          {% else %}
+                            <li class="none"><a href="">...</a></li>
+                          {% endif %}
+                        {% endfor %}
+
+                        {% if te_courses.has_next %}
+                             <li class="long"><a href="?{{ te_courses.next_page_number.querystring }}">下一页</a></li>
+                        {% endif %}
+                     </ul>
+                    </div>
             </div>
             </div>
         </div>
+{#右侧上部机构简介#}
         <div class="fr list">
              <div class="butler_detail_list">
                 <div class="right butler-company-box">
                 <div class="head">
-                    <h1>慕课网</h1>
-                    <p>知名高校，权威教学</p>
+                    <h1>{{ teacher.org.name }}</h1>
+                    {% ifequal teacher.org.category 'gx' %}
+                        <p>知名高校，权威教学</p>
+                    {% endifequal %}
+                    {% ifequal teacher.org.category 'pxjg' %}
+                        <p>知名机构，权威教学</p>
+                    {% endifequal %}
+                    {% ifequal teacher.org.category 'gr' %}
+                        <p>知名学者，权威教学</p>
+                    {% endifequal %}
                 </div>
                 <div class="pic">
-                    <a href="org-detail-homepage.html">
-                        <img width="150" height="80" src="../media/org/2016/11/imooc.png"/>
+                    <a href="{% url 'org:org_home' teacher.org.id %}">
+                        <img width="150" height="80" src="{{ MEDIA_URL }}{{ teacher.org.image }}"/>
                     </a>
                 </div>
-                <a href="org-detail-homepage.html">
-                    <h2 class="center">慕课网</h2>
+                <a href="{% url 'org:org_home' teacher.org.id %}">
+                    <h2 class="center">{{ teacher.org.name }}</h2>
                 </a>
-                <p class="center tell">地址：北京市</p>
+                <p class="center tell">地址：{{ teacher.org.address }}</p>
                 <a class="btn" id="jsRightBtn">收藏</a>
             </div>
             </div>
+{#右侧下部教师排行#}
             <div class="butler_detail_cont">
                 <div class="butler_list_box">
                     <div class="right layout">
-                        <div class="head">讲师排行榜</div>
-                        
+                        <div class="head">教师排行榜</div>
+                        {% for hot_teacher in hot_teachers %}
                         <dl class="des">
-                            <span class="num fl">1</span>
-                            <a href="/org/teacher/detail/1/">
+                            <dt class="num fl">{{ forloop.counter }}</dt>
+                            <a href="{% url 'org:teacher_detail' hot_teacher.id %}">
                                 <dt>
-                                    <img width="50" height="50" class="scrollLoading" src="../media/teacher/2016/11/aobama_CXWwMef.png"/>
+                                    <img width="50" height="50" class="scrollLoading" src="{{ MEDIA_URL }}{{ hot_teacher.image }}"/>
                                 </dt>
                             </a>
                             <dd>
-                                <a href="/org/teacher/detail/1/">
-                                    <h1 title="bobby">bobby</h1>
+                                <a href="{% url 'org:teacher_detail' hot_teacher.id %}">
+                                    <h1 title="{{ hot_teacher.name }}">{{ hot_teacher.name }}</h1>
                                 </a>
-                                <p>工作年限：<span>5年</span></p>
+                                <p>工作年限：<span>{{ hot_teacher.work_years }}</span></p>
                             </dd>
                         </dl>
-                        
-                        <dl class="des">
-                            <span class="num fl">1</span>
-                            <a href="/org/teacher/detail/2/">
-                                <dt>
-                                    <img width="50" height="50" class="scrollLoading" src="../media/teacher/2016/11/aobama.png"/>
-                                </dt>
-                            </a>
-                            <dd>
-                                <a href="/org/teacher/detail/2/">
-                                    <h1 title="还是bobby">还是bobby</h1>
-                                </a>
-                                <p>工作年限：<span>5年</span></p>
-                            </dd>
-                        </dl>
-                        
-
+                        {% endfor %}
                     </div>
                 </div>
             </div>

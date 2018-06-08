@@ -26,7 +26,7 @@ class OrganizationinfoAdmin:
 
 
 class TeacherAdmin:
-    """讲师信息管理"""
+    """教师信息管理"""
     list_display = ['org', 'name', 'image', 'age', 'work_years', 'work_position',
                     'teach_points', 'fav_nums', 'add_time', 'click_nums']
     list_filter = ['org', 'name',  'age', 'work_years', 'work_position',

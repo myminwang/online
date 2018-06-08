@@ -9,10 +9,10 @@ from .views import TeacherListView, OrgListView, OrgHomeView, UserAskView, OrgCo
     OrgDescView, TeacherDetailView
 
 urlpatterns = [
-    # 讲师列表
+    # 教师列表
     path('teach_list/', TeacherListView.as_view(), name='teach_list'),
 
-    # 讲师详情
+    # 教师详情
     path('teacher_detail/<int:teacher_id>/', TeacherDetailView.as_view(), name='teacher_detail'),
 
     # 机构列表
@@ -27,7 +27,7 @@ urlpatterns = [
     # 机构课程
     path('org_course/<int:org_id>/', OrgCourseView.as_view(), name='org_course'),
 
-    # 机构讲师
+    # 机构教师
     path('org_teacher/<int:org_id>/', OrgTeacherListView.as_view(), name='org_teacher'),
 
     # 机构介绍

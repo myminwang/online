@@ -24,12 +24,12 @@ class CourseComments(models.Model):
 
 
 class UserFav(models.Model):
-    """用户对机构、讲师、课程收藏"""
+    """用户对机构、教师、课程收藏"""
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name='用户')
     fav_id = models.IntegerField(verbose_name='收藏类型的ID', default=0)
     # 该fav_id记录的是相应收藏类型的id
     fav_type = models.IntegerField(verbose_name='收藏类型',
-                                   choices=((0, '课程'), (1, '机构'), (2, '讲师')),
+                                   choices=((0, '课程'), (1, '机构'), (2, '教师')),
                                    default=0)
     add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
 
@@ -78,4 +78,4 @@ class UserAsk(models.Model):
         verbose_name = '用户咨询'
         verbose_name_plural = verbose_name
 
-# 用户对课程、讲师、课程点赞
+# 用户对课程、教师、课程点赞

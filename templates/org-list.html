@@ -61,7 +61,7 @@
 					<li class="{% ifequal sort 'courses' %}active{% endifequal %}"><a href="?sort=courses&ct={{ category }}&city={{ city_id }}">课程数 &#8595;</a></li>
 				</ul>
 			</div>
-{#机构列表，对象的object_list方法#}
+{#机构列表，使用分页后的对象object_list方法#}
             {% for org in all_orgs.object_list %}
                 <dl class="des difdes">
                     <dt>
@@ -74,15 +74,19 @@
                              <a href="{% url 'org:org_home' org.id %}">
                                  <h1>{{ org.name }}</h1>
                                  <div class="pic fl">
-
-                                         <img src="{% static 'images/authentication.png' %}"/>
-
+                                     {% if org.is_authentication %}
+                                          <img src="{% static 'images/authentication.png' %}"/>
+                                     {% endif %}
+                                     {% if org.is_gold %}
                                          <img src="{% static 'images/gold.png' %}"/>
+                                     {% endif %}
                                  </div>
                              </a>
                         </div>
                         <ul class="cont">
-                            <li class="first"><p class="pic9">课程数：<span>{{ org.course_nums }}</span></p><p class="c7">学习人数：<span>{{ org.students }}</span></p></li>
+                            <li class="first">
+                                <p class="pic9">课程数：<span>{{ org.course_nums }}</span></p>
+                                <p class="c7">学习人数：<span>{{ org.students }}</span></p></li>
                             <li class="c8" style="padding-left:18px;">{{ org.address }}</li>
                             <li class="pic10" style="padding-left:18px;">经典课程：
 
@@ -107,19 +111,22 @@
                 </li>
 
                 {% for page in all_orgs.pages %}
-                    {% if page %}
+                 {% if page %}
+
                     {% ifequal page all_orgs.number %}
-                      <li class="active"><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                        <li class="active"><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
                     {% else %}
-                    <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                        <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
                     {% endifequal %}
-                  {% else %}
-                    <li class="none"><a href="">...</a></li>
-                  {% endif %}
+
+                 {% else %}
+                        <li class="none"><a href="">...</a></li>
+                 {% endif %}
+
                 {% endfor %}
 
                 {% if all_orgs.has_next %}
-                     <li class="long"><a href="?{{ all_orgs.next_page_number.querystring }}">下一页</a></li>
+                <li class="long"><a href="?{{ all_orgs.next_page_number.querystring }}">下一页</a></li>
                 {% endif %}
              </ul>
         </div>

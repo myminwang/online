@@ -11,7 +11,7 @@ from organizations.models import Organizationinfo, Teacher
 class Courseinfo(models.Model):
     """课程信息"""
     course_org = models.ForeignKey(Organizationinfo, on_delete=models.CASCADE, null=True, verbose_name='所属机构')
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, verbose_name='讲师')
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, verbose_name='教师')
     name = models.CharField(max_length=100, verbose_name='课程名称')
     image = models.ImageField(verbose_name='课程封面', upload_to='courses/%Y/%m', max_length=100)
     desc = models.CharField(max_length=300, verbose_name='课程描述')

@@ -34,7 +34,7 @@
 
 					<!--验证是否已登录-->
                     {% if request.user.is_authenticated %}
-{#                        登录后跳转#}
+{#登录后跳转#}
 						<div class="personal">
                             <dl class="user fr">
                                 <dd>{{ request.user.nick_name }}<img class="down fr" src="{% static 'images/top_down.png' %}"/></dd>
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                     {% else %}
-{#                        未登录显示#}
+{#未登录显示#}
                         <a style="color:white" class="fr registerbtn" href="{% url 'users:register' %}">注册</a>
                         <a style="color:white" class="fr loginbtn" href="{% url 'users:login' %}">登录</a>
                     {% endif %}
@@ -63,7 +63,7 @@
 
 				</div>
 			</div>
-
+{#搜索功能#}
             <div class="middle">
                 <div class="wp">
                     <a href="{% url 'index' %}"><img width="350" height="100" src="{% static 'images/logo.png' %}"/></a>
@@ -75,7 +75,7 @@
                             <ul class="selectMenu" id="jsSelectMenu">
                                 <li data-value="course">公开课</li>
                                 <li data-value="org">课程机构</li>
-                                <li data-value="teacher">授课老师</li>
+                                <li data-value="teacher">授课教师</li>
                             </ul>
                         </div>
                         <input id="search_keywords" class="fl" type="text" value="" placeholder="请输入搜索内容"/>

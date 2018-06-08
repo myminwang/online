@@ -62,8 +62,8 @@ class Migration(migrations.Migration):
                 ('org', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organizations.Organizationinfo', verbose_name='就职公司')),
             ],
             options={
-                'verbose_name': '讲师',
-                'verbose_name_plural': '讲师',
+                'verbose_name': '教师',
+                'verbose_name_plural': '教师',
             },
         ),
     ]

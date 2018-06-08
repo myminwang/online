@@ -7,28 +7,71 @@ from django.views.generic.base import View
 from pure_pagination import Paginator, PageNotAnInteger  # 实现分页功能
 from django.http import HttpResponse
 
-from .models import City, Organizationinfo
+from .models import City, Organizationinfo, Teacher
 from .forms import UserAskForm
 from operation.models import UserAsk
+from courses.models import Courseinfo
 
 
 # Create your views here.
 
 
 class TeacherListView(View):
-    """讲师列表"""
+    """教师列表"""
 
     def get(self, request):
-        return render(request, 'teachers-list.html')
+        teachers = Teacher.objects.all()
+        hot_teachers = Teacher.objects.all().order_by('-click_nums')[:3]
+
+        # 教师总数
+        te_nums = teachers.count()
+
+        # 排序功能
+        sort = request.GET.get('sort','')
+        if sort == 'hot':
+            teachers = teachers.order_by('-click_nums')
+            pass
+
+        # 分页功能
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+        p = Paginator(teachers, 5, request=request)
+        teach = p.page(page)
+
+        return render(request, 'teachers-list.html', {
+            'teachers': teach,
+            'te_nums': te_nums,
+            'hot_teachers': hot_teachers,
+        })
 
     pass
 
 
 class TeacherDetailView(View):
-    """讲师详情"""
+    """教师详情"""
 
     def get(self, request, teacher_id):
-        return render(request, 'teacher-detail.html')
+        teacher = Teacher.objects.get(id=teacher_id)
+        te_courses = Courseinfo.objects.filter(teacher_id=teacher_id)
+
+        # 教师排行
+        hot_teachers = Teacher.objects.all().order_by('-click_nums')[:3]
+
+        # 分页功能
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+        p = Paginator(te_courses, 5, request=request)
+        te_course = p.page(page)
+
+        return render(request, 'teacher-detail.html',{
+            'teacher': teacher,
+            'te_courses': te_course,
+            'hot_teachers': hot_teachers,
+        })
 
 
 class OrgListView(View):
@@ -125,7 +168,7 @@ class OrgCourseView(View):
 
 
 class OrgTeacherListView(View):
-    """机构讲师"""
+    """机构教师"""
 
     def get(self, request, org_id):
         org = Organizationinfo.objects.get(id=org_id)

@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('fav_id', models.IntegerField(default=0, verbose_name='收藏类型的ID')),
-                ('fav_type', models.IntegerField(choices=[(0, '课程'), (1, '机构'), (2, '讲师')], default=0, verbose_name='收藏类型')),
+                ('fav_type', models.IntegerField(choices=[(0, '课程'), (1, '机构'), (2, '教师')], default=0, verbose_name='收藏类型')),
                 ('add_time', models.DateField(default=datetime.datetime.now, verbose_name='添加时间')),
             ],
             options={
