@@ -93,8 +93,12 @@ class OrgListView(View):
         # 城市筛选
         city_id = request.GET.get('city', )
         if city_id and city_id != 'None':
-            org_city_id = City.objects.get(name=city_id)
-            all_orgs = all_orgs.filter(city_id=org_city_id.id)
+            city_id = int(city_id)
+            all_orgs = all_orgs.filter(city_id=city_id)
+        if city_id == 'None':
+            city_id = ''
+            # org_city_id = City.objects.get(name=city_id)
+            # all_orgs = all_orgs.filter(city_id=org_city_id.id)
 
         # 筛选后机构的数量
         org_nums = all_orgs.count()

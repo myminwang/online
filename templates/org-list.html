@@ -40,9 +40,9 @@
 					<h2>所在地区</h2>
 					<div class="more">更多</div>
 					<div class="cont">
-                        <a href="?ct={{ category }}"><span class="{% ifequal city '' %}active2{% endifequal %}">全部</span></a>
+                        <a href="?ct={{ category }}"><span class="{% if not city_id %}active2{% endif %}">全部</span></a>
                         {% for city in all_citys %}
-                            <a href="?city={{ city }}&ct={{ category }}"><span class="{% ifequal city_id city %}active2{% endifequal %}">{{ city }}</span></a>
+                            <a href="?city={{ city.id }}&ct={{ category }}"><span class="{% ifequal city_id city.id %}active2{% endifequal %}">{{ city.name }}</span></a>
 
                         {% endfor %}
 

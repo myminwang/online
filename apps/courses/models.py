@@ -28,12 +28,16 @@ class Courseinfo(models.Model):
     is_banner = models.BooleanField(verbose_name='是否为轮播图', default=False)
     before_know = models.CharField(verbose_name='课前须知', max_length=300, default='')
     teacher_tell = models.CharField(verbose_name='老师告诉你能学到什么', max_length=300, default='')
-    add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
+    add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.now)
+    notice = models.CharField(verbose_name='课程公告', max_length=300, default='暂无公告')
 
     # 章节数
     # 学习用户展示
     # 课程标签
     # 课程评论
+    def lession_nums(self):
+        """章节数"""
+        return self.lession_set.count()
 
     class Meta:
         verbose_name = '课程信息'
@@ -63,8 +67,8 @@ class Lession(models.Model):
     点击我要学习进入
     """
     course = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, verbose_name='课程')
-    name = models.CharField(verbose_name='章节名', max_length=100)
-    add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
+    name = models.CharField(verbose_name='章名', max_length=100)
+    add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.now)
 
     class Meta:
         verbose_name = '课程章节'
@@ -76,18 +80,15 @@ class Lession(models.Model):
 
 class Video(models.Model):
     """视频信息"""
-    # 外键至章节
-    # 播放地址
-    # 添加时间
-    lession = models.ForeignKey(Lession, on_delete=models.CASCADE, verbose_name='章节')
-    name = models.CharField(verbose_name='视频名称', max_length=100)
+    lession = models.ForeignKey(Lession, on_delete=models.CASCADE, verbose_name='章')
+    name = models.CharField(verbose_name='小节/视频名称', max_length=100)
     url = models.URLField(verbose_name='播放地址', max_length=200, default='https://v.youku.com/v_show/id_XMzU3ODg1MjUwMA'
                                                                        '.html?spm=a2hww.20027244.m_250379.5~1~3!2~A')
     learn_time = models.IntegerField(verbose_name='视频时长（分钟数）', default=0)
-    add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
+    add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.now)
 
     class Meta:
-        verbose_name = '视频'
+        verbose_name = '小节/视频'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -101,8 +102,8 @@ class CourseResource(models.Model):
     # 添加时间
     lession = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, verbose_name='课程')
     name = models.CharField(verbose_name='资料名称', max_length=100)
-    download = models.FileField(verbose_name='资料下载', upload_to='course/resource/%Y/%m', max_length=100)
-    add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
+    download = models.FileField(verbose_name='资料下载', upload_to='courses/resource/%Y/%m', max_length=100)
+    add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.now)
 
     class Meta:
         verbose_name = '课程资料'

@@ -14,13 +14,13 @@ class UserProfile(AbstractUser):
     继承AbstractUser类，需要在setting里配置AUTH_USER_MODEL
     """
     nick_name = models.CharField(max_length=20, verbose_name='昵称', default='')
-    birthday = models.DateField(verbose_name='生日', null=True)
+    birthday = models.DateTimeField(verbose_name='生日', null=True)
     gender = models.CharField(max_length=10, choices=(('male', '男'), ('female', '女')), default='male',
                               verbose_name='性别')
     address = models.CharField(max_length=100, default='', verbose_name='地址')
     mobile = models.IntegerField(verbose_name='手机号', null=True)
     image = models.ImageField(verbose_name='用户头像', upload_to='users/%Y/%m', default='default.png')
-    add_time = models.DateField(verbose_name='添加时间', default=datetime.datetime.now)
+    add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.datetime.now)
 
     class Meta:
         verbose_name = '用户信息'
@@ -38,7 +38,7 @@ class EmailVerification(models.Model):
     send_type = models.CharField(max_length=20, verbose_name='验证码类型',
                                  choices=(('register', '注册'), ('forget', '修改密码'), ('update_email', '修改邮箱')),
                                  default='register')
-    send_time = models.DateField(verbose_name='添加时间', default=datetime.datetime.now)
+    send_time = models.DateTimeField(verbose_name='添加时间', default=datetime.datetime.now)
     is_delete = models.BooleanField(verbose_name='是否已验证', default=0)
 
     class Meta:

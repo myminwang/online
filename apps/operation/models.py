@@ -13,10 +13,10 @@ from organizations.models import Organizationinfo, Teacher
 
 class CourseComments(models.Model):
     """用户对课程的评论"""
-    course = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, verbose_name='课程')
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name='用户')
+    course = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, null=True, verbose_name='课程')
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, verbose_name='用户')
     comments = models.TextField(verbose_name='评论')
-    add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
+    add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.now)
 
     class Meta:
         verbose_name = '课程评论'
@@ -31,7 +31,7 @@ class UserFav(models.Model):
     fav_type = models.IntegerField(verbose_name='收藏类型',
                                    choices=((0, '课程'), (1, '机构'), (2, '教师')),
                                    default=0)
-    add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
+    add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.now)
 
     class Meta:
         verbose_name = '用户收藏'
@@ -46,7 +46,7 @@ class UserMessage(models.Model):
     # 如果 为 0 代表全局消息，否则就是用户的 ID
     user = models.IntegerField(default=0, verbose_name='接收用户')
     messages = models.CharField(verbose_name='消息内容', max_length=500)
-    add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
+    add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.now)
 
     has_read = models.BooleanField(verbose_name='是否已读', default=False)
 
@@ -58,8 +58,11 @@ class UserMessage(models.Model):
 # 用户对用户的消息
 
 
-class UserCourse(CourseComments):
-    """用户正在学习的课程,继承用户评论"""
+class UserCourse(models.Model):
+    """用户正在学习的课程,可以继承用户评论"""
+    course = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, null=True, verbose_name='课程')
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, verbose_name='用户')
+    add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.now)
 
     class Meta:
         verbose_name = '用户学习的课程'
@@ -71,7 +74,7 @@ class UserAsk(models.Model):
     name = models.CharField(verbose_name='姓名', max_length=50)
     mobile = models.CharField(verbose_name='联系电话', max_length=11)
     course_name = models.CharField(verbose_name='课程名', max_length=100)
-    add_time = models.DateField(verbose_name='添加时间', default=datetime.now)
+    add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.now)
     is_delete = models.BooleanField(verbose_name='是否已处理', default=0, choices=((0, '未处理'), (1, '已处理')))
 
     class Meta:
