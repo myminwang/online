@@ -9,18 +9,19 @@
 {% block body %}
 <section>
 	<div class="wp list personal_list">
-	<div class="left">
-        <ul>
-            <li class="active2"><a href="usercenter-info.html">个人资料</a></li>
-            <li ><a href="usercenter-mycourse.html">我的课程</a></li>
-            <li ><a href="usercenter-fav-course.html">我的收藏</a></li>
-            <li >
-                <a href="usercenter-message.html" style="position: relative;">
-                    我的消息
-                </a>
-            </li>
-        </ul>
-	</div>
+            <div class="left">
+                <ul>
+                    <li class="{% ifequal request.path|slice:'15' '/users/userinfo' %}active2{% endifequal %}"><a href="{% url 'users:userinfo' %}">个人资料</a></li>
+                    <li class="{% ifequal request.path|slice:'15' '/users/mycourse' %}active2{% endifequal %}"><a href="{% url 'users:mycourse' %}">我的课程</a></li>
+                    <li class="{% ifequal request.path|slice:'12' '/users/myfav' %}active2{% endifequal %}"><a href="{% url 'users:myfavorg' %}">我的收藏</a></li>
+                    <li class="{% ifequal request.path|slice:'16' '/users/mymessage' %}active2{% endifequal %}">
+                        <a href="{% url 'users:mymessage' %}" style="position: relative;">
+                            我的消息
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
 
     
     <div class="right" >
@@ -33,42 +34,53 @@
 		<div class="personal_des permessage">
 			<div class="head">
 				<ul class="tab_header messagehead">
-					<li class="active"><a href="/user/message/">个人消息</a> </li>
+					<li class="active">个人消息 </li>
 				</ul>
 
 
 			</div>
 			<div class="messagelist">
-                
-                    <div class="messages">
+                {% for message in messages.object_list %}
+                <div class="messages">
                         <div class="fr">
-                            <div class="top"><span class="fl time">2016年11月6日 23:49</span><span class="fr btn foldbtn"></span></div>
+                            <div class="top"><span class="fl time">{{ message.add_time }}</span><span class="fr btn foldbtn"></span></div>
                             <p>
-                                欢迎注册
+                                {{ message.messages }}
                             </p>
                         </div>
                     </div>
-                
-
+                {% endfor %}
 
 			</div>
+{#分页功能#}
+		 <div class="pageturn">
+             <ul class="pagelist">
+                <li class="long">
+                    {% if messages.has_previous %}
+                    <a href="?{{ messages.previous_page_number.querystring }}" class="prev">上一页</a>
+                    {% endif %}
+                </li>
 
+                {% for page in messages.pages %}
+                 {% if page %}
 
-			<div class="pageturn pagerright">
-                <ul class="pagelist">
-                
+                    {% ifequal page messages.number %}
+                        <li class="active"><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                    {% else %}
+                        <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                    {% endifequal %}
 
-                
-                    
-                        
-                            <li class="active"><a href="?page=1">1</a></li>
+                 {% else %}
+                        <li class="none"><a href="">...</a></li>
+                 {% endif %}
 
+                {% endfor %}
 
-
-
-
-            </ul>
-            </div>
+                {% if messages.has_next %}
+                <li class="long"><a href="?{{ messages.next_page_number.querystring }}">下一页</a></li>
+                {% endif %}
+             </ul>
+        </div>
 		</div>
 
 	</div>

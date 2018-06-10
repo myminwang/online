@@ -34,8 +34,7 @@ class Organizationinfo(models.Model):
     is_authentication = models.BooleanField(verbose_name='是否已认证', choices=((0, '未认证'), (1, '已认证')), default=0)
     is_gold = models.BooleanField(verbose_name='是否为金牌机构', choices=((0, '非金牌机构'), (1, '金牌机构')), default=0)
     # 金牌机构必须是已获得认证的
-    course_nums =  models.IntegerField(verbose_name='课程数', default=0)
-
+    course_nums = models.IntegerField(verbose_name='课程数', default=0)
 
     tag = models.CharField(verbose_name='机构标签', default='全国知名', max_length=20)
     click_nums = models.IntegerField(verbose_name='点击数', default=0)
@@ -78,7 +77,7 @@ class Teacher(models.Model):
 
     def course_nums(self):
         """课程数量"""
-        return self.courseinfo_set.count()   # 使用'实例.course_nums()'调用该方法获取值，在前端可以使用'实例.course_nums'直接获取值
+        return self.courseinfo_set.count()  # 使用'实例.course_nums()'调用该方法获取值，在前端可以使用'实例.course_nums'直接获取值
 
     class Meta:
         verbose_name = '教师'

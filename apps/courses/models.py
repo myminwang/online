@@ -79,7 +79,7 @@ class Lession(models.Model):
 
 
 class Video(models.Model):
-    """视频信息"""
+    """小节/视频信息"""
     lession = models.ForeignKey(Lession, on_delete=models.CASCADE, verbose_name='章')
     name = models.CharField(verbose_name='小节/视频名称', max_length=100)
     url = models.URLField(verbose_name='播放地址', max_length=200, default='https://v.youku.com/v_show/id_XMzU3ODg1MjUwMA'

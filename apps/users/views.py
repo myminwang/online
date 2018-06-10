@@ -6,10 +6,14 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout  # 登录模块、用户验证方法
 from django.contrib.auth.backends import ModelBackend  # 包含authenticate方法的模块，进行重写，需要在setting里配置
 from django.db.models import Q  # or功能
+from pure_pagination import Paginator, PageNotAnInteger  # 实现分页功能
 
 from .forms import RegisterForm, LoginForm, ForgetpwdForm, PwdmodifyForm
-from .models import UserProfile, EmailVerification
+from .models import UserProfile, EmailVerification ,Banner
 from utils.email_send import send_link_email
+from operation.models import UserCourse,UserFav,UserMessage
+from organizations.models import Organizationinfo, Teacher
+from courses.models import Courseinfo
 
 
 # Create your views here.
@@ -19,7 +23,17 @@ class IndexView(View):
     """显示首页"""
 
     def get(self, request):
-        return render(request, 'index.html', {})
+        banners = Banner.objects.all()
+        courses = Courseinfo.objects.all().order_by('-click_nums')[:6]
+        banner_courses = Courseinfo.objects.filter(is_banner=True).order_by('-click_nums')[:3]
+        orgs = Organizationinfo.objects.all().order_by('click_nums')[:15]
+
+        return render(request, 'index.html', {
+            'banners': banners,
+            'courses': courses,
+            'banner_courses': banner_courses,
+            'orgs': orgs,
+        })
 
 
 class RegisterView(View):
@@ -211,7 +225,7 @@ class LogoutView(View):
 
     def get(self, request):
         """get方式进行注销登录"""
-        logout(request)   # 源码显示，logout只需要一个参数
+        logout(request)  # 源码显示，logout只需要一个参数
         return render(request, 'index.html')
 
 
@@ -221,8 +235,77 @@ class UserInfoView(View):
     def get(self, request):
         """进入个人中心"""
         user = request.user.username
-        if not user:    # 未登录
+        if not user:  # 未登录
             return render(request, 'login.html', {'pwdreset_msg': '您还未登录...'})
         else:
+
             return render(request, 'usercenter-info.html')
 
+
+class MyCourseView(View):
+    """个人中心之我的课程"""
+
+    def get(self, request):
+        user_id = request.user.id
+        courses = UserCourse.objects.filter(user_id=user_id)
+        return render(request, 'usercenter-mycourse.html',{
+            'courses': courses,
+        })
+
+
+class MyfavCourseView(View):
+    """个人中心之我收藏的课程"""
+
+    def get(self, request):
+        user_id = request.user.id
+        fav_ids = [userfav.fav_id for userfav in UserFav.objects.filter(user_id=user_id, fav_type=0)]
+        courses = Courseinfo.objects.filter(id__in=fav_ids)
+        return render(request, 'usercenter-fav-course.html', {
+            'courses': courses,
+
+        })
+
+
+class MyfavOrgView(View):
+    """个人中心之我收藏的机构"""
+
+    def get(self, request):
+        user_id = request.user.id
+        fav_ids = [userfav.fav_id for userfav in UserFav.objects.filter(user_id=user_id, fav_type=1)]
+        orgs = Organizationinfo.objects.filter(id__in=fav_ids)
+        return render(request, 'usercenter-fav-org.html', {
+            'orgs': orgs,
+
+        })
+
+
+class MyfavTeacherView(View):
+    """个人中心之我收藏的教师"""
+
+    def get(self, request):
+        user_id = request.user.id
+        fav_ids = [userfav.fav_id for userfav in UserFav.objects.filter(user_id=user_id, fav_type=2)]
+        teachers = Teacher.objects.filter(id__in=fav_ids)
+        return render(request, 'usercenter-fav-teacher.html', {
+            'teachers': teachers,
+        })
+
+
+class MyMessageView(View):
+    """个人中心之我的消息"""
+
+    def get(self, request):
+        user_id = request.user.id
+        messages = UserMessage.objects.filter(Q(user_id=user_id)|Q(user_id=0))
+
+        # 分页功能
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+        p = Paginator(messages, 5, request=request)
+        messagess = p.page(page)
+
+        return render(request, 'usercenter-message.html', {
+            'messages': messagess,
+        })

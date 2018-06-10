@@ -9,18 +9,18 @@
 {% block body %}
 <section>
 	<div class="wp list personal_list">
-	<div class="left">
-        <ul>
-            <li class="active2"><a href="usercenter-info.html">个人资料</a></li>
-            <li ><a href="usercenter-mycourse.html">我的课程</a></li>
-            <li ><a href="usercenter-fav-course.html">我的收藏</a></li>
-            <li >
-                <a href="usercenter-message.html" style="position: relative;">
-                    我的消息
-                </a>
-            </li>
-        </ul>
-	</div>
+            <div class="left">
+                <ul>
+                    <li class="{% ifequal request.path|slice:'15' '/users/userinfo' %}active2{% endifequal %}"><a href="{% url 'users:userinfo' %}">个人资料</a></li>
+                    <li class="{% ifequal request.path|slice:'15' '/users/mycourse' %}active2{% endifequal %}"><a href="{% url 'users:mycourse' %}">我的课程</a></li>
+                    <li class="{% ifequal request.path|slice:'12' '/users/myfav' %}active2{% endifequal %}"><a href="{% url 'users:myfavorg' %}">我的收藏</a></li>
+                    <li class="{% ifequal request.path|slice:'16' '/users/mymessage' %}active2{% endifequal %}">
+                        <a href="{% url 'users:mymessage' %}" style="position: relative;">
+                            我的消息
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
     
     <div class="right" >
@@ -32,45 +32,30 @@
             <div class="personal_des permessage">
                 <div class="head">
                     <ul class="tab_header messagehead">
-                        <li><a href="usercenter-fav-course.html">课程机构</a> </li>
-                        <li><a href="usercenter-fav-teacher.html">授课教师 </a></li>
-                        <li class="active"><a href="usercenter-fav-course.html">公开课程</a></li>
+                        <li class="{% ifequal request.path|slice:'15' '/users/myfavorg' %}active{% endifequal %}"><a href="{% url 'users:myfavorg' %}">课程机构</a> </li>
+                        <li class="{% ifequal request.path|slice:'19' '/users/myfavteacher' %}active{% endifequal %}"><a href="{% url 'users:myfavteacher' %}">授课教师 </a></li>
+                        <li class="{% ifequal request.path|slice:'18' '/users/myfavcourse' %}active{% endifequal %}"><a href="{% url 'users:myfavcourse' %}">公开课</a></li>
                     </ul>
 
                 </div>
                 <div class="companycenter">
                     <div class="group_list brief">
-                        
+                        {% for course in courses %}
                         <div class="module1_5 box">
-                            <a href="course-detail.html">
-                                <img width="214" height="190" src="{% static 'media/courses/2016/12/57035ff200014b8a06000338-240-135_dHfj8Nq.jpg' %}"/>
+                            <a href="{% url 'courses:detail' course.id %}">
+                                <img width="214" height="190" src="{{ MEDIA_URL }}{{ course.image }}"/>
                             </a>
                             <div class="des">
-                                <a href="course-detail.html"><h2>scrapy教程</h2></a>
-                                <span class="fl">时长：<i class="key">55</i></span>
-                                <span class="fr">学习人数：0</span>
+                                <a href="{% url 'courses:detail' course.id %}"><h2>{{ course.name }}</h2></a>
+                                <span class="fl">时长：<i class="key">{{ course.learn_time }}</i></span>
+                                <span class="fr">学习人数：{{ course.students }}</span>
                             </div>
                             <div class="bottom">
-                                <span class="fl">北京大学</span>
+                                <span class="fl">{{ course.course_org.name }}</span>
                                 <span class="delete-group fr jsDeleteFav_course" data-favid="12"></span>
                             </div>
                         </div>
-                        
-                        <div class="module1_5 box">
-                            <a href="course-detail.html">
-                                <img width="214" height="190" src="{% static 'media/courses/2016/12/mysql.jpg' %}"/>
-                            </a>
-                            <div class="des">
-                                <a href="course-detail.html"><h2>xadmin进阶开发</h2></a>
-                                <span class="fl">时长：<i class="key">30</i></span>
-                                <span class="fr">学习人数：2</span>
-                            </div>
-                            <div class="bottom">
-                                <span class="fl">慕课网</span>
-                                <span class="delete-group fr jsDeleteFav_course" data-favid="13"></span>
-                            </div>
-                        </div>
-                        
+                        {% endfor %}
 
                     </div>
                 </div>

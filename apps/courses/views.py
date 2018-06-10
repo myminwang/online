@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views.generic.base import View
 from pure_pagination import Paginator, PageNotAnInteger  # 实现分页功能
 
-from .models import Courseinfo
+from .models import Courseinfo, Video, Lession
 from operation.models import UserCourse, CourseComments
 
 
@@ -107,3 +107,29 @@ class CourseCommentView(View):
             'course_lists': course_lists,
             'comments': comments,
         })
+
+
+class VideoPlayView(View):
+    """视频播放页面"""
+    def get(self,request,video_id):
+        video = Video.objects.get(id=video_id)
+        lession = Lession.objects.get(id=video.lession_id)
+        course = Courseinfo.objects.get(id=lession.course_id)
+        course_id = course.id
+        lessions = course.lession_set.all()
+        resources = course.courseresource_set.all()
+
+        user_ids = [usercourse.user_id for usercourse in UserCourse.objects.filter(course_id=course_id)]
+        user_courses_ids = [usercourse.course_id for usercourse in UserCourse.objects.filter(user_id__in=user_ids)]
+        usercourses_ids = set(user_courses_ids)
+        course_lists = Courseinfo.objects.filter(id__in=usercourses_ids).order_by('-click_nums')[:3]
+
+        return render(request,'course-play.html', {
+            'video': video,
+            'course': course,
+            'lessions': lessions,
+            'resources': resources,
+            'course_lists': course_lists,
+
+        })
+

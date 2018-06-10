@@ -7,7 +7,7 @@ from django.conf.urls import url
 from django.urls import path
 
 
-from .views import CoursesListView, CourseDetailView, CourseVideoView, CourseCommentView
+from .views import CoursesListView, CourseDetailView, CourseVideoView, CourseCommentView,VideoPlayView
 
 urlpatterns = [
     # 课程列表
@@ -21,5 +21,8 @@ urlpatterns = [
 
     # 课程评论
     path('comment/<int:course_id>/', CourseCommentView.as_view(), name='comment'),
+
+    # 视频播放
+    path('play/<int:video_id>/', VideoPlayView.as_view(), name='play'),
 
 ]

@@ -198,7 +198,7 @@
         """课程数量"""
         return self.courseinfo_set.count()
 
-* 
+* 个人中心——用户收藏——教师收藏，课程数、工作职位，第一个字有背景
 ## 待优化项目：
 * 邮件发送成功页面、密码修改页面，优化
 * 注册页面输入框中显示None，value=register_form.email.value，一开始没有返回值的原因，如何消除，现在把value注释了，不能显示红框

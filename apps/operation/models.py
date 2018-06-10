@@ -44,7 +44,7 @@ class UserMessage(models.Model):
     系统对用户的消息分为对单个用户的、对全部用户的
     """
     # 如果 为 0 代表全局消息，否则就是用户的 ID
-    user = models.IntegerField(default=0, verbose_name='接收用户')
+    user_id = models.IntegerField(default=0, verbose_name='接收用户')
     messages = models.CharField(verbose_name='消息内容', max_length=500)
     add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.now)
 

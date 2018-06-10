@@ -4,6 +4,7 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from courses.models import Courseinfo
 
 # Create your models here.
 
@@ -51,8 +52,9 @@ class EmailVerification(models.Model):
 
 class Banner(models.Model):
     """轮播图管理"""
+    course = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, null=True, verbose_name='课程')
     image = models.ImageField(verbose_name='轮播图', upload_to='users/%Y/%m', max_length=200)
-    banner_url = models.URLField(verbose_name='轮播图链接', max_length=100)
+    # banner_url = models.URLField(verbose_name='轮播图链接', max_length=100)
     order = models.IntegerField(default=100, verbose_name='顺序')
 
     class Meta:
@@ -60,4 +62,4 @@ class Banner(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.image
+        return self.course.name

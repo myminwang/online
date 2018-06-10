@@ -1,67 +1,67 @@
 {% extends 'base.html' %}
-
+{% block title %}{{ video.name }} - 慕学在线网{% endblock %}
 {% load staticfiles %}
 
-{% block title %}章节信息{% endblock %}
-{% block crumbs%}
-<!--crumbs start-->
-<section>
-	<div class="wp">
-		<div class="crumbs">
-			<ul>
-				<li><a href="{% url 'index' %}">首页</a>></li>
-                <li><a href="{% url 'courses:list' %}">公开课程</a>></li>
-				<li><a href="{% url 'courses:detail' course.id %}">{{ course.name }}</a>></li>
-                <li>章节信息</li>
-			</ul>
-		</div>
-	</div>
-</section>
- {% endblock %}
-{% block body %}
-<div id="main">
+{% block custom_css %}
+  <link rel="stylesheet" href="{%  static 'css/muke/base.css' %}"/>
+  <link rel="stylesheet" href="{%  static 'css/muke/common-less.css' %}"/>
+  <link rel="stylesheet" href="{%  static 'css/muke/course/learn-less.css' %}"/>
+  <link rel="stylesheet" href="{%  static 'css/aui.css' %}"/>
+  <link rel="stylesheet" href="{%  static 'css/mooc.css' %}"/>
+  <link rel="stylesheet" href="{%  static 'css/muke/course/common-less.css' %}">
+  <link rel="stylesheet" href="{%  static 'css/video-js.min.css' %}">
+  <style>
+    .video-js .vjs-big-play-button {
+      top: 50%;
+      left: 50%;
+    }
+  </style>
+{% endblock %}
 
-    <div class="course-infos">
-        <div class="w pr">
-            <div style="height: 15px" class="path">
-            </div>
-            <div class="hd">
-                <h2 class="l">&ensp;{{ course.name }}</h2>
-            </div>
-            <div class="statics clearfix">
-                <div class="static-item ">
-                    <span class="meta-value"><strong>{{ course.get_degree_display }}</strong></span>
-                    <span class="meta">难度</span>
-                    <em></em>
-                </div>
-                <div class="static-item static-time">
-                    <span class="meta-value">{{ course.learn_time }}</span>
-                    <span class="meta">时长</span>
-                    <em></em>
-                </div>
-                <div class="static-item">
-                    <span class="meta-value"><strong>{{ course.students }}</strong></span>
-                    <span class="meta">学习人数</span>
-                    <em></em>
-                </div>
-            </div>
+{% block custom_js %}
+<script src="{% static 'js/video.min.js' %}"></script>
+{% endblock %}
+
+{% block crumbs %}
+    <section>
+        <div class="wp">
+            <ul class="crumbs">
+                <li><a href="{% url 'index' %}">首页</a>></li>
+                <li><a href="{% url 'courses:list' %}">公开课</a> > </li>
+                <li><a href="{% url 'courses:detail' course.id %}">{{ course.name }}</a> > </li>
+                <li>{{ video.name }}</li>
+            </ul>
         </div>
-    </div>
-    <div class="course-info-main clearfix w has-progress">
+    </section>
+{% endblock %}
 
-        <div class="info-bar clearfix">
-        <div class="content-wrap clearfix">
-            <div class="content">
-                <div class="mod-tab-menu">
-                    <ul class="course-menu clearfix">
-                        <li><a class="ui-tabs-active active" id="learnOn"><span>章节</span></a></li>
-                        <li><a id="commentOn" class="" href="{% url 'courses:comment' course.id %}"><span>评论</span></a></li>
-                    </ul>
-                </div>
-                <div id="notice" class="clearfix">
+{% block body %}
+  <div id="main">
+{#视频播放#}
+  <div style=" width:950px;height:670px; margin-left: 50px">
+    <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1200"
+           poster="{{ MEDIA_URL }}{{ course.image }}"
+           data-setup="{}">
+      <source src="{{ video.url }}" type='video/mp4'>
+    </video>
+  </div>
+
+  <div class="course-info-main clearfix w has-progress">
+
+    <div class="info-bar clearfix">
+      <div class="content-wrap clearfix">
+        <div class="content">
+          <div class="mod-tab-menu">
+            <ul class="course-menu clearfix">
+                <li><a class="ui-tabs-active active" id="learnOn"><span>章节</span></a></li>
+                <li><a id="commentOn" class="" href="{% url 'courses:comment' course.id %}"><span>评论</span></a></li>
+            </ul>
+          </div>
+          <div id="notice" class="clearfix">
                     <div class="l"> <strong>课程公告:</strong> <a  href="javascript:void(0)">{{ course.notice }}</a> </div>
-                </div>
-                <div class="mod-chapters">
+          </div>
+
+          <div class="mod-chapters">
 {#章节信息#}
                     {% for lession in lessions %}
                     <div class="chapter chapter-active" >
@@ -121,7 +121,6 @@
                         </div>
                     </div>
 
-
                     <div class="cp-other-learned  js-comp-tabs">
                         <div class="cp-header clearfix">
                             <h2 class="cp-tit l">该课的同学还学过</h2>
@@ -151,7 +150,6 @@
         <div class="clear"></div>
 
     </div>
-
-</div>
+  </div>
 </div>
 {% endblock %}
