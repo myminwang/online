@@ -39,6 +39,7 @@ class CoursesListView(View):
         return render(request, 'course-list.html', {
             'all_courses': allcourses,
             'hot_courses': hot_courses,
+            'sort': sort,
 
         })
 

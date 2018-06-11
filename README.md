@@ -182,7 +182,7 @@
 
 
 ## 待解决问题：
-* xadmin，后台管理不能显示APP的中文名称
+* xadmin，后台管理不能显示APP的中文名称——已解决，原因是之前的models设计有问题，在进行xadmin注册时报错
         每个APP文件下的__init__.py文件添加（以uses为例）：
 
         default_app_config = "users.apps.UsersConfig"
@@ -192,7 +192,7 @@
 * 注册页面第一次显示时，不能显示验证码，点击注册并登录后可以正常显示:已解决，get方式调用视图时，需要将验证码模块render到网页中
 * 用户咨询的手机号正则验证
 * 后台管理中，对机构进行修改时，需要重新上传图片
-* organizations.views的110行，是否可以调用方法进行排序，models中定义
+* organizations.views的110行，是否可以调用方法进行排序，models中定义,目前显示获取的外键是不能排序的，在后台管理页面显示时没有排序功能
 
         def course_nums(self):
         """课程数量"""
@@ -214,7 +214,7 @@
 
 * 课程、教师、机构的点击数处理
 
-
+* 后台管理时，添加课程，选择机构，再选择教师时，只显示该机构的教师
 
 * 服务器启动项目
 * /etc/init.d/nginx restart

@@ -21,8 +21,8 @@
 		<div class="butler_list layout">
 			<div class="head">
 				<ul class="fl tab_header">
-					<li class="active"><a href="?sort=">全部</a> </li>
-					<li ><a href="?sort=hot">人气 &#8595;</a></li>
+					<li class="{% ifequal sort '' %}active{% endifequal %}"><a href="?sort=">全部</a> </li>
+					<li class="{% ifequal sort 'hot' %}active{% endifequal %}"><a href="?sort=hot">人气 &#8595;</a></li>
 				</ul>
                 <div class="fr butler-num">共<span class="key">{{ te_nums }}</span>人&nbsp;&nbsp;&nbsp;</div>
 			</div>
@@ -71,27 +71,27 @@
 {#分页功能#}
 		 <div class="pageturn">
              <ul class="pagelist">
-                <li class="long">
+                 <li class="long">
                     {% if teachers.has_previous %}
                     <a href="?{{ teachers.previous_page_number.querystring }}" class="prev">上一页</a>
                     {% endif %}
-                </li>
+                 </li>
 
-                {% for page in teachers.pages %}
+                 {% for page in teachers.pages %}
                     {% if page %}
                     {% ifequal page teachers.number %}
-                      <li class="active"><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                 <li class="active"><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
                     {% else %}
-                    <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                 <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
                     {% endifequal %}
                   {% else %}
-                    <li class="none"><a href="">...</a></li>
+                 <li class="none"><a href="">...</a></li>
                   {% endif %}
-                {% endfor %}
+                 {% endfor %}
 
-                {% if teachers.has_next %}
-                     <li class="long"><a href="?{{ teachers.next_page_number.querystring }}">下一页</a></li>
-                {% endif %}
+                 {% if teachers.has_next %}
+                 <li class="long"><a href="?{{ teachers.next_page_number.querystring }}">下一页</a></li>
+                 {% endif %}
              </ul>
         </div>
 	</div>

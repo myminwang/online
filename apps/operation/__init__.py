@@ -1,1 +1,1 @@
-# default_app_config = 'operation.apps.OperationConfig'
+default_app_config = 'operation.apps.OperationConfig'

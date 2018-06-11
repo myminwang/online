@@ -45,10 +45,14 @@ class Organizationinfo(models.Model):
     def teacher_nums(self):
         """获取该机构的教师数量"""
         return self.teacher_set.count()
+    teacher_nums.short_description = '教师人数'
 
-    # def course_nums(self):
+    # def get_course_nums(self):
     #     """获取该机构课程总数"""
-    #     return self.courseinfo_set.count()
+    #     course_nums = self.courseinfo_set.all().count()
+    #     self.save()
+    #     return course_nums
+    # get_course_nums.short_description = '课程总数'
 
     class Meta:
         verbose_name = '授课机构'
@@ -60,9 +64,9 @@ class Organizationinfo(models.Model):
 
 class Teacher(models.Model):
     """教师"""
-    org = models.ForeignKey(Organizationinfo, on_delete=models.CASCADE, verbose_name='就职公司')
+    org = models.ForeignKey(Organizationinfo, on_delete=models.CASCADE, verbose_name='就职单位')
     name = models.CharField(verbose_name='姓名', default='', max_length=20)
-    image = models.ImageField(verbose_name='教师头像', upload_to='teachers/%Y/%m', default='default1.png', max_length=100)
+    image = models.ImageField(verbose_name='头像', upload_to='teachers/%Y/%m', default='default1.png', max_length=100)
     age = models.IntegerField(verbose_name='年龄', default=30)
     work_years = models.IntegerField(verbose_name='工作年限', default=0)
     work_position = models.CharField(verbose_name='工作职位', default='', max_length=20)
@@ -78,6 +82,7 @@ class Teacher(models.Model):
     def course_nums(self):
         """课程数量"""
         return self.courseinfo_set.count()  # 使用'实例.course_nums()'调用该方法获取值，在前端可以使用'实例.course_nums'直接获取值
+    course_nums.short_description = '课程数量'
 
     class Meta:
         verbose_name = '教师'

@@ -23,15 +23,13 @@ class IndexView(View):
     """显示首页"""
 
     def get(self, request):
-        banners = Banner.objects.all()
+        banners = Banner.objects.all().order_by('-order')[:3]
         courses = Courseinfo.objects.all().order_by('-click_nums')[:6]
-        banner_courses = Courseinfo.objects.filter(is_banner=True).order_by('-click_nums')[:3]
-        orgs = Organizationinfo.objects.all().order_by('click_nums')[:15]
+        orgs = Organizationinfo.objects.all().order_by('click_nums').order_by('-course_nums')[:15]
 
         return render(request, 'index.html', {
             'banners': banners,
             'courses': courses,
-            'banner_courses': banner_courses,
             'orgs': orgs,
         })
 

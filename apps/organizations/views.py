@@ -44,6 +44,7 @@ class TeacherListView(View):
             'teachers': teach,
             'te_nums': te_nums,
             'hot_teachers': hot_teachers,
+            'sort': sort,
         })
 
     pass

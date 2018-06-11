@@ -40,7 +40,7 @@ class EmailVerification(models.Model):
                                  choices=(('register', '注册'), ('forget', '修改密码'), ('update_email', '修改邮箱')),
                                  default='register')
     send_time = models.DateTimeField(verbose_name='添加时间', default=datetime.datetime.now)
-    is_delete = models.BooleanField(verbose_name='是否已验证', default=0)
+    is_delete = models.BooleanField(verbose_name='是否已验证', default=False)
 
     class Meta:
         verbose_name = '邮箱验证信息'
@@ -52,14 +52,12 @@ class EmailVerification(models.Model):
 
 class Banner(models.Model):
     """轮播图管理"""
-    course = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, null=True, verbose_name='课程')
-    image = models.ImageField(verbose_name='轮播图', upload_to='users/%Y/%m', max_length=200)
-    # banner_url = models.URLField(verbose_name='轮播图链接', max_length=100)
+    image = models.ImageField(verbose_name='轮播图', upload_to='banners/%Y/%m', max_length=200)
+    banner_url = models.URLField(verbose_name='轮播图链接', max_length=100, default='www.baidu.com')
     order = models.IntegerField(default=100, verbose_name='顺序')
+    add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.datetime.now)
 
     class Meta:
         verbose_name = '轮播图管理'
         verbose_name_plural = verbose_name
 
-    def __str__(self):
-        return self.course.name
