@@ -31,7 +31,7 @@
                         <iframe id='frameFile' name='frameFile' style='display: none;'></iframe>
 {#修改头像#}
                         <form class="clearfix" id="jsAvatarForm" enctype="multipart/form-data" autocomplete="off"
-                              method="post" action="/users/image/upload/" target='frameFile'>
+                              method="post" action="{% url 'users:uploadimage' %}" target='frameFile'>
                             <label class="changearea" for="avatarUp">
                         <span id="avatardiv" class="pic">
                             <img width="100" height="100" class="js-img-show" id="avatarShow"
@@ -105,8 +105,8 @@
 
 
     </div>
-</section>
 
+</section>
     <div class="dialog" id="jsDialog">
         <div class="successbox dialogbox" id="jsSuccessTips">
             <h1>成功提交</h1>
@@ -130,6 +130,7 @@
                 </dd>
             </div>
         </div>
+{#修改密码小窗口#}
         <div class="resetpwdbox dialogbox" id="jsResetDialog">
             <h1>修改密码</h1>
             <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
@@ -147,11 +148,11 @@
                     <div class="button">
                         <input id="jsResetPwdBtn" type="button" value="提交"/>
                     </div>
-                    <input type='hidden' name='csrfmiddlewaretoken' value='DaP7IUKm9FA9nELA9YUlYYWpyIDdCiIP'/>
-                    <input type='hidden' name='csrfmiddlewaretoken' value='799Y6iPeEDNSGvrTu3noBrO4MBLv6enY'/>
+                    {% csrf_token %}
                 </form>
             </div>
         </div>
+{#修改邮箱#}
         <div class="dialogbox changeemai1 changephone" id="jsChangeEmailDialog">
             <h1>修改邮箱</h1>
             <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
@@ -188,6 +189,7 @@
                                                                      style="cursor: pointer;">再次发送验证邮件</span></p>
             </div>
         </div>
+{#修改密码#}
         <div class="resetpassbox dialogbox" id="jsSetNewPwd">
             <h1>重新设置密码</h1>
             <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>

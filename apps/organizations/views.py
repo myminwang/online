@@ -22,6 +22,12 @@ class TeacherListView(View):
     def get(self, request):
         teachers = Teacher.objects.all()
         hot_teachers = Teacher.objects.all().order_by('-click_nums')[:3]
+        keywords = request.GET.get('keywords',)
+
+        # 搜索功能,contains相当于like，i表示不区分大小写
+        if keywords:
+            teachers = teachers.filter(name__icontains=keywords)
+
 
         # 教师总数
         te_nums = teachers.count()
@@ -82,6 +88,11 @@ class OrgListView(View):
         """进入机构列表页"""
         all_citys = City.objects.all()
         all_orgs = Organizationinfo.objects.all()
+        keywords = request.GET.get('keywords', '')
+
+        # 搜索功能,contains相当于like，i表示不区分大小写
+        if keywords:
+            all_orgs = all_orgs.filter(name__icontains=keywords)
 
         # 右侧授课机构排名（根据拥有的课程数排名，取前3名），不能放到后面，下面的all_org会改变
         hot_orgs = all_orgs.order_by('-click_nums')[:3]
@@ -128,7 +139,9 @@ class OrgListView(View):
             'org_nums': org_nums,
             'all_orgs': orgs,
             'sort': sort,
-            'hot_orgs': hot_orgs, })
+            'hot_orgs': hot_orgs,
+            'keywords': keywords,
+        })
 
 
 class OrgHomeView(View):

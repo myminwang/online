@@ -28,11 +28,11 @@
 					<div class="cont">
                         <a href="?city={{ city_id }}"><span class="{% ifequal category '' %}active2{% endifequal %}">全部</span></a>
 
-                            <a href="?ct=pxjg&city={{ city_id }}"><span class="{% ifequal category 'pxjg' %}active2{% endifequal %}">培训机构</span></a>
+                            <a href="?ct=pxjg&city={{ city_id }}{% if keywords %}&keywords={{ keywords }}{% endif %}"><span class="{% ifequal category 'pxjg' %}active2{% endifequal %}">培训机构</span></a>
 
-                            <a href="?ct=gx&city={{ city_id }}"><span class="{% ifequal category 'gx' %}active2{% endifequal %}">高校</span></a>
+                            <a href="?ct=gx&city={{ city_id }}{% if keywords %}&keywords={{ keywords }}{% endif %}"><span class="{% ifequal category 'gx' %}active2{% endifequal %}">高校</span></a>
 
-                            <a href="?ct=gr&city={{ city_id }}"><span class="{% ifequal category 'gr' %}active2{% endifequal %}">个人</span></a>
+                            <a href="?ct=gr&city={{ city_id }}{% if keywords %}&keywords={{ keywords }}{% endif %}"><span class="{% ifequal category 'gr' %}active2{% endifequal %}">个人</span></a>
 
 					</div>
 				</li>
@@ -42,7 +42,7 @@
 					<div class="cont">
                         <a href="?ct={{ category }}"><span class="{% if not city_id %}active2{% endif %}">全部</span></a>
                         {% for city in all_citys %}
-                            <a href="?city={{ city.id }}&ct={{ category }}"><span class="{% ifequal city_id city.id %}active2{% endifequal %}">{{ city.name }}</span></a>
+                            <a href="?city={{ city.id }}&ct={{ category }}{% if keywords %}&keywords={{ keywords }}{% endif %}"><span class="{% ifequal city_id city.id %}active2{% endifequal %}">{{ city.name }}</span></a>
 
                         {% endfor %}
 
@@ -182,16 +182,22 @@
 {#ajax，通过 HTTP 请求加载远程数据，.ajax()函数依赖服务器提供的信息来处理返回的数据。#}
 <script>
     $(function(){
+        {#绑定click事件#}
         $('#jsStayBtn').on('click', function(){
             $.ajax({
+                {#是否缓存此页面#}
                 cache: false,
+                {#发送给后端的方式#}
                 type: "POST",
                 {#dataType:"json",#}
+                {#发送给端的路由#}
                 url:"{% url 'org:user_ask' %}",
-                {# serialize()方法将结果转换为字符串,同时将 csrf token 一块序列化过来 #}
+                {# 设置发送给服务器的数据，serialize()方法将结果转换为字符串,同时将 csrf token 一块序列化过来 #}
                 data:$('#jsStayForm').serialize(),
-                {# 所有请求均为异步请求 #}
+                {#(默认: true) 默认设置下，所有请求均为异步请求。如果需要发送同步请求，
+                请将此选项设置为 false。注意，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行#}
                 async: true,
+                {#success：请求成功后的回调函数#}
                 success: function(data) {
                     if(data.status == 'success'){
                         $('#jsStayForm')[0].reset();

@@ -4,6 +4,7 @@
 from django.shortcuts import render
 from django.views.generic.base import View
 from pure_pagination import Paginator, PageNotAnInteger  # 实现分页功能
+from django.db.models import Q
 
 from .models import Courseinfo, Video, Lession
 from operation.models import UserCourse, CourseComments
@@ -17,9 +18,14 @@ class CoursesListView(View):
 
     def get(self, request):
         all_courses = Courseinfo.objects.all()
+        keywords = request.GET.get('keywords', )
 
         # 热门课程推荐
         hot_courses = Courseinfo.objects.order_by('-click_nums')[:3]
+
+        # 搜索功能,contains相当于like，i表示不区分大小写
+        if keywords:
+            all_courses = all_courses.filter(name__icontains=keywords)
 
         # 排序
         sort = request.GET.get('sort', )
@@ -89,6 +95,7 @@ class CourseVideoView(View):
 
 class CourseCommentView(View):
     """课程评论"""
+
     def get(self, request, course_id):
         course = Courseinfo.objects.get(id=course_id)
         resources = course.courseresource_set.all()
@@ -112,7 +119,8 @@ class CourseCommentView(View):
 
 class VideoPlayView(View):
     """视频播放页面"""
-    def get(self,request,video_id):
+
+    def get(self, request, video_id):
         video = Video.objects.get(id=video_id)
         lession = Lession.objects.get(id=video.lession_id)
         course = Courseinfo.objects.get(id=lession.course_id)
@@ -125,7 +133,7 @@ class VideoPlayView(View):
         usercourses_ids = set(user_courses_ids)
         course_lists = Courseinfo.objects.filter(id__in=usercourses_ids).order_by('-click_nums')[:3]
 
-        return render(request,'course-play.html', {
+        return render(request, 'course-play.html', {
             'video': video,
             'course': course,
             'lessions': lessions,
@@ -133,4 +141,3 @@ class VideoPlayView(View):
             'course_lists': course_lists,
 
         })
-

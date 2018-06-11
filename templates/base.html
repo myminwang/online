@@ -70,16 +70,21 @@
                     <a href="{% url 'index' %}"><img width="350" height="100" src="{% static 'images/logo.png' %}"/></a>
                     <div class="searchbox fr">
                         <div class="selectContainer fl">
-                            <span class="selectOption" id="jsSelectOption" data-value="course">
-                                公开课
-                            </span>
+                                {% if request.path|slice:'15' == '/org/teach_list' %}
+                                    <span class="selectOption" id="jsSelectOption" data-value="teacher">授课教师</span>
+                                    {% elif request.path|slice:'13' == '/org/org_list' %}
+                                    <span class="selectOption" id="jsSelectOption" data-value="org">课程机构</span>
+                                    {% else %}
+                                    <span class="selectOption" id="jsSelectOption" data-value="course">公开课</span>
+                                {% endif %}
+                                
                             <ul class="selectMenu" id="jsSelectMenu">
                                 <li data-value="course">公开课</li>
                                 <li data-value="org">课程机构</li>
                                 <li data-value="teacher">授课教师</li>
                             </ul>
                         </div>
-                        <input id="search_keywords" class="fl" type="text" value="" placeholder="请输入搜索内容"/>
+                        <input id="search_keywords" class="fl" type="text" value="{% if request.GET.keywords %}{{ request.GET.keywords }}{% endif %}" placeholder="请输入搜索内容"/>
                         <img class="search_btn fr" id="jsSearchBtn" src="{% static 'images/search_btn.png' %}"/>
                     </div>
                 </div>

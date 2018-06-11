@@ -1,4 +1,6 @@
 # _*_ coding:utf-8 _*_
+import json
+
 from django.shortcuts import render
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password  # 对明文进行加密模块
@@ -8,12 +10,13 @@ from django.contrib.auth.backends import ModelBackend  # 包含authenticate方�
 from django.db.models import Q  # or功能
 from pure_pagination import Paginator, PageNotAnInteger  # 实现分页功能
 
-from .forms import RegisterForm, LoginForm, ForgetpwdForm, PwdmodifyForm
-from .models import UserProfile, EmailVerification ,Banner
+from .forms import RegisterForm, LoginForm, ForgetpwdForm, PwdmodifyForm, UpImageForm, UpUserInfoForm
+from .models import UserProfile, EmailVerification, Banner
 from utils.email_send import send_link_email
-from operation.models import UserCourse,UserFav,UserMessage
+from operation.models import UserCourse, UserFav, UserMessage
 from organizations.models import Organizationinfo, Teacher
 from courses.models import Courseinfo
+from utils.mixin_utils import LoginRequiredMixin
 
 
 # Create your views here.
@@ -246,7 +249,7 @@ class MyCourseView(View):
     def get(self, request):
         user_id = request.user.id
         courses = UserCourse.objects.filter(user_id=user_id)
-        return render(request, 'usercenter-mycourse.html',{
+        return render(request, 'usercenter-mycourse.html', {
             'courses': courses,
         })
 
@@ -294,7 +297,7 @@ class MyMessageView(View):
 
     def get(self, request):
         user_id = request.user.id
-        messages = UserMessage.objects.filter(Q(user_id=user_id)|Q(user_id=0))
+        messages = UserMessage.objects.filter(Q(user_id=user_id) | Q(user_id=0))
 
         # 分页功能
         try:
@@ -307,3 +310,65 @@ class MyMessageView(View):
         return render(request, 'usercenter-message.html', {
             'messages': messagess,
         })
+
+
+class UploadImageView(LoginRequiredMixin, View):
+    """个人中心头像修改"""
+
+    def post(self, request):
+        uploadimage_forms = UpImageForm(request.POST, request.FILES, instance=request.user)
+        res = dict()
+        if uploadimage_forms.is_valid():
+            uploadimage_forms.save()
+            res['status'] = 'success'
+            res['msg'] = '头像修改成功'
+        else:
+            res['status'] = 'fail'
+            res['msg'] = '头像修改失败'
+        return HttpResponse(json.dumps(res), content_type='application/json')
+
+
+class UploadPwdView(LoginRequiredMixin, View):
+    """个人中心的密码修改"""
+
+    def post(self, request):
+        pwdmodify_form = PwdmodifyForm(request.POST)
+        res = dict()
+        if pwdmodify_form.is_valid():
+            pwd1 = request.POST.get('password1', '')
+            pwd2 = request.POST.get('password2', '')
+            if pwd1 != pwd2:
+                res['status'] = 'fail'
+                res['msg'] = '两次密码不一致'
+                return HttpResponse(json.dumps(res), content_type='application/json')
+
+            user = request.user
+            user.password = make_password(pwd2)
+            user.save()
+
+            res['status'] = 'success'
+            res['msg'] = '密码修改成功'
+        else:
+            res = pwdmodify_form.errors
+        return HttpResponse(json.dumps(res), content_type='application/json')
+
+
+class UploadUserInfoView(LoginRequiredMixin, View):
+    """个人中心的个人资料修改"""
+
+    def post(self, request):
+        user_form = UpUserInfoForm(request.POST, instance=request.user)
+        res = dict()
+        if user_form.is_valid():
+            user = UserProfile.objects.get(id=request.user.id)
+            user.nick_name = request.POST.get('nick_name', '')
+            user.birthday = request.POST.get('birthday', '')
+            user.gender = request.POST.get('gender', '')
+            user.address = request.POST.get('address', '')
+            user.mobile = request.POST.get('mobile', '')
+            user.save()
+
+            res['status'] = 'success'
+        else:
+            res = user_form.errors
+        return HttpResponse(json.dumps(res), content_type='application/json')

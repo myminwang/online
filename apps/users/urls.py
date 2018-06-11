@@ -6,7 +6,8 @@ __date__ = "5/29/18 19:27"
 from django.urls import path
 
 from .views import RegisterView, LoginView, RegisterActiveView, UserInfoView, ForgetpwdView, PwdresetView, \
-    PwdmodifyView, LogoutView, MyCourseView, MyfavOrgView, MyfavCourseView, MyfavTeacherView, MyMessageView
+    PwdmodifyView, LogoutView, MyCourseView, MyfavOrgView, MyfavCourseView, MyfavTeacherView, MyMessageView, \
+    UploadImageView, UploadPwdView, UploadUserInfoView
 
 urlpatterns = [
     # 用户注册
@@ -17,6 +18,12 @@ urlpatterns = [
     path('active/<url_active_code>/', RegisterActiveView.as_view()),
     # 个人中心
     path('userinfo/', UserInfoView.as_view(), name='userinfo'),
+    # 个人中心——头像修改
+    path('uploadimage/', UploadImageView.as_view(), name='uploadimage'),
+    # 个人中心——密码修改
+    path('uploadpwd/', UploadPwdView.as_view(), name='uploadpwd'),
+    # 个人中心——基本资料修改
+    path('uploadinfo/', UploadUserInfoView.as_view(), name='uploadinfo'),
     # 我的课程
     path('mycourse/', MyCourseView.as_view(), name='mycourse'),
     # 我的收藏——机构

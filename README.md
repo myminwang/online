@@ -199,6 +199,14 @@
         return self.courseinfo_set.count()
 
 * 个人中心——用户收藏——教师收藏，课程数、工作职位，第一个字有背景
+* 首页搜索时，公开课，视图编写使用Q选择:all_courses = all_courses.filter(Q(name__icontains=keywords) | Q(lession__name__icontains=keywords) | Q(
+                lession__video__name__icontains=keywords))，结果为多个重复值
+                
+* 在users.views中头像上传处理的json接收方，没有处理过程？
+* 个人信息页面，基本资料修改有问题，不能连续修改，电话不能验证
+
+
+
 ## 待优化项目：
 * 邮件发送成功页面、密码修改页面，优化
 * 注册页面输入框中显示None，value=register_form.email.value，一开始没有返回值的原因，如何消除，现在把value注释了，不能显示红框
