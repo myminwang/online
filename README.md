@@ -204,6 +204,7 @@
                 
 * 在users.views中头像上传处理的json接收方，没有处理过程？
 * 个人信息页面，基本资料修改有问题，不能连续修改，电话不能验证
+* 登录或登出时，返回首页的静态文件不能加载
 
 
 
@@ -224,6 +225,18 @@
 
 * 后台管理时，添加课程，选择机构，再选择教师时，只显示该机构的教师
 
-* 服务器启动项目
-* /etc/init.d/nginx restart
-* uwsgi --http :8000 --plugin python --module Online_learning.wsgi
+* 重新启动Nginx
+* sudo /etc/init.d/nginx restart
+
+* 项目目录下重新启动uwsgi
+* uwsgi --reload uwsgi.pid
+
+* 启动测试
+* uwsgi --http :8000 --plugin python --wsgi-file test.py
+
+* 启动项目
+* uwsgi --http :8000 --plugin python3 --module online.wsgi
+* uwsgi --ini uwsgi.ini
+
+
+uwsgi --http :8000 --plugin python --module online.wsgi

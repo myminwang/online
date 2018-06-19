@@ -34,7 +34,7 @@ class CourseinfoAdmin:
                      'degree', 'students', 'learn_time', 'category', 'fav_nums',
                      'click_nums', 'detail', 'is_banner', 'before_know', 'teacher_tell', 'add_time']
     readonly_fields = ['fav_nums', 'click_nums', 'students', 'add_time']
-    inlines = [LessonInline, CourseResourceInline]
+    # inlines = [LessonInline, CourseResourceInline]
 
 
 class LessionAdmin:

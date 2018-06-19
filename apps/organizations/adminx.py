@@ -32,7 +32,7 @@ class TeacherAdmin:
                     'teach_points', 'add_time', 'fav_nums', 'click_nums', 'course_nums']
     list_filter = ['org', 'name', 'age', 'work_years']
     search_fields = ['org', 'name']
-    fields = ['name', 'age', 'org', 'work_position', 'work_years',
+    fields = ['name', 'age', 'org', 'work_position', 'work_years', 'image',
               'teach_points']
     list_per_page = 10
 

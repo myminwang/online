@@ -29,11 +29,13 @@ class IndexView(View):
         banners = Banner.objects.all().order_by('-order')[:3]
         courses = Courseinfo.objects.all().order_by('-click_nums')[:6]
         orgs = Organizationinfo.objects.all().order_by('click_nums').order_by('-course_nums')[:15]
+        banner_courses = Courseinfo.objects.filter(is_banner=True).order_by('-click_nums')[:3]
 
         return render(request, 'index.html', {
             'banners': banners,
             'courses': courses,
             'orgs': orgs,
+            'banner_courses':banner_courses,
         })
 
 

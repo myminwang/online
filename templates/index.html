@@ -14,7 +14,7 @@
                 <ul class="imgs">
                     {% for banner in banners %}
                     <li>
-                        <a href="{{ banner.url }}">
+                        <a href="{{ banner.banner_url }}">
                             <img width="1200" height="478" src="{{ MEDIA_URL }}{{ banner.image }}" />
                         </a>
                     </li>
@@ -83,21 +83,21 @@
                         <div class="unslider-arrow2 prev"></div>
                         <div class="unslider-arrow2 next"></div>
                     </div>
-                        {% for banner_course in banner_courses %}
+                        {% for course in courses %}
                         <div class="module1_{{ forloop.counter|add:2 }} box">
-                            <a href="{% url 'courses:detail' banner_course.id %}">
-                                <img width="233" height="190" src="{{ MEDIA_URL }}{{ banner_course.image }}"/>
+                            <a href="{% url 'courses:detail' course.id %}">
+                                <img width="233" height="190" src="{{ MEDIA_URL }}{{ course.image }}"/>
                             </a>
                             <div class="des">
-                                <a href="{% url 'courses:detail' banner_course.id %}">
-                                    <h2 title="{{ banner_course.name }}">{{ banner_course.name }}</h2>
+                                <a href="{% url 'courses:detail' course.id %}">
+                                    <h2 title="{{ course.name }}">{{ course.name }}</h2>
                                 </a>
-                                <span class="fl">难度：<i class="key">{{ banner_course.get_degree_display }}</i></span>
-                                <span class="fr">学习人数：{{ banner_course.students }}</span>
+                                <span class="fl">难度：<i class="key">{{ course.get_degree_display }}</i></span>
+                                <span class="fr">学习人数：{{ course.students }}</span>
                             </div>
                             <div class="bottom">
-                                <span class="fl" title="{{ banner_course.course_org.name }}">{{ banner_course.course_org.name }}</span>
-                                <span class="star fr">{{ banner_course.fav_nums }}</span>
+                                <span class="fl" title="{{ course.course_org.name }}">{{ course.course_org.name }}</span>
+                                <span class="star fr">{{ course.fav_nums }}</span>
                             </div>
                         </div>
                         {% endfor %}
