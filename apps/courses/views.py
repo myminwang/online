@@ -7,7 +7,8 @@ from pure_pagination import Paginator, PageNotAnInteger  # 实现分页功能
 from django.db.models import Q
 
 from .models import Courseinfo, Video, Lession
-from operation.models import UserCourse, CourseComments
+from operation.models import UserCourse, CourseComments, UserFav
+from utils.mixin_utils import LoginRequiredMixin
 
 
 # Create your views here.
@@ -60,14 +61,28 @@ class CourseDetailView(View):
         # 学习该课程的用户
         users = course.usercourse_set.filter(course_id=course_id)
 
+        # 是否已收藏   课程
+        is_course_fav = False
+        if request.user.is_authenticated:  # is_authenticated是属性，不是方法
+            if UserFav.objects.filter(user=request.user, fav_type=0, fav_id=course_id):
+                is_course_fav = True
+
+        # 是否已收藏   右侧机构
+        is_fav = False
+        if request.user.is_authenticated:  # is_authenticated是属性，不是方法
+            if UserFav.objects.filter(user=request.user, fav_type=1, fav_id=course.course_org.id):
+                is_fav = True
+
         return render(request, 'course-detail.html', {
             'course': course,
             'users': users,
+            'is_fav':is_fav,
+            'is_course_fav':is_course_fav,
 
         })
 
 
-class CourseVideoView(View):
+class CourseVideoView(LoginRequiredMixin,View):
     """章节/视频列表"""
 
     def get(self, request, course_id):

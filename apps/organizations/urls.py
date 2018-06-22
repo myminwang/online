@@ -6,7 +6,7 @@ __date__ = "5/29/18 19:27"
 from django.conf.urls import url
 from django.urls import path
 from .views import TeacherListView, OrgListView, OrgHomeView, UserAskView, OrgCourseView, OrgTeacherListView, \
-    OrgDescView, TeacherDetailView
+    OrgDescView, TeacherDetailView, AddFavView
 
 urlpatterns = [
     # 教师列表
@@ -32,4 +32,7 @@ urlpatterns = [
 
     # 机构介绍
     path('org_desc/<int:org_id>/', OrgDescView.as_view(), name='org_desc'),
+
+    # 收藏机构
+    path('add_fav/',AddFavView.as_view(), name='add_fav'),
 ]

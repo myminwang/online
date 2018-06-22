@@ -195,7 +195,7 @@ class PwdresetView(View):
             return render(request, 'register_active_failed.html')
 
 
-class PwdmodifyView(View):
+class PwdmodifyView(LoginRequiredMixin, View):
     """密码重置功能"""
 
     def post(self, request):

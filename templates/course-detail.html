@@ -50,7 +50,11 @@
 						</ul>
                             <div class="btns">
                                 <div class="btn colectgroupbtn"  id="jsLeftBtn">
-                                      收藏
+                                    {% if is_course_fav %}
+                                        已收藏
+                                        {% else %}
+                                        收藏
+                                    {% endif %}
                                 </div>
                                 <div class="buy btn"><a style="color: white" href="{% url 'courses:video' course.id%}">开始学习</a></div>
                             </div>
@@ -95,7 +99,12 @@
                     <p class="center tell">地址：{{ course.course_org.address }}</p>
                     <div class="center">
                         <a class="btn  notlogin" data-favid="14" id="jsRightBtn">
-                        收藏
+                            {% if is_fav %}
+                                已收藏
+                            {% else %}
+                                收藏
+                            {% endif %}
+
                         </a>
                     </div>
                     <br>
@@ -134,16 +143,16 @@ function add_fav(current_elem, fav_id, fav_type){
     $.ajax({
         cache: false,
         type: "POST",
-        url:"/org/add_fav/",
+        url:"{% url 'org:add_fav' %}",
         data:{'fav_id':fav_id, 'fav_type':fav_type},
         async: true,
         beforeSend:function(xhr, settings){
-            xhr.setRequestHeader("X-CSRFToken", "5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy");
+            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
         },
         success: function(data) {
             if(data.status == 'fail'){
                 if(data.msg == '用户未登录'){
-                    window.location.href="login.html";
+                    window.location.href="{% url 'users:login' %}";
                 }else{
                     alert(data.msg)
                 }
@@ -156,11 +165,11 @@ function add_fav(current_elem, fav_id, fav_type){
 }
 
 $('#jsLeftBtn').on('click', function(){
-    add_fav($(this), 10, 1);
+    add_fav($(this), {{ course.id }}, 0);
 });
 
 $('#jsRightBtn').on('click', function(){
-    add_fav($(this), 2, 2);
+    add_fav($(this), {{ course.course_org.id }}, 1);
 });
 
 

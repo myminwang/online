@@ -9,7 +9,7 @@ from django.http import HttpResponse
 
 from .models import City, Organizationinfo, Teacher
 from .forms import UserAskForm
-from operation.models import UserAsk
+from operation.models import UserAsk, UserFav
 from courses.models import Courseinfo
 
 
@@ -66,6 +66,18 @@ class TeacherDetailView(View):
         # 教师排行
         hot_teachers = Teacher.objects.all().order_by('-click_nums')[:3]
 
+        # 是否已收藏   教师
+        is_tea_fav = False
+        if request.user.is_authenticated:  # is_authenticated是属性，不是方法
+            if UserFav.objects.filter(user=request.user, fav_type=2, fav_id=teacher.id):
+                is_tea_fav = True
+
+        # 是否已收藏   右侧机构
+        is_fav = False
+        if request.user.is_authenticated:  # is_authenticated是属性，不是方法
+            if UserFav.objects.filter(user=request.user, fav_type=1, fav_id=teacher.org.id):
+                is_fav = True
+
         # 分页功能
         try:
             page = request.GET.get('page', 1)
@@ -78,6 +90,8 @@ class TeacherDetailView(View):
             'teacher': teacher,
             'te_courses': te_course,
             'hot_teachers': hot_teachers,
+            'is_tea_fav':is_tea_fav,
+            'is_fav':is_fav,
         })
 
 
@@ -152,10 +166,18 @@ class OrgHomeView(View):
         org = Organizationinfo.objects.get(id=org_id)
         org_courses = org.courseinfo_set.all()[:4]
         org_teachers = org.teacher_set.all()[:5]
+
+        # 判断是否已收藏
+        is_fav = False
+        if request.user.is_authenticated:   # is_authenticated是属性，不是方法
+            if UserFav.objects.filter(user=request.user, fav_type=1, fav_id=org_id):
+                is_fav = True
+
         context = {
             'org': org,
             'org_courses': org_courses,
             'org_teachers': org_teachers,
+            'is_fav':is_fav,
         }
         return render(request, 'org-detail-homepage.html', context)
 
@@ -238,4 +260,57 @@ class UserAskView(View):
             for key, error in userask_form.errors.items():
                 res['msg'] = error
                 break  # 只显示一个错误
+        return HttpResponse(json.dumps(res), content_type='application/json')
+
+
+class AddFavView(View):
+    """课程机构  用户收藏、取消收藏"""
+    def set_fav_nums(self,fav_id,fav_type,sign=1):
+        """处理收藏数据"""
+        if fav_type == 0:   # 课程收藏
+            course = Courseinfo.objects.get(id=fav_id)
+            course.fav_nums += sign
+            course.save()
+        if fav_type == 1:   # 机构收藏
+            org = Organizationinfo.objects.get(id=fav_id)
+            org.fav_nums += sign
+            org.save()
+        if fav_type == 2:   # 教师收藏
+            teacher = Teacher.objects.get(id=fav_id)
+            teacher.fav_nums += sign
+            teacher.save()
+
+
+    def post(self, request):
+        fav_id = request.POST.get('fav_id','')
+        fav_type = request.POST.get('fav_type','')
+
+        res = dict()
+        if not request.user.is_authenticated:   # is_authenticated是属性，不是方法
+            res['status'] = 'fail'
+            res['msg'] = '用户未登录'
+            return HttpResponse(json.dumps(res), content_type='application/json')
+
+        # 是否已收藏
+        exist_records = UserFav.objects.filter(user=request.user,fav_id=fav_id,fav_type=fav_type)
+        if exist_records:     # 已收藏，点击后取消收藏
+            res['status'] = 'success'
+            res['msg'] = '收藏'
+
+            self.set_fav_nums(fav_id=fav_id,fav_type=fav_type,sign=-1)
+            exist_records.delete()
+        else:         # 未收藏，点击收藏
+            userfav = UserFav()
+            if fav_type and fav_id:
+                res['status'] = 'success'
+                res['msg'] = '已收藏'
+
+                self.set_fav_nums(fav_id=fav_id, fav_type=fav_type, sign=1)
+                userfav.user = request.user
+                userfav.fav_id = fav_id
+                userfav.fav_type = fav_type
+                userfav.save()
+            else:
+                res['status'] = 'fail'
+                res['msg'] = '收藏出错'
         return HttpResponse(json.dumps(res), content_type='application/json')

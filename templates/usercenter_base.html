@@ -79,16 +79,6 @@
 
 {% block body %}{% endblock %}
 
-<!--sidebar start-->
-<section>
-    <ul class="sidebar">
-        <li class="qq">
-            <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2023525077&site=qq&menu=yes"></a>
-        </li>
-        <li class="totop"></li>
-    </ul>
-</section>
-<!--sidebar end-->
 
 
 <div class="bg" id="dialogBg"></div>
@@ -114,11 +104,11 @@
         $.ajax({
                 cache: false,
                 type: "POST",
-                url: "/org/add_fav/",
+                url: "{% url 'org:add_fav' %}",
                 data: {
-                    fav_type: 1,
+                    fav_type: 0,
                     fav_id: favid,
-                    csrfmiddlewaretoken: '799Y6iPeEDNSGvrTu3noBrO4MBLv6enY'
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
                 async: true,
                 success: function(data) {
@@ -133,11 +123,11 @@
             $.ajax({
                     cache: false,
                     type: "POST",
-                    url: "/org/add_fav/",
+                    url: "{% url 'org:add_fav' %}",
                     data: {
-                        fav_type: 3,
+                        fav_type: 2,
                         fav_id: favid,
-                        csrfmiddlewaretoken: '799Y6iPeEDNSGvrTu3noBrO4MBLv6enY'
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
                     },
                     async: true,
                     success: function(data) {
@@ -153,11 +143,11 @@
             $.ajax({
                     cache: false,
                     type: "POST",
-                    url: "/org/add_fav/",
+                    url: "{% url 'org:add_fav' %}",
                     data: {
-                        fav_type: 2,
+                        fav_type: 1,
                         fav_id: favid,
-                        csrfmiddlewaretoken: '799Y6iPeEDNSGvrTu3noBrO4MBLv6enY'
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
                     },
                     async: true,
                     success: function(data) {

@@ -23,14 +23,14 @@
 
 <section class="headerwrap headerwrap2">
     <header>
-		<div  class="header2 header">
+		<div  class="header header2">
             <div class="top">
 				<div class="wp">
 					<div class="fl"><p>服务电话：<b>88888888</b></p></div>
 
 					<!--验证是否已登录start-->
                     {% if request.user.is_authenticated %}
-{#                        登录后跳转#}
+{#登录后跳转#}
 						<div class="personal">
                             <dl class="user fr">
                                 <dd>{{ request.user.nick_name }}<img class="down fr" src="{% static 'images/top_down.png' %}"/></dd>
@@ -51,7 +51,7 @@
                             </div>
                         </div>
                     {% else %}
-{#                        未登录显示#}
+{#未登录显示#}
                         <a style="color:white" class="fr registerbtn" href="{% url 'users:register' %}">注册</a>
                         <a style="color:white" class="fr loginbtn" href="{% url 'users:login' %}">登录</a>
                     {% endif %}
@@ -77,10 +77,18 @@
                             <span class="key">5.0</span>
                         </p>
                     </div>
-                    <div class="btn fr collectionbtn  notlogin
-                         "data-favid="22" data-fav-type="1">
+                    {% if is_fav %}
+                        <div class="btn fr collectionbtn  notlogin
+                         "data-favid="22" data-fav-type="1" title="取消收藏">
+                         已收藏
+                    </div>
+                    {% else %}
+                      <div class="btn fr collectionbtn  notlogin
+                         "data-favid="22" data-fav-type="1" title="点击收藏">
                          收藏
                     </div>
+                    {% endif %}
+
                 </div>
             </div>
                     <!--机构页面头部end-->
@@ -137,21 +145,22 @@
 
 <script type="text/javascript" src="{% static 'js/plugins/jquery.raty.js' %}"></script>
 <script type="text/javascript">
+
 //收藏分享
 function add_fav(current_elem, fav_id, fav_type){
     $.ajax({
         cache: false,
         type: "POST",
-        url:"/org/add_fav/",
+        url:"{% url 'org:add_fav' %}",
         data:{'fav_id':fav_id, 'fav_type':fav_type},
         async: true,
         beforeSend:function(xhr, settings){
-            xhr.setRequestHeader("X-CSRFToken", "5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy");
+            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
         },
         success: function(data) {
             if(data.status == 'fail'){
                 if(data.msg == '用户未登录'){
-                    window.location.href="login.html";
+                    window.location.href="{% url 'users:login' %}";
                 }else{
                     alert(data.msg)
                 }
@@ -164,7 +173,7 @@ function add_fav(current_elem, fav_id, fav_type){
 }
 
 $('.collectionbtn').on('click', function(){
-    add_fav($(this), 1, 2);
+    add_fav($(this), {{ org.id }}, 1);
 });
 
 $(function(){

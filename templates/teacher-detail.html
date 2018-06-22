@@ -28,7 +28,11 @@
                             </div>
                             <div class="btn">
                                 <span class="fl btn1 collectionbtn" id="jsLeftBtn">
-                                     收藏
+                                    {% if is_tea_fav %}
+                                        已收藏
+                                    {% else %}
+                                        收藏
+                                    {% endif %}
                                 </span>
                                 <span class="fr btn2 shareBtn bdsharebuttonbox"
                                       data-text="授课教师-{{ teacher.name }}-在线学习网"
@@ -142,7 +146,14 @@
                     <h2 class="center">{{ teacher.org.name }}</h2>
                 </a>
                 <p class="center tell">地址：{{ teacher.org.address }}</p>
-                <a class="btn" id="jsRightBtn">收藏</a>
+                <a class="btn" id="jsRightBtn">
+                    {% if is_fav %}
+                        已收藏
+                        {% else %}
+                        收藏
+
+                    {% endif %}
+                </a>
             </div>
             </div>
 {#右侧下部教师排行#}
@@ -185,7 +196,7 @@ function add_fav(current_elem, fav_id, fav_type){
         data:{'fav_id':fav_id, 'fav_type':fav_type},
         async: true,
         beforeSend:function(xhr, settings){
-            xhr.setRequestHeader("X-CSRFToken", "5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy");
+            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
         },
         success: function(data) {
             if(data.status == 'fail'){
@@ -203,11 +214,11 @@ function add_fav(current_elem, fav_id, fav_type){
 }
 
 $('#jsLeftBtn').on('click', function(){
-    add_fav($(this), 1, 3);
+    add_fav($(this), {{ teacher.id }}, 2);
 });
 
 $('#jsRightBtn').on('click', function(){
-    add_fav($(this), 1, 2);
+    add_fav($(this), {{ teacher.org.id }}, 1);
 });
 
 
