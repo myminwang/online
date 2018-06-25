@@ -182,15 +182,6 @@
 
 
 ## 待解决问题：
-* xadmin，后台管理不能显示APP的中文名称——已解决，原因是之前的models设计有问题，在进行xadmin注册时报错
-        每个APP文件下的__init__.py文件添加（以uses为例）：
-
-        default_app_config = "users.apps.UsersConfig"
-
-        使用runserver或makemigrations时，报错：
-        ModuleNotFoundError: No module named 'users'
-* 注册页面第一次显示时，不能显示验证码，点击注册并登录后可以正常显示:已解决，get方式调用视图时，需要将验证码模块render到网页中
-* 用户咨询的手机号正则验证
 * 后台管理中，对机构进行修改时，需要重新上传图片
 * organizations.views的110行，是否可以调用方法进行排序，models中定义,目前显示获取的外键是不能排序的，在后台管理页面显示时没有排序功能
 
@@ -198,19 +189,13 @@
         """课程数量"""
         return self.courseinfo_set.count()
 
-* 个人中心——用户收藏——教师收藏，课程数、工作职位，第一个字有背景
-* 首页搜索时，公开课，视图编写使用Q选择:all_courses = all_courses.filter(Q(name__icontains=keywords) | Q(lession__name__icontains=keywords) | Q(
-                lession__video__name__icontains=keywords))，结果为多个重复值
-                
-* 在users.views中头像上传处理的json接收方，没有处理过程？
-* 个人信息页面，基本资料修改有问题，不能连续修改，电话不能验证
+* 前端相关：个人中心——用户收藏——教师收藏，课程数、工作职位，第一个字有背景
 * 登录或登出时，返回首页的静态文件不能加载
-* 个人信息-收藏-课程收藏，删除书会弹出窗口，哎
+* 个人信息-收藏-课程收藏，删除书会弹出窗口.
 
 
 
 ## 待优化项目：
-* 邮件发送成功页面、密码修改页面，优化
 * 注册页面输入框中显示None，value=register_form.email.value，一开始没有返回值的原因，如何消除，现在把value注释了，不能显示红框
 * 直接输入网址链接，是否能直接进入相应页面？
 * org-list.html 的第44行不理解，第88、89行待修改
