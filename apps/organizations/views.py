@@ -182,8 +182,6 @@ class OrgHomeView(View):
         return render(request, 'org-detail-homepage.html', context)
 
 
-# 机构推荐指数
-# 收藏机构
 
 class OrgCourseView(View):
     """机构课程"""

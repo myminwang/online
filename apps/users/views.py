@@ -157,7 +157,7 @@ class LoginView(View):
 
 
 class ForgetpwdView(View):
-    """忘记密码功能"""
+    """登录页面点击忘记密码"""
 
     def get(self, request):
         """get方法获取URL中数据,调用验证码模块，render到网页中，否则不显示验证码"""
@@ -182,7 +182,7 @@ class ForgetpwdView(View):
 
 
 class PwdresetView(View):
-    """密码重置链接处理"""
+    """密码重置链接处理,点击转向密码重置页面"""
 
     def get(self, request, url_pwdreset_code):
         pwdreset_code = url_pwdreset_code
@@ -241,11 +241,10 @@ class UserInfoView(View):
         if not user:  # 未登录
             return render(request, 'login.html', {'pwdreset_msg': '您还未登录...'})
         else:
-
             return render(request, 'usercenter-info.html')
 
 
-class MyCourseView(View):
+class MyCourseView(LoginRequiredMixin, View):
     """个人中心之我的课程"""
 
     def get(self, request):
@@ -256,7 +255,7 @@ class MyCourseView(View):
         })
 
 
-class MyfavCourseView(View):
+class MyfavCourseView(LoginRequiredMixin, View):
     """个人中心之我收藏的课程"""
 
     def get(self, request):
@@ -269,7 +268,7 @@ class MyfavCourseView(View):
         })
 
 
-class MyfavOrgView(View):
+class MyfavOrgView(LoginRequiredMixin, View):
     """个人中心之我收藏的机构"""
 
     def get(self, request):
@@ -282,7 +281,7 @@ class MyfavOrgView(View):
         })
 
 
-class MyfavTeacherView(View):
+class MyfavTeacherView(LoginRequiredMixin, View):
     """个人中心之我收藏的教师"""
 
     def get(self, request):
@@ -294,7 +293,7 @@ class MyfavTeacherView(View):
         })
 
 
-class MyMessageView(View):
+class MyMessageView(LoginRequiredMixin, View):
     """个人中心之我的消息"""
 
     def get(self, request):

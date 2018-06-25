@@ -108,7 +108,7 @@ class CourseVideoView(LoginRequiredMixin,View):
         })
 
 
-class CourseCommentView(View):
+class CourseCommentView(LoginRequiredMixin,View):
     """课程评论"""
 
     def get(self, request, course_id):
@@ -132,7 +132,7 @@ class CourseCommentView(View):
         })
 
 
-class VideoPlayView(View):
+class VideoPlayView(LoginRequiredMixin,View):
     """视频播放页面"""
 
     def get(self, request, video_id):
