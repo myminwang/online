@@ -4,11 +4,12 @@ import json
 from django.shortcuts import render
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password  # 对明文进行加密模块
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import login, authenticate, logout  # 登录模块、用户验证方法
 from django.contrib.auth.backends import ModelBackend  # 包含authenticate方法的模块，进行重写，需要在setting里配置
 from django.db.models import Q  # or功能
 from pure_pagination import Paginator, PageNotAnInteger  # 实现分页功能
+from django.urls import reverse
 
 from .forms import RegisterForm, LoginForm, ForgetpwdForm, PwdmodifyForm, UpImageForm, UpUserInfoForm
 from .models import UserProfile, EmailVerification, Banner
@@ -134,7 +135,8 @@ class LoginView(View):
             if user:  # 通过验证
                 if user.is_active:  # 已激活
                     login(request, user)
-                    return render(request, 'index.html', {})
+                    # return render(request, 'index.html', {})
+                    return HttpResponseRedirect(reverse('index'))
                 else:
                     return render(request, 'login.html', {'msg': '用户未激活'})
             else:
@@ -229,7 +231,8 @@ class LogoutView(View):
     def get(self, request):
         """get方式进行注销登录"""
         logout(request)  # 源码显示，logout只需要一个参数
-        return render(request, 'index.html')
+        # return render(request, 'index.html')
+        return HttpResponseRedirect(reverse('index'))
 
 
 class UserInfoView(View):

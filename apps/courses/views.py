@@ -58,6 +58,10 @@ class CourseDetailView(View):
         """课程详情页处理"""
         course = Courseinfo.objects.get(id=course_id)
 
+        # 课程点击数
+        course.click_nums += 1
+        course.save()
+
         # 学习该课程的用户
         users = course.usercourse_set.filter(course_id=course_id)
 
@@ -89,6 +93,10 @@ class CourseVideoView(LoginRequiredMixin,View):
         course = Courseinfo.objects.get(id=course_id)
         lessions = course.lession_set.all()
         resources = course.courseresource_set.all()
+
+        # 课程学习人数
+        course.students += 1
+        course.save()
 
         # 该课的同学还学过
         # 获取所有学过本课程的用户的id

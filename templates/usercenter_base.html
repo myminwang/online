@@ -46,8 +46,8 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="usercenter-message.html">
-                            <div class="msg-num"><span id="MsgNum">0</span></div>
+                        <a href="{% url 'users:mymessage' %}">
+                            <div class="msg-num"><span id="MsgNum">{{ request.user.get_unread_nums }}</span></div>
                         </a>
 
 

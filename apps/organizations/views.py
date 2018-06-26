@@ -63,6 +63,10 @@ class TeacherDetailView(View):
         teacher = Teacher.objects.get(id=teacher_id)
         te_courses = Courseinfo.objects.filter(teacher_id=teacher_id)
 
+        # 教师点击数
+        teacher.click_nums += 1
+        teacher.save()
+
         # 教师排行
         hot_teachers = Teacher.objects.all().order_by('-click_nums')[:3]
 
@@ -167,6 +171,10 @@ class OrgHomeView(View):
         org_courses = org.courseinfo_set.all()[:4]
         org_teachers = org.teacher_set.all()[:5]
 
+        # 机构点击数
+        org.click_nums += 1
+        org.save()
+
         # 判断是否已收藏
         is_fav = False
         if request.user.is_authenticated:   # is_authenticated是属性，不是方法
@@ -268,14 +276,20 @@ class AddFavView(View):
         if fav_type == 0:   # 课程收藏
             course = Courseinfo.objects.get(id=fav_id)
             course.fav_nums += sign
+            if course.fav_nums < 0:
+                course.fav_nums = 0
             course.save()
         if fav_type == 1:   # 机构收藏
             org = Organizationinfo.objects.get(id=fav_id)
             org.fav_nums += sign
+            if org.fav_nums < 0:
+                org.fav_nums = 0
             org.save()
         if fav_type == 2:   # 教师收藏
             teacher = Teacher.objects.get(id=fav_id)
             teacher.fav_nums += sign
+            if teacher.fav_nums < 0:
+                teacher.fav_nums = 0
             teacher.save()
 
 

@@ -23,6 +23,11 @@ class UserProfile(AbstractUser):
     image = models.ImageField(verbose_name='用户头像', upload_to='users/%Y/%m', default='default.png')
     add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.datetime.now)
 
+    def get_unread_nums(self):
+        """获取未读消息数量"""
+        from operation.models import UserMessage
+        return UserMessage.objects.filter(user_id=self.id, has_read=False).count()
+
     class Meta:
         verbose_name = '用户信息'
         verbose_name_plural = verbose_name

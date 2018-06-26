@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import sys  # 配置app目录
-import pymysql  # mysql 数据库
+import pymysql  # 操作mysql 数据库
 
 pymysql.install_as_MySQLdb()
 
