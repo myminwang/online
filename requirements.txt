@@ -1,25 +1,24 @@
-pip install diff-match-patch==20121119
-pip install Django==2.0.6
-pip install django-crispy-forms==1.7.2
-pip install django-formtools==2.1
-pip install django-import-export==1.0.1
-pip install django-pure-pagination==0.3.0
-pip install django-ranged-response==0.2.0
-pip install django-reversion==2.0.13
-pip install django-simple-captcha==0.5.6
-pip install et-xmlfile==1.0.1
-pip install future==0.16.0
-pip install httplib2==0.9.2
-pip install jdcal==1.4
-pip install odfpy==1.3.6
-pip install olefile==0.45.1
-pip install openpyxl==2.5.3
-pip install Pillow==4.1.0
-pip install PyMySQL==0.8.1
-pip install pytz==2018.4
-pip install PyYAML==3.12
-pip install six==1.11.0
-pip install tablib==0.12.1
-pip install unicodecsv==0.14.1
-pip install xlrd==1.1.0
-pip install xlwt==1.3.0
+diff-match-patch==20121119
+django-crispy-forms==1.7.2
+django-formtools==2.1
+django-import-export==1.0.1
+django-pure-pagination==0.3.0
+django-ranged-response==0.2.0
+django-reversion==2.0.13
+django-simple-captcha==0.5.6
+et-xmlfile==1.0.1
+future==0.16.0
+httplib2==0.9.2
+jdcal==1.4
+odfpy==1.3.6
+olefile==0.45.1
+openpyxl==2.5.3
+Pillow==4.1.0
+PyMySQL==0.8.1
+pytz==2018.4
+PyYAML==3.12
+six==1.11.0
+tablib==0.12.1
+unicodecsv==0.14.1
+xlrd==1.1.0
+xlwt==1.3.0
