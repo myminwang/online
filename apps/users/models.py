@@ -10,10 +10,7 @@ from courses.models import Courseinfo
 
 
 class UserProfile(AbstractUser):
-    """
-    用户基本信息,
-    继承AbstractUser类，需要在setting里配置AUTH_USER_MODEL
-    """
+    """用户信息"""
     nick_name = models.CharField(max_length=20, verbose_name='昵称', default='')
     birthday = models.DateTimeField(verbose_name='生日', null=True)
     gender = models.CharField(max_length=10, choices=(('male', '男'), ('female', '女')), default='male',
@@ -33,7 +30,6 @@ class UserProfile(AbstractUser):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        # 在python 2.7 使用__unicode__(self)
         return self.username
 
 

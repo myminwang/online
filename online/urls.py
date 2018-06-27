@@ -26,13 +26,10 @@ from users.views import IndexView
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-
-    # path('admin/', admin.site.urls),
     path('admin/', xadmin.site.urls),
-    path('captcha/', include('captcha.urls')),
 
-    # 用户操作管理，URL
-    # path('^opera/', include(('operation.urls', 'operation'), namespace='opera')),
+    # 验证码路由
+    path('captcha/', include('captcha.urls')),
 
     # 课程机构相关 URL
     path(r'org/', include(('organizations.urls', 'organizations'), namespace='org')),

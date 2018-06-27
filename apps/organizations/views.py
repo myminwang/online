@@ -13,9 +13,6 @@ from operation.models import UserAsk, UserFav
 from courses.models import Courseinfo
 
 
-# Create your views here.
-
-
 class TeacherListView(View):
     """教师列表"""
 
@@ -24,7 +21,7 @@ class TeacherListView(View):
         hot_teachers = Teacher.objects.all().order_by('-click_nums')[:3]
         keywords = request.GET.get('keywords',)
 
-        # 搜索功能,contains相当于like，i表示不区分大小写
+        # 搜索功能
         if keywords:
             teachers = teachers.filter(name__icontains=keywords)
 
@@ -72,13 +69,13 @@ class TeacherDetailView(View):
 
         # 是否已收藏   教师
         is_tea_fav = False
-        if request.user.is_authenticated:  # is_authenticated是属性，不是方法
+        if request.user.is_authenticated:
             if UserFav.objects.filter(user=request.user, fav_type=2, fav_id=teacher.id):
                 is_tea_fav = True
 
         # 是否已收藏   右侧机构
         is_fav = False
-        if request.user.is_authenticated:  # is_authenticated是属性，不是方法
+        if request.user.is_authenticated:
             if UserFav.objects.filter(user=request.user, fav_type=1, fav_id=teacher.org.id):
                 is_fav = True
 
@@ -108,11 +105,11 @@ class OrgListView(View):
         all_orgs = Organizationinfo.objects.all()
         keywords = request.GET.get('keywords', '')
 
-        # 搜索功能,contains相当于like，i表示不区分大小写
+        # 搜索功能
         if keywords:
             all_orgs = all_orgs.filter(name__icontains=keywords)
 
-        # 右侧授课机构排名（根据拥有的课程数排名，取前3名），不能放到后面，下面的all_org会改变
+        # 右侧授课机构排名
         hot_orgs = all_orgs.order_by('-click_nums')[:3]
 
         # 机构类别筛选
@@ -127,8 +124,6 @@ class OrgListView(View):
             all_orgs = all_orgs.filter(city_id=city_id)
         if city_id == 'None':
             city_id = ''
-            # org_city_id = City.objects.get(name=city_id)
-            # all_orgs = all_orgs.filter(city_id=org_city_id.id)
 
         # 筛选后机构的数量
         org_nums = all_orgs.count()
@@ -141,13 +136,11 @@ class OrgListView(View):
             all_orgs = all_orgs.order_by('-course_nums')
 
         # 分页功能
-        # 尝试获取前台get请求传递过来的page参数
-        # # 如果是不合法的配置参数默认返回第一页
         try:
             page = request.GET.get('page', 1)
         except PageNotAnInteger:
             page = 1
-        p = Paginator(all_orgs, 5, request=request)  # 这里指从allorg中取五个出来，每页显示5个
+        p = Paginator(all_orgs, 5, request=request)
         orgs = p.page(page)
 
         return render(request, 'org-list.html', {
@@ -177,7 +170,7 @@ class OrgHomeView(View):
 
         # 判断是否已收藏
         is_fav = False
-        if request.user.is_authenticated:   # is_authenticated是属性，不是方法
+        if request.user.is_authenticated:
             if UserFav.objects.filter(user=request.user, fav_type=1, fav_id=org_id):
                 is_fav = True
 
@@ -245,9 +238,6 @@ class OrgDescView(View):
 class UserAskView(View):
     """用户咨询处理"""
 
-    # 比较合理的操作是异步的，不会对整个页面进行刷新。如果有错误，显示错误。一种ajax的异步操作。
-    # 因此我们此时不能直接render一个页面回来。应该是给前端返回json数据，而不是页面
-    # HttpResponse类指明给用户返回哪种类型数据
     def post(self, request):
         """用户咨询"""
         userask = UserAsk()
@@ -258,14 +248,13 @@ class UserAskView(View):
             userask.mobile = request.POST.get('mobile', '')
             userask.course_name = request.POST.get('course_name', '')
             userask.save()
-            # userask_form.save(commit=True)
 
             res['status'] = 'success'
         else:
             res['status'] = 'fail'
             for key, error in userask_form.errors.items():
                 res['msg'] = error
-                break  # 只显示一个错误
+                break  # 只显示第一个错误
         return HttpResponse(json.dumps(res), content_type='application/json')
 
 
@@ -298,7 +287,7 @@ class AddFavView(View):
         fav_type = request.POST.get('fav_type','')
 
         res = dict()
-        if not request.user.is_authenticated:   # is_authenticated是属性，不是方法
+        if not request.user.is_authenticated:
             res['status'] = 'fail'
             res['msg'] = '用户未登录'
             return HttpResponse(json.dumps(res), content_type='application/json')

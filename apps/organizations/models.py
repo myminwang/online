@@ -40,19 +40,10 @@ class Organizationinfo(models.Model):
     click_nums = models.IntegerField(verbose_name='点击数', default=0)
     fav_nums = models.IntegerField(verbose_name='收藏数', default=0)
 
-    # 经典课程
-    # 机构教师
     def teacher_nums(self):
         """获取该机构的教师数量"""
         return self.teacher_set.count()
     teacher_nums.short_description = '教师人数'
-
-    # def get_course_nums(self):
-    #     """获取该机构课程总数"""
-    #     course_nums = self.courseinfo_set.all().count()
-    #     self.save()
-    #     return course_nums
-    # get_course_nums.short_description = '课程总数'
 
     class Meta:
         verbose_name = '授课机构'
@@ -81,8 +72,8 @@ class Teacher(models.Model):
 
     def course_nums(self):
         """课程数量"""
-        return self.courseinfo_set.count()  # 使用'实例.course_nums()'调用该方法获取值，在前端可以使用'实例.course_nums'直接获取值
-    course_nums.short_description = '课程数量'
+        return self.courseinfo_set.count()
+    course_nums.short_description = '课程数量'  # 后台管理显示
 
     class Meta:
         verbose_name = '教师'

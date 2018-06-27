@@ -4,7 +4,6 @@
 from django.shortcuts import render
 from django.views.generic.base import View
 from pure_pagination import Paginator, PageNotAnInteger  # 实现分页功能
-from django.db.models import Q
 
 from .models import Courseinfo, Video, Lession
 from operation.models import UserCourse, CourseComments, UserFav
@@ -24,7 +23,7 @@ class CoursesListView(View):
         # 热门课程推荐
         hot_courses = Courseinfo.objects.order_by('-click_nums')[:3]
 
-        # 搜索功能,contains相当于like，i表示不区分大小写
+        # 搜索功能
         if keywords:
             all_courses = all_courses.filter(name__icontains=keywords)
 
@@ -99,13 +98,9 @@ class CourseVideoView(LoginRequiredMixin,View):
         course.save()
 
         # 该课的同学还学过
-        # 获取所有学过本课程的用户的id
         user_ids = [usercourse.user_id for usercourse in UserCourse.objects.filter(course_id=course_id)]
-        # 获取这些用户学习过的所有课程的id
         user_courses_ids = [usercourse.course_id for usercourse in UserCourse.objects.filter(user_id__in=user_ids)]
-        # 对筛选出的课程id进行去重
         usercourses_ids = set(user_courses_ids)
-        # 对选出的id对应的课程对象，按照点击数排序后取前3名
         course_lists = Courseinfo.objects.filter(id__in=usercourses_ids).order_by('-click_nums')[:3]
 
         return render(request, 'course-video.html', {

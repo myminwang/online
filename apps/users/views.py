@@ -3,11 +3,11 @@ import json
 
 from django.shortcuts import render
 from django.views.generic.base import View
-from django.contrib.auth.hashers import make_password  # 对明文进行加密模块
+from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse,HttpResponseRedirect
-from django.contrib.auth import login, authenticate, logout  # 登录模块、用户验证方法
-from django.contrib.auth.backends import ModelBackend  # 包含authenticate方法的模块，进行重写，需要在setting里配置
-from django.db.models import Q  # or功能
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.backends import ModelBackend
+from django.db.models import Q
 from pure_pagination import Paginator, PageNotAnInteger  # 实现分页功能
 from django.urls import reverse
 
@@ -18,9 +18,6 @@ from operation.models import UserCourse, UserFav, UserMessage
 from organizations.models import Organizationinfo, Teacher
 from courses.models import Courseinfo
 from utils.mixin_utils import LoginRequiredMixin
-
-
-# Create your views here.
 
 
 class IndexView(View):
@@ -44,25 +41,15 @@ class RegisterView(View):
     """用户注册功能"""
 
     def get(self, request):
-        """get方法获取URL中数据,调用验证码模块，render到网页中，否则不显示验证码"""
         register_form = RegisterForm()
         return render(request, 'register.html', {'register_form': register_form})
 
     def post(self, request):
-        """
-        获取html传回的form数据
-        form验证、数据库存在验证
-        发送验证邮件、保存到数据库
-        """
-        # 进行form验证
-        register_form = RegisterForm(request.POST)  # 将html提供的POST对象传入,并将判断结果传回给变量
-        if register_form.is_valid():  # is_valid()为固定用法，判断是否验证通过
-
-            # 验证通过，获取用户输入的参数
+        register_form = RegisterForm(request.POST)
+        if register_form.is_valid():
             email = request.POST.get('email', '')
             password = request.POST.get('password', '')
             if UserProfile.objects.filter(email=email):  # 判断邮箱是否已经注册过了
-                # 如果使用get方法，未匹配到会报错，使用filter未匹配到返回[]，为False
                 return render(request, 'register.html', {'register_form': register_form, 'msg': '用户已经存在！'})
             else:
                 user_profile = UserProfile()
@@ -86,13 +73,11 @@ class RegisterActiveView(View):
     """注册激活功能"""
 
     def get(self, request, url_active_code):
-        """获取url中的验证码"""
         regis_actives = EmailVerification.objects.filter(code=url_active_code, is_delete=0)
-        # 如果在数据库中有符合要求的数据，则返回该对象（包括数据库中该行记录）给regis_actives
         if regis_actives:
-            for regis_active in regis_actives:  # 第一次遍历，regis_active获取该对象在数据库中的该行记录，类字典方式存在变量中
+            for regis_active in regis_actives:
                 email = regis_active.email
-                user = UserProfile.objects.get(email=email)  # 获取用户信息中此邮箱的用户，将该条记录以类字典方式传给user
+                user = UserProfile.objects.get(email=email)
                 user.is_active = True
                 user.save()
 
@@ -105,7 +90,6 @@ class RegisterActiveView(View):
 
 class ChongxieAuthenticate(ModelBackend):
     """重写authenticate方法,使之可以对邮箱验证"""
-
     def authenticate(self, username=None, password=None, **kwargs):
         try:
             user = UserProfile.objects.get(Q(username=username) | Q(email=username))
@@ -121,7 +105,6 @@ class LoginView(View):
     """用户登录功能"""
 
     def get(self, request):
-        """不允许get方式登录"""
         return render(request, 'login.html', {})
 
     def post(self, request):
@@ -129,31 +112,15 @@ class LoginView(View):
         if login_form.is_valid():
             login_user = request.POST.get('username', '')
             login_password = request.POST.get('password', '')
-
-            # 使用django自带的用户名、密码验证
             user = authenticate(username=login_user, password=login_password)
             if user:  # 通过验证
                 if user.is_active:  # 已激活
                     login(request, user)
-                    # return render(request, 'index.html', {})
                     return HttpResponseRedirect(reverse('index'))
                 else:
                     return render(request, 'login.html', {'msg': '用户未激活'})
             else:
                 return render(request, 'login.html', {'login_form': login_form, 'msg': '用户名或密码错误'})
-
-            # 验证用户名、密码、是否激活
-            # try:
-            #     users = UserProfile.objects.get(Q(username=login_user) | Q(email=login_user))
-            #     if not users.is_active:
-            #         return render(request, 'login.html', {'msg': '用户未激活'})
-            #     elif users.check_password(login_password):  # django自带的转密文的密码验证方式
-            #         login(request, users)
-            #         return render(request, 'index.html', {})
-            #     else:
-            #         return render(request, 'login.html', {'login_form': login_form, 'msg': '用户名或密码错误'})
-            # except Exception as e:
-            #     return render(request, 'login.html', {'login_form': login_form, 'msg': '用户未注册'})
         else:
             return render(request, 'login.html', {'login_form': login_form})
 
@@ -162,7 +129,6 @@ class ForgetpwdView(View):
     """登录页面点击忘记密码"""
 
     def get(self, request):
-        """get方法获取URL中数据,调用验证码模块，render到网页中，否则不显示验证码"""
         forgetpwd_form = ForgetpwdForm()
         return render(request, 'forgetpwd.html', {'forgetpwd_form': forgetpwd_form})
 
@@ -211,7 +177,7 @@ class PwdmodifyView(LoginRequiredMixin, View):
             if password1 == password2:
                 pwdmodify_user = UserProfile.objects.get(email=pwdmodify_email)
                 pwdmodify_user.password = make_password(password1)
-                pwdmodify_user.save()  # 更新数据库中的密码
+                pwdmodify_user.save()
 
                 pwdmodify_code_e = EmailVerification.objects.get(code=pwdmodify_code)
                 pwdmodify_code_e.is_delete = 1
@@ -229,9 +195,7 @@ class LogoutView(View):
     """注销登录功能"""
 
     def get(self, request):
-        """get方式进行注销登录"""
-        logout(request)  # 源码显示，logout只需要一个参数
-        # return render(request, 'index.html')
+        logout(request)
         return HttpResponseRedirect(reverse('index'))
 
 

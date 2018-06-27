@@ -3,8 +3,6 @@ from datetime import datetime
 
 from django.db import models
 
-# Create your models here.
-
 from organizations.models import Organizationinfo, Teacher
 
 
@@ -31,10 +29,6 @@ class Courseinfo(models.Model):
     add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.now)
     notice = models.CharField(verbose_name='课程公告', max_length=300, default='暂无公告')
 
-    # 章节数
-    # 学习用户展示
-    # 课程标签
-    # 课程评论
     def lession_nums(self):
         """章节数"""
         return self.lession_set.count()
@@ -50,12 +44,8 @@ class Courseinfo(models.Model):
 class CourseBanner(Courseinfo):
     """
     课程轮播图
-    在首页展示的
-    继承课程信息
     """
-    # 暂时不知此模块作用！！！
-    # 播放次序
-    # 链接
+
     class Meta:
         verbose_name = '轮播课程'
         verbose_name_plural = verbose_name
@@ -63,8 +53,7 @@ class CourseBanner(Courseinfo):
 
 class Lession(models.Model):
     """
-    章节信息
-    点击我要学习进入
+    章节信息，点击我要学习进入
     """
     course = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, verbose_name='课程')
     name = models.CharField(verbose_name='章名', max_length=100)
@@ -97,9 +86,6 @@ class Video(models.Model):
 
 class CourseResource(models.Model):
     """资料下载,如课件等资料"""
-    # 资料名称
-    # 下载地址
-    # 添加时间
     lession = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, verbose_name='课程')
     name = models.CharField(verbose_name='资料名称', max_length=100)
     download = models.FileField(verbose_name='资料下载', upload_to='courses/resource/%Y/%m', max_length=100)

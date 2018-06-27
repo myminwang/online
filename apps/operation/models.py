@@ -5,7 +5,6 @@ from datetime import datetime
 from django.db import models
 from courses.models import Courseinfo
 from users.models import UserProfile
-from organizations.models import Organizationinfo, Teacher
 
 
 # Create your models here.
@@ -55,9 +54,6 @@ class UserMessage(models.Model):
         verbose_name_plural = verbose_name
 
 
-# 用户对用户的消息
-
-
 class UserCourse(models.Model):
     """用户正在学习的课程,可以继承用户评论"""
     course = models.ForeignKey(Courseinfo, on_delete=models.CASCADE, null=True, verbose_name='课程')
@@ -80,5 +76,3 @@ class UserAsk(models.Model):
     class Meta:
         verbose_name = '用户咨询'
         verbose_name_plural = verbose_name
-
-# 用户对课程、教师、课程点赞

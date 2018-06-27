@@ -76,8 +76,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
-                # 配置后，在html文件中才可以正常找到路径
                 'django.template.context_processors.media',
             ],
         },
@@ -148,20 +146,19 @@ STATICFILES_DIRS = (
 
 # 配置用户上传的文件
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 还需要配置上面的TEMPLATES
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 需要配置TEMPLATES
 
 
 # UserProfile 覆盖了 django 内置的 users 表
 AUTH_USER_MODEL = 'users.UserProfile'
 
 # 发送邮件功能设置
-EMAIL_HOST = 'smtp.sina.com'  # 发送邮件的服务器，使用SMTP服务器，需要在邮箱中开启此服务
-EMAIL_PORT = 25  # 官网文档中默认值
-EMAIL_HOST_USER = 'online_learn_edu@sina.com'  # 用户名
-EMAIL_HOST_PASSWORD = 'WZQwzq+123'  # 密码
+EMAIL_HOST = 'smtp.sina.com'  # 使用SMTP服务器，需要在邮箱中开启此服务
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'online_learn_edu@sina.com'
+EMAIL_HOST_PASSWORD = 'WZQwzq+123'
 
 EMAIL_FROM = 'online_learn_edu@sina.com'  # 自定义配置，使用时需要引入
-# 在send_mail()参数中要求写'from@example.com'
 
 
 # 重写ModelBackend模块下的authenticate方法
@@ -169,7 +166,7 @@ AUTHENTICATION_BACKENDS = (
     'users.views.ChongxieAuthenticate',
 )
 
-# # 分页器
+# 分页器
 PAGINATION_SETTINGS = {
     'PAGE_RANGE_DISPLAYED': 10,   # 中间显示多少个页码
     'MARGIN_PAGES_DISPLAYED': 2,  # 两端显示多少个页码
