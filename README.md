@@ -1,25 +1,17 @@
 ## 在线教育平台  
-[![Build Status](https://travis-ci.org/liangliangyy/DjangoBlog.svg?branch=master)](https://travis-ci.org/liangliangyy/DjangoBlog) [![python3.5](https://img.shields.io/badge/python-3.5-brightgreen.svg)]() [![django1.10](https://img.shields.io/badge/django-2.0-brightgreen.svg)]()   
+[![Build Status](https://travis-ci.org/liangliangyy/DjangoBlog.svg?branch=master)](https://travis-ci.org/liangliangyy/DjangoBlog) [![python3.6](https://img.shields.io/badge/python-3.6-brightgreen.svg)]() [![django2.0](https://img.shields.io/badge/django-2.0-brightgreen.svg)]()   
 　　该平台的课程由各授课机构提供，授课机构中的各授课老师将录制的视频上传至平台，由平台进行呈现，学员通过平台进行在线学习，<a href="http://www.myminwang.top" target="_blank">项目展示</a>。　　
->本项目在开发及调试过程中遇到的问题，在<a href="http://www.cnblogs.com/wendaobiancheng/" target="_blank">我的博客</a>中均有列出。
+>本项目在开发过程中遇到的问题，在<a href="http://www.cnblogs.com/wendaobiancheng/" target="_blank">我的博客</a>中均有列出。
     
-### 网页结构及功能：  
-1. **首页**：`平台名称`、`logo展示`、`登录/注册/个人中心入口`、`内容搜索`、`功能菜单`、`轮播图`、`公开课展示`、`机构展示`、`页脚`；
+## 主要功能：  
+* 账号注册、激活、登录、密码找回等功能。
+* 个人中心页面支持`个人信息`、`我的课程`、`我的收藏`、`我的消息`管理。
+* 首页轮播图、机构、课程展示。
+* 支持讲师、课程、机构选项的全局搜索。
+* 侧边栏提供热门课程推荐、机构/讲师排名、课程咨询。
+* 支持授课机构按类别、按地区筛选，按学习人数、课程数排序。
 
-2. **课程页面**（首页->公开课）：`公开课列表`、`热门公开课`；
-    >课程详情页（首页->公开课->课程）：展示课程详情（由后台富文本编辑生成），可对课程进行收藏、开始学习，右侧为课程机构的简单介绍；  
-    >课程学习页（首页->公开课->课程->开始学习）：展示课程章节信息，点击章节跳转到响应的播放页面，即可开始该章内容的学习，并可对该课程进行评论，右侧为该课程课程资料的下载展示；
-
-3. **教师页面**（首页->授课教师）：`授课教师列表`，可按人气进行排序，可对内容进行分页，右侧展示`教师排行榜`；
-    >教师详情页（首页->授课教师->教师）：展示教师简介，在授课程等；
-
-4. **授课机构页面**（首页->授课机构）：`授课机构列表`，可按类别、地区进行筛选，可按学习人数、评论数进行排序，右侧上方为用户提交我要学习的`咨询窗口`，下方为`机构排名`；
-    >授课机构详情页（首页->授课机构->机构）：该授课机构首页，可点击进行收藏，可分别进入机构课程、机构介绍、机构教师等页面；
-
-5. **个人中心页面**（首页->个人中心）：`用户注册`、`登录`、`邮箱激活验证`、`密码找回`、`个人信息`展示/修改，同时可分别进入`我的课程`、`我的收藏`、`我的消息`等页面；
-
-
-### 环境
+## 环境
 * Python 3.6.5
 * Django 2.0.6
 * MySQL 5.7.22
@@ -32,11 +24,12 @@
     mysql -u root -p
     Enter password: 
     mysql> create database online;
+    
 3.建立虚拟环境（可省略）
 
     python3 -m venv venv
     source venv/bin/activate
-
+    
 4.项目下载
 
     git clone https://github.com/myminwang/online.git
