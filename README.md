@@ -1,5 +1,5 @@
 ## 在线教育平台  
-[![python3.5](https://img.shields.io/badge/python-3.5-brightgreen.svg)]() [![django1.10](https://img.shields.io/badge/django-2.0-brightgreen.svg)]() 
+[![Build Status](https://travis-ci.org/liangliangyy/DjangoBlog.svg?branch=master)](https://travis-ci.org/liangliangyy/DjangoBlog) [![python3.5](https://img.shields.io/badge/python-3.5-brightgreen.svg)]() [![django1.10](https://img.shields.io/badge/django-2.0-brightgreen.svg)]()   
 　　该平台的课程由各授课机构提供，授课机构中的各授课老师将录制的视频上传至平台，由平台进行呈现，学员通过平台进行在线学习，<a href="http://www.myminwang.top" target="_blank">项目展示</a>。　　
 >本项目在开发及调试过程中遇到的问题，在<a href="http://www.cnblogs.com/wendaobiancheng/" target="_blank">我的博客</a>中均有列出。
     
