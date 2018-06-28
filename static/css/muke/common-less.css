@@ -698,7 +698,7 @@ a:active {
 }
 /*翻页*/
 .page {
-    margin: 25px 0 auto;
+    /*margin: 25px 0 auto;*/
     overflow: hidden;
     clear: both;
     text-align: center;

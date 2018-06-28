@@ -191,12 +191,12 @@
             data:{'course_id':10, 'comments':comments},
             async: true,
             beforeSend:function(xhr, settings){
-                xhr.setRequestHeader("X-CSRFToken", "5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy");
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
             },
             success: function(data) {
                 if(data.status == 'fail'){
                     if(data.msg == '用户未登录'){
-                        window.location.href="login.html";
+                        window.location.href="{% url 'users:login' %}";
                     }else{
                         alert(data.msg)
                     }

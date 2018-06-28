@@ -36,16 +36,17 @@
         <h1>机构教师</h1>
         <a class="green fr more" href="{% url 'org:org_teacher' org.id%}">查看更多  >  </a>
     </div>
-    {% for org_teacher in org_teachers %}
     <div class="diarys">
         <div class="module5 share company-diary-box" style="padding:10px 0;">
+        {% for org_teacher in org_teachers %}
             <div class="left">
                 <a href="{% url 'org:teacher_detail' org_teacher.id %}"><img class="pic" src="{{ MEDIA_URL }}{{ org_teacher.image }}"/></a>
                 <p>姓名：{{ org_teacher.name }}</p>
             </div>
+        {% endfor %}
         </div>
     </div>
-    {% endfor %}
+
 
 
 </div>

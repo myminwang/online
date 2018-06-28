@@ -163,7 +163,7 @@ class PwdresetView(View):
             return render(request, 'register_active_failed.html')
 
 
-class PwdmodifyView(LoginRequiredMixin, View):
+class PwdmodifyView(View):
     """密码重置功能"""
 
     def post(self, request):
@@ -179,11 +179,12 @@ class PwdmodifyView(LoginRequiredMixin, View):
                 pwdmodify_user.password = make_password(password1)
                 pwdmodify_user.save()
 
-                pwdmodify_code_e = EmailVerification.objects.get(code=pwdmodify_code)
-                pwdmodify_code_e.is_delete = 1
-                pwdmodify_code_e.save()
+                pwdmodify_code_es = EmailVerification.objects.filter(code=pwdmodify_code)
+                for pwdmodify_code_e in pwdmodify_code_es:
+                    pwdmodify_code_e.is_delete = 1
+                    pwdmodify_code_e.save()
 
-                return render(request, 'login.html', {'pwdreset_msg': '密码重置成功，请登录'})
+                    return render(request, 'login.html', {'pwdreset_msg': '密码重置成功，请登录'})
             else:
                 return render(request, 'password_reset.html',
                               {'pwdmodify_form': pwdmodify_form, 'msg': '两次输入不一致，请重新输入'})

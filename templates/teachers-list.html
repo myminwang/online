@@ -31,7 +31,7 @@
 					<dt>
 						<a href="{% url 'org:teacher_detail' teacher.id %}">
                             <div class="picpic">
-                                <img width="100" height="100" class="scrollLoading" src="{{ MEDIA_URL }}{{ teacher.image }}"/>
+                                <img width="100" height="100" class="scrollLoading" src="{{ MEDIA_URL }}{{ teacher.image }}" title="加载中"/>
                             </div>
                         </a>
 						<div class="btn">
@@ -105,7 +105,7 @@
                 <dt class="num fl">{{ forloop.counter }}</dt>
                 <a href="{% url 'org:teacher_detail' hot_teacher.id %}">
                     <dt>
-                        <img width="50" height="50" class="scrollLoading"  src="{{ MEDIA_URL }}{{ hot_teacher.image }}"/>
+                        <img width="50" height="50" class="scrollLoading"  src="{{ MEDIA_URL }}{{ hot_teacher.image }}" title="加载中"/>
                     </dt>
                 </a>
                 <dd>
