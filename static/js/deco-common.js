@@ -360,7 +360,7 @@ $(function() {
 	//返回顶部
 	$('.totop').click(function(){
 		$('html,body').animate({scrollTop:0},100);
-		return false;
+		return true;
 	});
 
     //顶部个人中心下拉框

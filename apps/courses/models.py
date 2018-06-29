@@ -43,12 +43,13 @@ class Courseinfo(models.Model):
 
 class CourseBanner(Courseinfo):
     """
-    课程轮播图
+    课程轮播图，后台管理时使用两个标签，管理一个数据表，实现数据的分类管理
     """
 
     class Meta:
         verbose_name = '轮播课程'
         verbose_name_plural = verbose_name
+        proxy = True  # 具有models功能，同时不再生成新的表
 
 
 class Lession(models.Model):

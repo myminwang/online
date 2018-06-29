@@ -5,7 +5,7 @@ __date__ = "5/29/18 16:52"
 
 import xadmin
 
-from .models import Courseinfo, Lession, Video, CourseResource
+from .models import Courseinfo, Lession, Video, CourseResource, CourseBanner
 
 
 class LessonInline:
@@ -35,9 +35,35 @@ class CourseinfoAdmin:
                      'click_nums', 'detail', 'is_banner', 'before_know', 'teacher_tell', 'add_time']
     readonly_fields = ['fav_nums', 'click_nums', 'students', 'add_time']
 
+    def queryset(self):
+        """筛选非轮播课程"""
+        qs = super(CourseinfoAdmin,self).queryset()
+        qs = qs.filter(is_banner=False)
+        return qs
+
+
+class CourseBannerAdmin:
+    """课程信息管理"""
+    list_display = ['name', 'teacher', 'course_org', 'desc',
+                    'category', 'degree', 'learn_time', 'students', 'fav_nums',
+                    'click_nums', 'is_banner', 'add_time']
+    list_filter = ['course_org', 'teacher', 'name', 'image', 'desc',
+                   'degree', 'students', 'learn_time', 'category', 'fav_nums',
+                   'click_nums', 'detail', 'is_banner', 'before_know', 'teacher_tell']
+    search_fields = ['course_org', 'teacher', 'name', 'image', 'desc',
+                     'degree', 'students', 'learn_time', 'category', 'fav_nums',
+                     'click_nums', 'detail', 'is_banner', 'before_know', 'teacher_tell', 'add_time']
+    readonly_fields = ['fav_nums', 'click_nums', 'students', 'add_time']
+
+    def queryset(self):
+        """筛选轮播课程"""
+        qs = super(CourseBannerAdmin,self).queryset()
+        qs = qs.filter(is_banner=True)
+        return qs
+
 
 class LessionAdmin:
-    """课程轮播图管理"""
+    """章节管理"""
     list_display = ['course', 'name', 'add_time']
     list_filter = ['course', 'name']
     search_fields = ['course', 'name', 'add_time']
@@ -61,6 +87,7 @@ class CourseResourceAdmin:
 
 
 xadmin.site.register(Courseinfo, CourseinfoAdmin)
+xadmin.site.register(CourseBanner, CourseBannerAdmin)
 xadmin.site.register(Lession, LessionAdmin)
 xadmin.site.register(Video, VideoAdmin)
 xadmin.site.register(CourseResource, CourseResourceAdmin)

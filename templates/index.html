@@ -121,7 +121,7 @@
                 <div class="right">
                     <ul>
                         {% for org in orgs %}
-                        <li class="">
+                        <li class="{% if forloop.counter|divisibleby:5 %}five{% endif %}">
                             <a href="{% url 'org:org_home' org.id %}">
                                 <div class="company">
                                     <img width="184" height="100" src="{{ MEDIA_URL }}{{ org.image }}"/>

@@ -45,3 +45,8 @@ urlpatterns = [
 if settings.DEBUG:
     #  配置静态文件访问处理
     urlpatterns.append(url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}))
+
+# 全局页面配置
+handler403 = 'users.views.page_not_look'
+handler404 = 'users.views.page_not_found'
+handler500 = 'users.views.page_error'

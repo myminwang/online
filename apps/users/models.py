@@ -58,6 +58,12 @@ class Banner(models.Model):
     order = models.IntegerField(default=100, verbose_name='顺序')
     add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.datetime.now)
 
+    def go_to(self):
+        """后台管理中，添加跳转链接"""
+        from django.utils.safestring import mark_safe
+        return mark_safe("<a href='http://www.myminwang.top'>跳转至首页</>")
+    go_to.short_description = '跳转'
+
     class Meta:
         verbose_name = '轮播图管理'
         verbose_name_plural = verbose_name

@@ -21,7 +21,7 @@ class GlobalSettings:
     """
     后台修改
     """
-    site_title = '后台管理系统'
+    site_title = '在线学习网'
     site_footer = '在线学习网'
     menu_style = 'accordion'  # 开启分组折叠
 
@@ -36,7 +36,7 @@ class EmailVerificationAdmin:
 
 class BannerAdmin:
     """轮播图后台管理"""
-    list_display = ['order', 'image', 'banner_url', 'add_time']
+    list_display = ['order', 'image', 'banner_url', 'add_time', 'go_to']
     list_filter = ['image', 'banner_url', 'order']
     search_fields = ['image', 'banner_url', 'order', 'add_time']
     fields = ['image', 'banner_url', 'order']

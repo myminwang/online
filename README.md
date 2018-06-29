@@ -74,8 +74,8 @@ DATABASES = {
 
 ### 关于Mysql及Navicat安装（ox系统）  
 
-* mysql安装请[参考](http://www.cnblogs.com/wendaobiancheng/p/9041278.html)
-* Navicat安装，mac[免费版链接](https://pan.baidu.com/s/1mWqOacmSqWmVD5YgRbUoCg)  密码:sjw4
+* mysql安装[参考](http://www.cnblogs.com/wendaobiancheng/p/9041278.html)
+* Navicat安装，[免费版链接](https://pan.baidu.com/s/1mWqOacmSqWmVD5YgRbUoCg)  密码:sjw4
 
 ### 关于项目部署（使用AWS EC2云服务器）  
 

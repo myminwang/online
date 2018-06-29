@@ -49,6 +49,13 @@ class UserMessage(models.Model):
 
     has_read = models.BooleanField(verbose_name='是否已读', default=False)
 
+    def user_name(self):
+        if self.user_id != 0:
+            return UserProfile.objects.get(id=self.user_id)
+        else:
+            return '系统消息'
+    user_name.short_description = '接收用户'
+
     class Meta:
         verbose_name = '用户消息'
         verbose_name_plural = verbose_name
