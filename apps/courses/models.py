@@ -33,6 +33,11 @@ class Courseinfo(models.Model):
         """章节数"""
         return self.lession_set.count()
 
+    def save_models(self):
+        """在新增课程保存时，更新机构的课程数"""
+        pass
+
+
     class Meta:
         verbose_name = '课程信息'
         verbose_name_plural = verbose_name
