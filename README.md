@@ -18,7 +18,7 @@
 
 
 ### 快速启动该项目
-1.安装Python 3.6
+1.安装Python 3.6  
 2.安装MySQL 5.7 并创建online数据库
 
     mysql -u root -p
