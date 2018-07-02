@@ -80,4 +80,4 @@ DATABASES = {
 ### 关于项目部署（使用AWS EC2云服务器）  
 
 * 云服务器[申请及配置](https://www.cnblogs.com/wendaobiancheng/p/9172083.html)
-* 使用Nginx+uWSGI[部署项目](https://www.cnblogs.com/wendaobiancheng/p/9172425.html)
+* 使用Nginx+uWSGI[部署项目](https://www.cnblogs.com/wendaobiancheng/p/9172425.html)  
