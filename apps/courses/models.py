@@ -2,6 +2,7 @@
 from datetime import datetime
 
 from django.db import models
+from DjangoUeditor.models import UEditorField
 
 from organizations.models import Organizationinfo, Teacher
 
@@ -22,6 +23,7 @@ class Courseinfo(models.Model):
                                 default='后端', max_length=100)
     fav_nums = models.IntegerField(verbose_name='收藏人数', default=0)
     click_nums = models.IntegerField(verbose_name='点击数', default=0)
+    # detail = UEditorField(verbose_name='课程详情',width=600, height=300, toolbars="full", imagePath="course/ueditor/", filePath="course/ueditor/", default='')
     detail = models.TextField(verbose_name='课程详情')
     is_banner = models.BooleanField(verbose_name='是否为轮播图', default=False)
     before_know = models.CharField(verbose_name='课前须知', max_length=300, default='')
@@ -32,10 +34,6 @@ class Courseinfo(models.Model):
     def lession_nums(self):
         """章节数"""
         return self.lession_set.count()
-
-    def save_models(self):
-        """在新增课程保存时，更新机构的课程数"""
-        pass
 
 
     class Meta:
@@ -77,8 +75,9 @@ class Video(models.Model):
     """小节/视频信息"""
     lession = models.ForeignKey(Lession, on_delete=models.CASCADE, verbose_name='章')
     name = models.CharField(verbose_name='小节/视频名称', max_length=100)
-    url = models.URLField(verbose_name='播放地址', max_length=200, default='https://v.youku.com/v_show/id_XMzU3ODg1MjUwMA'
-                                                                       '.html?spm=a2hww.20027244.m_250379.5~1~3!2~A')
+    # url = models.URLField(verbose_name='播放地址', max_length=200, default='https://v.youku.com/v_show/id_XMzU3ODg1MjUwMA'
+    #                                                                    '.html?spm=a2hww.20027244.m_250379.5~1~3!2~A')
+    url = models.FileField(verbose_name='播放地址', max_length=100, upload_to='courses/video/%Y/%m')
     learn_time = models.IntegerField(verbose_name='视频时长（分钟数）', default=0)
     add_time = models.DateTimeField(verbose_name='添加时间', default=datetime.now)
 

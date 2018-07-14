@@ -6,6 +6,7 @@ __date__ = "5/29/18 16:52"
 import xadmin
 
 from .models import Courseinfo, Lession, Video, CourseResource, CourseBanner
+from organizations.models import Organizationinfo
 
 
 class LessonInline:
@@ -35,6 +36,7 @@ class CourseinfoAdmin:
                      'click_nums', 'detail', 'is_banner', 'before_know', 'teacher_tell', 'add_time']
     readonly_fields = ['fav_nums', 'click_nums', 'students', 'add_time']
     # refresh_times = [3,5]   # 设定页面刷新
+    # style_fields = {'detail':'ueditor'}
 
     def queryset(self):
         """筛选非轮播课程"""
@@ -42,9 +44,18 @@ class CourseinfoAdmin:
         qs = qs.filter(is_banner=False)
         return qs
 
+    def save_models(self):
+        """在保存课程时，修改机构的课程总数"""
+        obj = self.new_obj
+        obj.save()
+        if obj.course_org is not None:
+            course_org = obj.course_org
+            course_org.course_nums = Courseinfo.objects.filter(course_org=course_org).count()
+            course_org.save()
+
 
 class CourseBannerAdmin:
-    """课程信息管理"""
+    """课程信息管理-轮播课程"""
     list_display = ['name', 'teacher', 'course_org', 'desc',
                     'category', 'degree', 'learn_time', 'students', 'fav_nums',
                     'click_nums', 'is_banner', 'add_time']
@@ -61,6 +72,15 @@ class CourseBannerAdmin:
         qs = super(CourseBannerAdmin,self).queryset()
         qs = qs.filter(is_banner=True)
         return qs
+
+    def save_models(self):
+        """在保存课程时，修改机构的课程总数"""
+        obj = self.new_obj
+        obj.save()
+        if obj.course_org is not None:
+            course_org = obj.course_org
+            course_org.course_nums = Courseinfo.objects.filter(course_org=course_org).count()
+            course_org.save()
 
 
 class LessionAdmin:

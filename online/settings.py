@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'captcha',  # 验证码包，需要配置url，并在数据库中生成表
     'pure_pagination',  # 分页器,在下面有配置
+    # 'DjangoUeditor', # 富文本编辑器
+
 ]
 
 MIDDLEWARE = [

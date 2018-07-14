@@ -10,6 +10,11 @@
   <link rel="stylesheet" href="{%  static 'css/mooc.css' %}"/>
   <link rel="stylesheet" href="{%  static 'css/muke/course/common-less.css' %}">
   <link rel="stylesheet" href="{%  static 'css/video-js.min.css' %}">
+  <link rel="stylesheet" href="{%  static 'js/video.min.js' %}">
+  <link rel="stylesheet" href="{%  static 'js/videojs-ie8.min.js' %}">
+
+
+
   <style>
     .video-js .vjs-big-play-button {
       top: 50%;
@@ -39,10 +44,11 @@
   <div id="main">
 {#视频播放#}
   <div style=" width:950px;height:670px; margin-left: 50px">
-    <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1200"
+    <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1200" height="600"
            poster="{{ MEDIA_URL }}{{ course.image }}"
            data-setup="{}">
-      <source src="{{ video.url }}" type='video/mp4'>
+      <source src="{{ MEDIA_URL }}{{ video.url }}" type='video/mp4'>
+
     </video>
   </div>
 

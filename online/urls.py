@@ -40,6 +40,9 @@ urlpatterns = [
     # 用户中心 URL 配置,看include源码进行配置，默认app_name=None,只有为元组时才能传入参数
     path('users/', include(('users.urls', 'users'), namespace='users')),
 
+    # 富文本编辑器url
+    # url(r'^ueditor/',include('DjangoUeditor.urls' )),
+
 ]
 
 if settings.DEBUG:

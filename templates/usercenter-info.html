@@ -32,16 +32,16 @@
 {#修改头像#}
                         <form class="clearfix" id="jsAvatarForm" enctype="multipart/form-data" autocomplete="off"
                               method="post" action="{% url 'users:uploadimage' %}" target='frameFile'>
-                            <label class="changearea" for="avatarUp">
-                        <span id="avatardiv" class="pic">
-                            <img width="100" height="100" class="js-img-show" id="avatarShow"
-                                 src="{{ MEDIA_URL }}{{ request.user.image }}"/>
-                        </span>
-                                <span class="fl upload-inp-box" style="margin-left:70px;">
-                            <span class="button btn-green btn-w100" id="jsAvatarBtn">修改头像</span>
-                            <input type="file" name="image" id="avatarUp" class="js-img-up"/>
-                        </span>
-                            </label>
+                                            <label class="changearea" for="avatarUp">
+                                                <span id="avatardiv" class="pic">
+                                                    <img width="100" height="100" class="js-img-show" id="avatarShow"
+                                                         src="{{ MEDIA_URL }}{{ request.user.image }}"/>
+                                                </span>
+                                                <span class="fl upload-inp-box" style="margin-left:70px;">
+                                                    <span class="button btn-green btn-w100" id="jsAvatarBtn">修改头像</span>
+                                                    <input type="file" name="image" id="avatarUp" class="js-img-up"/>
+                                                </span>
+                                            </label>
                             {% csrf_token %}
                         </form>
 {#修改密码#}
