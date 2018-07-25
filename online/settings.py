@@ -94,7 +94,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'online',
         'USER': 'root',
-        'PASSWORD': 'WZQwzq+123',
+        'PASSWORD': '1111111',
         'HOST': '127.0.0.1',
         'POST': '3306',
     }
@@ -158,7 +158,7 @@ AUTH_USER_MODEL = 'users.UserProfile'
 EMAIL_HOST = 'smtp.sina.com'  # 使用SMTP服务器，需要在邮箱中开启此服务
 EMAIL_PORT = 25
 EMAIL_HOST_USER = 'online_learn_edu@sina.com'
-EMAIL_HOST_PASSWORD = 'WZQwzq+123'
+EMAIL_HOST_PASSWORD = '11111111'
 
 EMAIL_FROM = 'online_learn_edu@sina.com'  # 自定义配置，使用时需要引入
 
