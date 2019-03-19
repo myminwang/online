@@ -2,7 +2,7 @@
 from datetime import datetime
 
 from django.db import models
-from DjangoUeditor.models import UEditorField
+# from DjangoUeditor.models import UEditorField
 
 from organizations.models import Organizationinfo, Teacher
 
